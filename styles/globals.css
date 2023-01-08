@@ -1,7 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css?family=Dela Gothic One');
+
 h1,h2,h3,h4,h5{
   font-family: 'Dela Gothic One'
+}
+p{
+  font-family: 'Montserrat'
 }
