@@ -1,7 +1,7 @@
 export const Headerr = () => {
   return (
     <>
-      <div className="grid grid-cols-12 grid-rows-1 pt-20 pl-48 pr-20 items-center">
+      <div className="grid grid-cols-12 grid-rows-1 pt-16 pl-44 pr-20 items-center">
         <h1 className="text-left ">GlobalTalk</h1>
         <p className="text-right">Main</p>
         <p className="text-right">Guide</p>

@@ -10,3 +10,31 @@ h1,h2,h3,h4,h5{
 p{
   font-family: 'Montserrat'
 }
+html{
+  font-size: 16px;
+}
+/* hide scroll bar, keep its function */
+*{ 
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+@media screen and (max-width: 1000px) {
+  html{
+    font-size: 12px;
+  }
+
+}
+@media screen and (min-width: 1500px) {
+  html{
+    font-size: 18px;
+  }
+
+}
+@media screen and (max-width: 500px) {
+  html{
+    font-size: 8px;
+  }
+
+}
