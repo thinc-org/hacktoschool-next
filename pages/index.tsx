@@ -1,14 +1,12 @@
-
-import styles from '../styles/Home.module.css'
-
+import { Bodyy } from "../component/bodyy";
+import {  Headerr } from "../component/headerr";
+import styles from "../styles/Home.module.css";
 
 export default function Home() {
   return (
-    <>
-        <h1 className="text-3xl ">
-      Hello world!
-    </h1>
-    <p>dddddddddddddddddddddd</p>
-    </>
-  )
+    <div className="bg-bgcolor w-screen h-screen">
+      <Headerr/>
+      <Bodyy/>
+    </div>
+  );
 }
