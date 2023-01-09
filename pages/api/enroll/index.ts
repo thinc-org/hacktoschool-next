@@ -16,15 +16,13 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 // req.body must have valid studentId and courseId
 async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
     const { studentId, courseId } = req.body;
-    const enroll = await prisma.enroll.create({
+    const student = await prisma.student.update({
+        where: {id : studentId},
         data: {
-            student: {
-                connect: [{id: studentId}], 
-            },
-            course: {
-                connect: [{id: courseId}], 
+            Enroll: {
+               create: { course: { connect: { id : courseId } } }
             }
         },
     });
-    res.json(enroll);
+    res.json(student);
 }

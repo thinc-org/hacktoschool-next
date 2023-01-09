@@ -19,11 +19,14 @@ const StudentDashboard: React.FC = () => {
                     headers: { 'Content-Type': 'application/json' },
                 });
                 const json = await response.json();
+                console.log(json.data);
                 setCourses(json.data);
+                // console.log(loading);
             } catch (error) {
                 // setError(error);
             } finally {
                 setLoading(false);
+                // console.log(loading);
             }
 
         };
@@ -37,12 +40,12 @@ const StudentDashboard: React.FC = () => {
 
     return (
         <>
-            {/* <Headerr /> */}
+            <Headerr />
+            <p>Your Courses</p>
 
             {loading ?
                 (<div>Loading ...</div>) :
                 (<div>
-                    <p>Your Courses</p>
                     {courses.map(course => (
                         <div key={course.id}>
                             <CourseElement course={course} />

@@ -28,10 +28,10 @@ model Instructor {
 
 model Enroll {
   id        Int     @id @default(autoincrement())
-  student   Student @relation(fields: [studentId], references: [id])
-  studentId Int
-  course    Course  @relation(fields: [courseId], references: [id])
-  courseId  Int
+  student   Student? @relation(fields: [studentId], references: [id])
+  studentId Int?
+  course    Course?  @relation(fields: [courseId], references: [id])
+  courseId  Int?
 }
 
 model Course {

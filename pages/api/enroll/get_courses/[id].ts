@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '../../../lib/prisma'
+import prisma from '../../../../lib/prisma'
 
 interface NextApiRequestWithId extends NextApiRequest {
     query : {
@@ -9,21 +9,32 @@ interface NextApiRequestWithId extends NextApiRequest {
 
 export default async function handle(req: NextApiRequestWithId, res: NextApiResponse) {
     const studentId = parseInt(req.query.id);
+
+    console.log(studentId);
+
     const enrolls = await prisma.enroll.findMany({
-        where: {
+        where: {    
             studentId: studentId,
         },
     });
+
+    console.log("enrolls");
+    console.log(enrolls);
 
     const courseIdArray = enrolls.map((e) => e.courseId);
 
     const courses = await prisma.course.findMany({
         where: {
             id: {
-                $in: courseIdArray
+                in: courseIdArray
             }
         }
     });
 
-    res.json(courses);
+    console.log("courses");
+    console.log(courses);
+    res.json({
+        data :   courses
+    }
+    );
 }
