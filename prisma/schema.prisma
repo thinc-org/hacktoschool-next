@@ -40,5 +40,5 @@ model Course {
   description  String?
   Enroll       Enroll[]
   instructor   Instructor @relation(fields: [instructorId], references: [id])
-  instructorId Int
+  instructorId Int  
 }

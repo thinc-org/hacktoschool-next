@@ -81,6 +81,7 @@ export const Bodyy = (props: { statemain: string }) => {
       return;
     } else {
       //Success login
+      console.log(res.body)
       if (res.body.role === "student") {
         localStorage.setItem("id", res.body.id);
         localStorage.setItem("role", res.body.role);
