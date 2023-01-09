@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../../lib/prisma'
+import { Prisma,PrismaClient } from "@prisma/client";
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
@@ -7,22 +8,54 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
         console.log(info)
 
         if(info.role === 'student'){
-            const newuser = await prisma.Student.create({
-                data:{
-                    email: info.email,
-                    name: info.name,
-                    password: info.password
+            try{
+                const newUser= await prisma.Student.create({
+                    data:{
+                        email: info.email,
+                        name: info.name,
+                        password: info.password
+                    }})
+            
                 }
-            })
+            catch(e){
+                if ( e instanceof Prisma.PrismaClientKnownRequestError){
+                    if (e.code ==='P2002'){
+                        console.log('same data inserted')
+                   
+                        res.status(500).json({
+                          body:"We fucked up"
+                        })
+        
+                       
+                    }
+                }
+                throw e
+            }
         }
         else{
-            const newuser = await prisma.Instructor.create({
-                data:{
-                    email: info.email,
-                    name: info.name,
-                    password: info.password
+            try{
+                const newUser= await prisma.Student.create({
+                    data:{
+                        email: info.email,
+                        name: info.name,
+                        password: info.password
+                    }})
+            
                 }
-            })
+            catch(e){
+                if ( e instanceof Prisma.PrismaClientKnownRequestError){
+                    if (e.code ==='P2002'){
+                        console.log('same data inserted')
+                   
+                        res.status(500).json({
+                          body:"We fucked up"
+                        })
+        
+                       
+                    }
+                }
+                throw e
+            }
 
         }
         res.status(200).json({

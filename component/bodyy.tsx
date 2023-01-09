@@ -1,10 +1,16 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 export const Bodyy = (props: { statemain: string }) => {
-
+  const [errormes, setErrormes] = useState('')
   useEffect(() => {
     console.log(props.statemain);
   }, [props.statemain]);
+
+  const timeout = (time: any) =>{
+    window.setTimeout(()=>{
+        setErrormes('')
+    },time)
+}
 
   const sendRegis=async (e: {
     target: any; preventDefault: () => void; 
@@ -26,7 +32,73 @@ export const Bodyy = (props: { statemain: string }) => {
     })
     const res = await response.json()
     console.log(res)
+    if (response.status === 500) { //if error, don't do and return
+      console.log(res.body)
+      if (res.body === "We fucked up") {
+          setErrormes('Already')
+          timeout(3000)
+      }
+      else {
+        
+      }
+      return
   }
+  }
+
+  const sendLogin=async (e: {
+    target: any; preventDefault: () => void; 
+})=>{
+    e.preventDefault()
+   
+    const loginuser={
+      email:e.target.email1.value,
+      password:e.target.password1.value
+    
+    }
+
+    console.log(loginuser)
+
+    const response = await fetch("/api/login/login",{
+      method: 'POST',
+      body:JSON.stringify(loginuser)
+    })
+    const res = await response.json()
+    console.log(res)
+    if (response.status === 500) { //if error, don't do and return
+      console.log(res.body)
+      if (res.body === "Wrong Password") {
+          setErrormes('Wrong')
+          timeout(3000)
+      }
+      else {
+        setErrormes('Cantfind')
+        timeout(3000)
+      }
+      return
+  }
+  else{
+    //Success login
+  }
+  }
+
+  const ShowErrorAdd = () => {
+
+    if (errormes === 'Wrong') {
+        return <div className="mt-8 text-red-600"><p>Wrong Password!</p></div>
+    }
+    else if (errormes === 'Cantfind') {
+        return <div className="mt-8 text-red-600"><p>Can't find your email!</p></div>
+    }
+    else if (errormes === 'Already'){
+      return <div className="mt-8 text-red-600"><p>This email already registered!</p></div>
+    }
+   
+    else {
+        return <div></div>
+    }
+
+}
+
 
   const Gridfirst = () => {
     if (props.statemain === "main") {
@@ -97,11 +169,40 @@ export const Bodyy = (props: { statemain: string }) => {
             <button className="bg-blue-500 text-white py-2 px-4 rounded">
               <p>Sign Up</p>
             </button>
+            <div>
+            <ShowErrorAdd/>
+          </div>
+            
           </form>
         </>
       );
     } else {
-      return <></>;
+      return (
+        <>
+        <form className="mt-24 pr-20" onSubmit={sendLogin}>
+          <div className="my-4">
+            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+              Email
+            </label>
+            <input required type='email' id='email1' name='email1' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+          </div>
+          <div className="my-4">
+            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+              Password
+            </label>
+            <input required type='password' id='password1' name='password1' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+          </div>
+          <div className="pt-6">
+          <button className="bg-blue-500 text-white py-2 px-4 rounded">
+            <p>Log in</p>
+          </button>
+          </div>
+          <div>
+            <ShowErrorAdd/>
+          </div>
+        </form>
+      </>
+      );
     }
   };
 
