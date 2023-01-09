@@ -1,11 +1,14 @@
+import { useRouter } from "next/router";
+
 export const Headerr = (props: { selectState: (arg0: string) => void }) => {
+  const router = useRouter()
   return (
     <>
       <div className="grid grid-cols-12 grid-rows-1 pt-16 pl-44 pr-20 items-center">
         <h1
           className="text-left"
           onClick={() => {
-            props.selectState("main");
+            router.push('/');
           }}
         >
           GlobalTalk

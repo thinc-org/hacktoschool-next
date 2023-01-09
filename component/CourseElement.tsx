@@ -3,7 +3,7 @@ const CourseElement: React.FC<Props> = ({ course }) => {
     return (
         <div>
             <h2>{course.title}</h2>
-            <small>Description : {course.description}</small>
+            <p>Description : {course.description}</p>
         </div>
     )
 }

@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import Router, { useRouter } from 'next/router'
 export const Bodyy = (props: { statemain: string }) => {
   const [errormes, setErrormes] = useState("");
+  const router  = useRouter()
   useEffect(() => {
     console.log(props.statemain);
   }, [props.statemain]);
@@ -44,10 +46,13 @@ export const Bodyy = (props: { statemain: string }) => {
         localStorage.setItem("id", res.body.id);
         localStorage.setItem("role", res.body.role);
         console.log("Student!");
+        router.push('/student/Dashboard')
+         
       } else {
         localStorage.setItem("id", res.body.id);
         localStorage.setItem("role", res.body.role);
         console.log("Instuctor");
+        router.push('/instructor/main')
       }
     }
   };
@@ -86,10 +91,12 @@ export const Bodyy = (props: { statemain: string }) => {
         localStorage.setItem("id", res.body.id);
         localStorage.setItem("role", res.body.role);
         console.log("Student!");
+        router.push('/student/Dashboard')
       } else {
         localStorage.setItem("id", res.body.id);
         localStorage.setItem("role", res.body.role);
         console.log("Instuctor!");
+        router.push('/instructor/main')
       }
     }
   };
