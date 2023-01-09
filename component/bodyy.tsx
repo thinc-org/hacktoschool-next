@@ -4,9 +4,9 @@ import Router, { useRouter } from 'next/router'
 export const Bodyy = (props: { statemain: string }) => {
   const [errormes, setErrormes] = useState("");
   const router  = useRouter()
-  useEffect(() => {
-    console.log(props.statemain);
-  }, [props.statemain]);
+  // useEffect(() => {
+  //   console.log(props.statemain);
+  // }, [props.statemain]);
 
   const timeout = (time: any) => {
     window.setTimeout(() => {
@@ -45,12 +45,15 @@ export const Bodyy = (props: { statemain: string }) => {
       if (res.body.role === "student") {
         localStorage.setItem("id", res.body.id);
         localStorage.setItem("role", res.body.role);
+        localStorage.setItem("email", res.body.email)
         console.log("Student!");
         router.push('/student/Dashboard')
          
       } else {
         localStorage.setItem("id", res.body.id);
         localStorage.setItem("role", res.body.role);
+        console.log(res.body.email+' ffffffffffff')
+        localStorage.setItem("email", res.body.email)
         console.log("Instuctor");
         router.push('/instructor/main')
       }
@@ -90,11 +93,13 @@ export const Bodyy = (props: { statemain: string }) => {
       if (res.body.role === "student") {
         localStorage.setItem("id", res.body.id);
         localStorage.setItem("role", res.body.role);
+        localStorage.setItem("email", res.body.email)
         console.log("Student!");
         router.push('/student/Dashboard')
       } else {
         localStorage.setItem("id", res.body.id);
         localStorage.setItem("role", res.body.role);
+        localStorage.setItem("email", res.body.email)
         console.log("Instuctor!");
         router.push('/instructor/main')
       }

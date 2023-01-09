@@ -22,6 +22,7 @@ export default async function handle(
         const resdata = {
           id: newUser.id,
           role: "student",
+          email: newUser.email
         };
         res.status(200).json({
           body: resdata,
@@ -52,6 +53,7 @@ export default async function handle(
         const resdata = {
           id: newUser.id,
           role: "instructor",
+          email: info.email
         };
         res.status(200).json({
           body: resdata,

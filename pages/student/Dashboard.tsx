@@ -19,7 +19,7 @@ const StudentDashboard: React.FC = () => {
                     headers: { 'Content-Type': 'application/json' },
                 });
                 const json = await response.json();
-                console.log(json.data);
+                //console.log(json.data);
                 setCourses(json.data);
                 // console.log(loading);
             } catch (error) {

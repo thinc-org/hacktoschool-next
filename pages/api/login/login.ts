@@ -15,6 +15,7 @@ export default async function handle(
         const resdata = {
           id: finduser.id,
           role: "student",
+          email: finduser.email
         };
         res.status(200).json({
           body: resdata,
@@ -33,6 +34,7 @@ export default async function handle(
           const resdata2 = {
             id: finduser2.id,
             role: "instructor",
+            email: finduser2.email
           };
           res.status(200).json({
             body: resdata2,
