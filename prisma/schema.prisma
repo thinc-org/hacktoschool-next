@@ -14,6 +14,7 @@ model Student {
   id     Int      @id @default(autoincrement())
   email  String   @unique
   name   String
+  password String
   Enroll Enroll[]
 }
 
@@ -21,6 +22,7 @@ model Instructor {
   id      Int      @id @default(autoincrement())
   email   String   @unique
   name    String
+  password String 
   courses Course[]
 }
 
