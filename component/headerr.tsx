@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 
 export const Headerr = (props: { selectState: (arg0: string) => void }) => {
   const router = useRouter();
+  const [role,setRole] = useState("")
   const [logined, setLogined] = useState("");
   useEffect(() => {
     // console.log(logined);
 
     setLogined(localStorage.getItem("email"));
+    setRole(localStorage.getItem("role"))
   }, []);
 
   const Loginornot = () => {
@@ -37,7 +39,7 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
       );
     } else {
       return (
-        <div className="col-span-3 flex flex-end items-center">
+        <div className="col-span-3 flex flex-end justify-center items-center">
           <span className="px-5">
             <p>{logined}</p>
           </span>
@@ -46,6 +48,8 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
             className="bg-blue-500 text-white py-2 px-4 rounded"
             onClick={() => {
               localStorage.setItem("email", "");
+              localStorage.setItem("role", "")
+              localStorage.setItem("id","")
               setLogined("");
               router.push("/");
             }}
@@ -57,6 +61,41 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
       );
     }
   };
+
+  const Navcontect=()=>{
+    if(role === "student"){
+    return(
+      <>
+      <p className="text-center">Main</p>
+      <p className="text-center">Profile</p>
+      <p className="text-center">My Course</p>
+      <p className="text-center col-span-2">Browse Course</p>
+      <div className="col-span-3"></div>
+      </>
+    )}
+    else if (role === "instructor"){
+      return(
+        <>
+        <p className="text-center">Main</p>
+        <p className="text-center">Profile</p>
+        <p className="text-center">My Course</p>
+        <p className="text-center">??</p>
+        <div className="col-span-4"></div>
+        </>
+      )
+    }
+    else{
+      return(
+        <>
+        <p className="text-center col-span-2">Browse Course</p>
+        <p className="text-center"></p>
+        <p className="text-center"></p>
+        <div className="col-span-4"></div>
+       
+        </>
+      )
+    }
+  }
   return (
     <>
       <div className="grid grid-cols-12 grid-rows-1 pt-16 pl-44 pr-20 items-center">
@@ -68,11 +107,8 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
         >
           GlobalTalk
         </h1>
-        <p className="text-right">Main</p>
-        <p className="text-right">Guide</p>
-        <p className="text-right">Statistics</p>
-        <p className="text-right">Games</p>
-        <div className="col-span-4"></div>
+        <Navcontect/>
+      
         <Loginornot />
       </div>
     </>

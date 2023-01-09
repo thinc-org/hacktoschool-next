@@ -23,11 +23,11 @@ export default function Home() {
       <Headerr />
       <div className="pt-10 px-48">
         {allcourse.map((course) => (
-          <div className="border-solid border-2 border-sky-500 my-3" key={course.id}>
+          <div className="border-solid rounded-3xl bg-gradient-to-r from-green-300 hover:scale-105 border-2 border-black my-5   " key={course.id}>
             <CourseElement course={course} />
           </div>
         ))}
-         <button className='bg-blue-500  text-white py-2 px-4 rounded' onClick={()=>{
+         <button className='bg-blue-500  text-white py-3 px-4 rounded' onClick={()=>{
             router.push('/instructor/createcourse')
          }} >GOOOOO</button>
       </div>
