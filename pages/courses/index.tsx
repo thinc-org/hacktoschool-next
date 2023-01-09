@@ -5,22 +5,22 @@ import CourseElement from "../../component/CourseElement";
 import { Headerr } from "../../component/headerr";
 import prisma from "../../lib/prisma";
 
-const StudentDashboard: React.FC = () => {
+const AllCourses: React.FC = () => {
 
     const [courses, setCourses] = useState([]);
-    const [loading, setLoading] = useState(true);   
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
-            const studentId = localStorage.getItem('id');
+            // const studentId = localStorage.getItem('id');
             try {
-                const response = await fetch(`/api/enroll/get_courses/${studentId}`, {
+                const response = await fetch(`/api/course`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                 });
                 const json = await response.json();
-                //console.log(json.data);
+                console.log(json.data);
                 setCourses(json.data);
                 // console.log(loading);
             } catch (error) {
@@ -46,13 +46,13 @@ const StudentDashboard: React.FC = () => {
     return (
         <>
             <Headerr />
-            <p>Your Courses</p>
+            <p>Our Courses</p>
 
             {loading ?
                 (<div>Loading ...</div>) :
                 (<div>
                     {courses.map(course => (
-                        <div key={course.id} onClick={() => onClickHandler(course.id)}>
+                        <div key={course.id} onClick = {() => onClickHandler(course.id)}>
                             <CourseElement course={course} />
                         </div>
                     ))}
@@ -62,4 +62,4 @@ const StudentDashboard: React.FC = () => {
     );
 
 }
-export default StudentDashboard;
+export default AllCourses;

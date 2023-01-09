@@ -52,5 +52,7 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
 // get all courses
 async function handleGET(res: NextApiResponse) {
   const courses = await prisma.course.findMany();
-  res.json(courses);
+  res.json({
+    data: courses
+  });
 }
