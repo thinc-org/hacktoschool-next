@@ -12,8 +12,12 @@ export default async function handle(
     });
     if (finduser) {
       if (finduser.password === data.password) {
+        const resdata = {
+          id: finduser.id,
+          role: "student",
+        };
         res.status(200).json({
-          body: "Log In",
+          body: resdata,
         });
       } else {
         res.status(500).json({
@@ -21,10 +25,29 @@ export default async function handle(
         });
       }
     } else {
-      res.status(500).json({
-        body: "Cant find",
+      const finduser2 = await prisma.Instructor.findUnique({
+        where: { email: data.email },
       });
-      return;
+      if (finduser2) {
+        if (finduser2.password === data.password) {
+          const resdata2 = {
+            id: finduser2.id,
+            role: "instructor",
+          };
+          res.status(200).json({
+            body: resdata2,
+          });
+        } else {
+          res.status(500).json({
+            body: "Wrong Password",
+          });
+        }
+      } else {
+        res.status(500).json({
+          body: "Cantfind",
+        });
+        return;
+      }
     }
   }
 }
