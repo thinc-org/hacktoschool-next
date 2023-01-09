@@ -15,15 +15,37 @@ export default async function handle(
         const resdata = {
           id: finduser.id,
           role: "student",
-          email: finduser.email
+          email: finduser.email,
         };
         res.status(200).json({
           body: resdata,
         });
       } else {
-        res.status(500).json({
-          body: "Wrong Password",
+        //in case user want to insert password for other id in instruction
+        //(same email)
+        const finduser2 = await prisma.Instructor.findUnique({
+          where: { email: data.email },
         });
+        if (finduser2) {
+          if (finduser2.password === data.password) {
+            const resdata = {
+              id: finduser2.id,
+              role: "instructor",
+              email: finduser.email,
+            };
+            res.status(200).json({
+              body: resdata,
+            });
+          } else {
+            res.status(500).json({
+              body: "Wrong Password",
+            });
+          }
+        } else {
+          res.status(500).json({
+            body: "Wrong Password",
+          });
+        }
       }
     } else {
       const finduser2 = await prisma.Instructor.findUnique({
@@ -34,7 +56,7 @@ export default async function handle(
           const resdata2 = {
             id: finduser2.id,
             role: "instructor",
-            email: finduser2.email
+            email: finduser2.email,
           };
           res.status(200).json({
             body: resdata2,

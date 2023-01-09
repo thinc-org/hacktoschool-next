@@ -38,6 +38,11 @@ export const Bodyy = (props: { statemain: string }) => {
       if (res.body === "We fucked up") {
         setErrormes("Already");
         timeout(3000);
+      }
+      else if(res.body === 'same password'){
+        setErrormes("Same")
+        timeout(4000)
+
       } else {
       }
       return;
@@ -123,6 +128,13 @@ export const Bodyy = (props: { statemain: string }) => {
       return (
         <div className="mt-8 text-red-600">
           <p>This email already registered!</p>
+        </div>
+      );
+    }
+    else if (errormes === "Same"){
+      return (
+        <div className="mt-8 text-red-600">
+          <p>You already have an account as another role, to prevent confusion, please use new password</p>
         </div>
       );
     } else {

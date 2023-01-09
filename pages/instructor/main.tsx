@@ -27,7 +27,7 @@ export default function Home() {
             <CourseElement course={course} />
           </div>
         ))}
-         <button className='bg-blue-500 text-white py-2 px-4 rounded' onClick={()=>{
+         <button className='bg-blue-500  text-white py-2 px-4 rounded' onClick={()=>{
             router.push('/instructor/createcourse')
          }} >GOOOOO</button>
       </div>

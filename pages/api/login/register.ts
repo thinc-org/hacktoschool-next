@@ -11,36 +11,63 @@ export default async function handle(
     console.log(info);
 
     if (info.role === "student") {
-      try {
-        const newUser = await prisma.Student.create({
-          data: {
-            email: info.email,
-            name: info.name,
-            password: info.password,
-          },
-        });
-        const resdata = {
-          id: newUser.id,
-          role: "student",
-          email: newUser.email
-        };
-        res.status(200).json({
-          body: resdata,
-        });
-        return;
-      } catch (e) {
-        if (e instanceof Prisma.PrismaClientKnownRequestError) {
-          if (e.code === "P2002") {
-            console.log("same data inserted");
-
-            res.status(500).json({
-              body: "We fucked up",
-            });
-          }
+      //in case they already have this id as instructor
+      const oldUser = await prisma.Instructor.findUnique({
+        where: { email: info.email },
+      });
+      if (oldUser) {
+        if (info.password === oldUser.password) {
+          res.status(500).json({
+            body: "same password",
+          });
+          return;
         }
-        throw e;
+        //not the same password is fine
+      } else {
+        try {
+          const newUser = await prisma.Student.create({
+            data: {
+              email: info.email,
+              name: info.name,
+              password: info.password,
+            },
+          });
+          const resdata = {
+            id: newUser.id,
+            role: "student",
+            email: newUser.email,
+          };
+          res.status(200).json({
+            body: resdata,
+          });
+          return;
+        } catch (e) {
+          if (e instanceof Prisma.PrismaClientKnownRequestError) {
+            if (e.code === "P2002") {
+              console.log("same data inserted");
+
+              res.status(500).json({
+                body: "We fucked up",
+              });
+            }
+          }
+          throw e;
+        }
       }
     } else {
+      //in case same password for same email
+      const oldUser = await prisma.Student.findUnique({
+        where: { email: info.email },
+      });
+      if (oldUser) {
+        if (info.password === oldUser.password) {
+          res.status(500).json({
+            body: "same password",
+          });
+          return;
+        }
+      }
+
       try {
         const newUser = await prisma.Instructor.create({
           data: {
@@ -53,7 +80,7 @@ export default async function handle(
         const resdata = {
           id: newUser.id,
           role: "instructor",
-          email: info.email
+          email: info.email,
         };
         res.status(200).json({
           body: resdata,
@@ -72,8 +99,6 @@ export default async function handle(
         throw e;
       }
     }
-
- 
   } else {
     throw new Error(
       `The HTTP ${req.method} method is not supported at this route.`

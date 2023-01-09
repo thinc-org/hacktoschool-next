@@ -1,12 +1,12 @@
 import { GetServerSideProps } from "next";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Headerr } from "../../component/headerr";
 import prisma from "../../lib/prisma";
 
 const CourseHome: React.FC = ({ title, description }) => {
-    let role;
+    const [role, setRole] = useState('')
     useEffect(() => {
-        role = localStorage.getItem('role');  
+        setRole(localStorage.getItem('role'));  
     }, []);
 
     if (role === 'student') {
