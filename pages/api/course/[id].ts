@@ -9,7 +9,7 @@ interface NextApiRequestWithId extends NextApiRequest {
 
 export default async function handle(req: NextApiRequestWithId, res: NextApiResponse) {
     const courseId = parseInt(req.query.id);
-
+    console.log(courseId);
     if (req.method === 'GET') {
         handleGET(courseId, res);
     } else if (req.method === 'PUT') {

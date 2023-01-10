@@ -58,7 +58,7 @@ const CourseHome: React.FC = ({ id: courseId, title, description }) => {
             courseId: courseId
         };
         try {
-            const response = await fetch(`/api/enroll`, {
+            const response = await fetch(`/api/enroll`, {   // careful to use `/api/enroll` and not `api/enroll`
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body)
@@ -104,6 +104,7 @@ const CourseHome: React.FC = ({ id: courseId, title, description }) => {
     }
 
     const deleteHandler = async () => {
+        console.log("deleting");
         try {
             const response = await fetch(`/api/course/${courseId}`, {
                 method: 'DELETE',

@@ -27,9 +27,9 @@ model Instructor {
 }
 
 model Enroll {
-  student   Student @relation(fields: [studentId], references: [id])
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
   studentId Int
-  course    Course @relation(fields: [courseId], references: [id])
+  course    Course @relation(fields: [courseId], references: [id], onDelete: Cascade) 
   courseId  Int
 
   @@unique([studentId, courseId])
