@@ -20,7 +20,7 @@ export default function Home() {
   };
 
   const onClickHandler = (courseId) => {
-    Router.push('/courses/[id]', `/courses/${courseId}`);
+    Router.push('/courses/instructor_view/[id]', `/courses/instructor_view/${courseId}`);
 }
 
 
@@ -30,11 +30,13 @@ export default function Home() {
       <div className="pt-10 px-48">
         <h1 className="text-2xl mb-5">Your Courses</h1>
         {allcourse.map(course => (
-                        <div key={course.id} className='border-solid rounded-3xl bg-white hover:scale-105 hover:border-2 hover:border-yellow-400 my-5
-                        grid grid-cols-2 grid-rows-1 ' >
-                            <CourseElement course={course} />
-                            <div className="flex items-center justify-end mr-5"><button  onClick = {() => onClickHandler(course.id)} className="bg-green-300 text-white rounded-3xl"><p className="px-4 py-1">Check Details</p></button></div>
-                        </div>
+                        <div className="border-solid rounded-3xl bg-white hover:scale-105 hover:border-2 hover:border-yellow-400 my-5
+                        grid grid-cols-2 grid-rows-1 overflow-x-hidden   " key={course.id}>
+                           <div className=""><img className="object-fill max-w-[10rem]" src="/dummypic.png" /></div>
+                           <div><CourseElement course={course} />
+                           <div className=" mx-5"><button  onClick = {() => onClickHandler(course.id)} className="bg-green-300 text-white rounded-3xl"><p className="px-4 py-1">Check Details</p></button></div>
+                           </div>
+                       </div>
                     ))}
          <button className='bg-blue-500  text-white py-3 px-4 rounded' onClick={()=>{
             router.push('/instructor/createcourse')

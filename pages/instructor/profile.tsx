@@ -3,7 +3,7 @@ import Router from "next/router";
 import { useEffect, useState } from "react";
 import { Headerr } from "../../component/headerr";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAddressCard, faEnvelope, faInfo, faLink, faPhone, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faAddressCard, faEnvelope, faInfo, faLink, faPhone, faThumbsUp, faUserDoctor } from "@fortawesome/free-solid-svg-icons";
 
 export default function Instructorprofile() {
   const [editmode, setEditmode] = useState(false);
@@ -15,7 +15,8 @@ export default function Instructorprofile() {
     psub: '',
     des: '',
     link:'',
-    email: ''
+    email: '',
+    role: ''
   });
 
   useEffect(()=>{
@@ -31,7 +32,10 @@ export default function Instructorprofile() {
     console.log('now ',res.body)
     const data = res.body 
     if(data === 'none'){
-
+        setInstructorprofile({
+            email:localStorage.getItem('email'),
+            role:localStorage.getItem('role')
+        })
     }
     else{
     setInstructorprofile({
@@ -42,7 +46,8 @@ export default function Instructorprofile() {
         psub:data.preferredsub,
         des: data.description,
         link:data.link,
-        email:localStorage.getItem('email')
+        email:localStorage.getItem('email'),
+        role:localStorage.getItem('role')
     })
     console.log(instructorprofile)
         
@@ -80,7 +85,9 @@ export default function Instructorprofile() {
         tel:data.tel,
         psub:data.preferredsub,
         des: data.description,
-        link:data.link
+        link:data.link,
+        email:localStorage.getItem('email'),
+        role:localStorage.getItem('role')
     })
     setEditmode(false)
 
@@ -92,7 +99,8 @@ export default function Instructorprofile() {
       <div className="grid grid-cols-3 grid-rows-6 pt-5 gap-5">
       <div className="flex flex-wrap bg-green-200 rounded-full items-center col-span-2"><span className="px-5"><FontAwesomeIcon icon={faAddressCard} size="xl"/></span><p>{instructorprofile.firstname} {instructorprofile.lastname}</p></div>
       <div className="flex flex-wrap bg-green-200 rounded-full items-center"><span className="px-5"><FontAwesomeIcon icon={faAddressCard} size="xl"/></span><p>{instructorprofile.age}</p></div>
-      <div className="flex flex-wrap bg-green-200 rounded-full items-center col-span-2"><span className="px-5"><FontAwesomeIcon icon={faEnvelope} size="xl"/></span><p>{instructorprofile.email}</p></div>
+      <div className="flex flex-wrap bg-green-200 rounded-full items-center"><span className="px-5"><FontAwesomeIcon icon={faUserDoctor} size="xl"/></span><p>{instructorprofile.role}</p></div>
+      <div className="flex flex-wrap bg-green-200 rounded-full items-center"><span className="px-5"><FontAwesomeIcon icon={faEnvelope} size="xl"/></span><p>{instructorprofile.email}</p></div>
       <div className="flex flex-wrap bg-green-200 rounded-full items-center"><span className="px-5"><FontAwesomeIcon icon={faPhone} size="xl"/></span><p>{instructorprofile.tel}</p></div>
       <div className="flex flex-wrap bg-green-200 rounded-full items-center col-span-3"><span className="px-5"><FontAwesomeIcon icon={faThumbsUp} size="xl"/></span><p>{instructorprofile.psub}</p></div>
       <div className="flex flex-wrap bg-green-200 rounded-full items-center col-span-3"><span className="px-5"><FontAwesomeIcon icon={faInfo} size="xl"/></span><p>{instructorprofile.des}</p></div>
@@ -150,7 +158,7 @@ export default function Instructorprofile() {
                 id="age"
                 name="age"
                 defaultValue={instructorprofile.age}
-                placeholder={instructorprofile.age.toString()}
+                placeholder={instructorprofile.age ? instructorprofile.age.toString():0}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
             </div>
