@@ -52,7 +52,7 @@ export const Bodyy = (props: { statemain: string }) => {
         localStorage.setItem("role", res.body.role);
         localStorage.setItem("email", res.body.email)
         console.log("Student!");
-        router.push('/student/Dashboard')
+        router.push('/student/dashboard')
          
       } else {
         localStorage.setItem("id", res.body.id);
@@ -100,7 +100,7 @@ export const Bodyy = (props: { statemain: string }) => {
         localStorage.setItem("role", res.body.role);
         localStorage.setItem("email", res.body.email)
         console.log("Student!");
-        router.push('/student/Dashboard')
+        router.push('/student/dashboard')
       } else {
         localStorage.setItem("id", res.body.id);
         localStorage.setItem("role", res.body.role);
