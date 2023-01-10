@@ -81,7 +81,7 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
       return(
         <>
         <button><p className="text-center hover:scale-125">Main</p></button>
-        <button><p className="text-center hover:scale-125">Profile</p></button>
+        <button><p className="text-center hover:scale-125" onClick={()=>{router.push('/instructor/profile')}}>Profile</p></button>
         <button><p className="text-center hover:scale-125" onClick={()=>{router.push('/instructor/main')}}>My Course</p></button>
         <button><p className="text-center hover:scale-125">??</p></button>
         <div className="col-span-4"></div>

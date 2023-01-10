@@ -15,7 +15,7 @@ export default async function handle(
     throw new Error(
       `The HTTP ${req.method} method is not supported at this route.`
     );
-course  }
+  }
 }
 
 // POST /api/course
@@ -23,10 +23,10 @@ course  }
 // requires instructorId field in req.body
 async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
   const data1 = JSON.parse(req.body);
-  const studentidna = parseInt(data1);
-  const alreadyprofile = await prisma.StudentProfile.findUnique({
+  const instructoridna = parseInt(data1);
+  const alreadyprofile = await prisma.InstructorProfile.findUnique({
     where:{
-        studentid:studentidna
+        instructorid:instructoridna
     }
   })
   if(alreadyprofile){

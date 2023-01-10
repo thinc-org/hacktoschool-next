@@ -96,7 +96,7 @@ export default function Studentprofile() {
       <div className="flex flex-wrap bg-green-200 rounded-full items-center"><span className="px-5"><FontAwesomeIcon icon={faPhone} size="xl"/></span><p>{studentprofile.tel}</p></div>
       <div className="flex flex-wrap bg-green-200 rounded-full items-center col-span-3"><span className="px-5"><FontAwesomeIcon icon={faThumbsUp} size="xl"/></span><p>{studentprofile.psub}</p></div>
       <div className="flex flex-wrap bg-green-200 rounded-full items-center col-span-3"><span className="px-5"><FontAwesomeIcon icon={faInfo} size="xl"/></span><p>{studentprofile.des}</p></div>
-      <div className="flex flex-wrap bg-green-200 rounded-full items-center col-span-2"><span className="px-5"><FontAwesomeIcon icon={faLink} size="xl"/></span><a href={studentprofile.link}>{studentprofile.link}</a></div>
+      <div className="flex flex-wrap bg-green-200 rounded-full items-center col-span-2"><span className="px-5"><FontAwesomeIcon icon={faLink} size="xl"/></span><a href={studentprofile.link} target="_blank" rel="noopener noreferrer">{studentprofile.link}</a></div>
       <div>
           <button
             className="bg-green-500 text-white py-2 px-4 rounded"
