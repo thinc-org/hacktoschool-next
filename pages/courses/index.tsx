@@ -55,9 +55,11 @@ const AllCourses: React.FC = () => {
                 (<div >
                     {courses.map(course => (
                         <div className="border-solid rounded-3xl bg-white hover:scale-105 hover:border-2 hover:border-yellow-400 my-5
-                         grid grid-cols-2 grid-rows-1   " key={course.id}>
-                            <CourseElement course={course} />
-                            <div className="flex items-center justify-end mr-5"><button  onClick = {() => onClickHandler(course.id)} className="bg-green-300 text-white rounded-3xl"><p className="px-4 py-1">Check Details</p></button></div>
+                         grid grid-cols-2 grid-rows-1 overflow-x-hidden   " key={course.id}>
+                            <div className=""><img className="object-fill max-w-[10rem]" src="/dummypic.png" /></div>
+                            <div><CourseElement course={course} />
+                            <div className=" mx-5"><button  onClick = {() => onClickHandler(course.id)} className="bg-green-300 text-white rounded-3xl"><p className="px-4 py-1">Check Details</p></button></div>
+                            </div>
                         </div>
                     ))}
                 </div>)

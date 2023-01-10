@@ -41,7 +41,7 @@ const StudentDashboard: React.FC = () => {
     // }
 
     const onClickHandler = (courseId) => {
-        Router.push('/courses/[id]', `/courses/${courseId}`);
+        Router.push('/courses/student_view/[id]', `/courses/student_view/${courseId}`);
     }
 
     return (
