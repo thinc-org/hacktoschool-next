@@ -70,20 +70,20 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
     if(role === "student"){
     return(
       <>
-      <p className="text-center hover:scale-125">Main</p>
-      <p className="text-center hover:scale-125">Profile</p>
-      <p className="text-center hover:scale-125" onClick={()=>{router.push('/student/Dashboard')}}>My Course</p>
-      <p className="text-center hover:scale-125 col-span-2" onClick={()=>toAllCourse()}>Browse Course</p>
+      <button><p className="text-center hover:scale-125">Main</p></button>
+      <button><p className="text-center hover:scale-125">Profile</p></button>
+      <button><p className="text-center hover:scale-125" onClick={()=>{router.push('/student/Dashboard')}}>My Course</p></button>
+      <button className="col-span-2" ><p className="text-center hover:scale-125 " onClick={()=>toAllCourse()}>Browse Course</p></button>
       <div className="col-span-3"></div>
       </>
     )}
     else if (role === "instructor"){
       return(
         <>
-        <p className="text-center hover:scale-125">Main</p>
-        <p className="text-center hover:scale-125">Profile</p>
-        <p className="text-center hover:scale-125">My Course</p>
-        <p className="text-center hover:scale-125">??</p>
+        <button><p className="text-center hover:scale-125">Main</p></button>
+        <button><p className="text-center hover:scale-125">Profile</p></button>
+        <button><p className="text-center hover:scale-125">My Course</p></button>
+        <button><p className="text-center hover:scale-125">??</p></button>
         <div className="col-span-4"></div>
         </>
       )
@@ -91,9 +91,9 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
     else{
       return(
         <>
-        <p className="text-center col-span-2" onClick={()=>toAllCourse()}>Browse Course</p>
-        <p className="text-center hover:scale-125"></p>
-        <p className="text-center hover:scale-125"></p>
+        <div  className='col-span-2'><button><p className="text-center" onClick={()=>toAllCourse()}>Browse Course</p></button></div>
+        <button><p className="text-center hover:scale-125"></p></button>
+        <button><p className="text-center hover:scale-125"></p></button>
         <div className="col-span-4"></div>
        
         </>
