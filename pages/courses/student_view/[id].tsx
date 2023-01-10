@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBullhorn } from "@fortawesome/free-solid-svg-icons";
 
 const CourseMenu: React.FC = ({
-  course: { id: courseId, title, description, instructor_name },
+  course: { id: courseId, title, description, instructor_name, imagePath },
 }) => {
   // for some loading
   const [loading, setLoading] = useState(true);
@@ -46,7 +46,7 @@ const CourseMenu: React.FC = ({
   const Mainbody = () => {
     return (
       <>
-        <img className="max-w-[10rem] rounded-3xl mb-5" src="/dummypic.png" />
+        <img className="max-w-[10rem] rounded-3xl mb-5" src={imagePath} />
         <h1>{title}</h1>
         <small>Description: {description}</small>
         <p>Instructor: {instructor_name}</p>
@@ -142,11 +142,27 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     include: { instructor: true },
   });
 
+
+  /*  add imagePath field to these courses*/
+  /* note for future debugging, becareful of the prisma await in the call back, the timing is uncontrollable */
+  if (course.photoId !== null) {
+    const photo = await prisma.photo.findUnique({
+      where: {
+        id: course.photoId,
+      },
+    });
+    course["imagePath"] = photo.filePath;
+  }
+  else {
+    course["imagePath"] = "/dummypic.png"
+  }
+
   return {
     props: {
       course: {
         ...JSON.parse(JSON.stringify(course)),
         instructor_name: course.instructor.name,
+        // imagePath: (course.photoId === null ? "/dummypic.png" : course.photo.filePath),  /* seriously no idea why this doesn't work when instructor does*/
       },
     },
   };
