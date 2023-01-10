@@ -46,7 +46,7 @@ const CourseHome: React.FC = ({ id: courseId, title, description }) => {
     console.log(loading);
 
     const enrollNonUserHandler = () => {
-        Router.push('/signup');
+        Router.push('/');
     }
 
     const enrollHandler = async () => {

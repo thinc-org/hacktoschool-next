@@ -28,6 +28,7 @@ export default function Home() {
     <>
       <Headerr />
       <div className="pt-10 px-48">
+        <h1 className="text-2xl mb-5">Your Courses</h1>
         {allcourse.map((course) => (
           <div className="border-solid rounded-3xl bg-gradient-to-r from-green-300 hover:scale-105 border-2 border-black my-5   " key={course.id}
           onClick={()=>onClickHandler(course.id)}>

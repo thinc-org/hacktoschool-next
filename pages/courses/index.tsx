@@ -46,18 +46,20 @@ const AllCourses: React.FC = () => {
     return (
         <>
             <Headerr />
-            <p>Our Courses</p>
+            <div className="pt-10 px-48">
+            <h1 className="text-2xl pb-5">Our Courses</h1>
 
             {loading ?
                 (<div>Loading ...</div>) :
-                (<div>
+                (<div >
                     {courses.map(course => (
-                        <div key={course.id} onClick = {() => onClickHandler(course.id)}>
+                        <div className="border-solid rounded-3xl bg-gradient-to-r from-green-300 hover:scale-105 border-2 border-black my-5   " key={course.id} onClick = {() => onClickHandler(course.id)}>
                             <CourseElement course={course} />
                         </div>
                     ))}
                 </div>)
             }
+            </div>
         </>
     );
 
