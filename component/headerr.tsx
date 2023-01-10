@@ -70,20 +70,20 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
     if(role === "student"){
     return(
       <>
-      <p className="text-center">Main</p>
-      <p className="text-center">Profile</p>
-      <p className="text-center" onClick={()=>{router.push('/student/Dashboard')}}>My Course</p>
-      <p className="text-center col-span-2" onClick={()=>toAllCourse()}>Browse Course</p>
+      <p className="text-center hover:scale-125">Main</p>
+      <p className="text-center hover:scale-125">Profile</p>
+      <p className="text-center hover:scale-125" onClick={()=>{router.push('/student/Dashboard')}}>My Course</p>
+      <p className="text-center hover:scale-125 col-span-2" onClick={()=>toAllCourse()}>Browse Course</p>
       <div className="col-span-3"></div>
       </>
     )}
     else if (role === "instructor"){
       return(
         <>
-        <p className="text-center">Main</p>
-        <p className="text-center">Profile</p>
-        <p className="text-center">My Course</p>
-        <p className="text-center">??</p>
+        <p className="text-center hover:scale-125">Main</p>
+        <p className="text-center hover:scale-125">Profile</p>
+        <p className="text-center hover:scale-125">My Course</p>
+        <p className="text-center hover:scale-125">??</p>
         <div className="col-span-4"></div>
         </>
       )
@@ -92,8 +92,8 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
       return(
         <>
         <p className="text-center col-span-2" onClick={()=>toAllCourse()}>Browse Course</p>
-        <p className="text-center"></p>
-        <p className="text-center"></p>
+        <p className="text-center hover:scale-125"></p>
+        <p className="text-center hover:scale-125"></p>
         <div className="col-span-4"></div>
        
         </>

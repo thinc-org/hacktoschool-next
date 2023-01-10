@@ -29,15 +29,16 @@ export default function Home() {
       <Headerr />
       <div className="pt-10 px-48">
         <h1 className="text-2xl mb-5">Your Courses</h1>
-        {allcourse.map((course) => (
-          <div className="border-solid rounded-3xl bg-gradient-to-r from-green-300 hover:scale-105 border-2 border-black my-5   " key={course.id}
-          onClick={()=>onClickHandler(course.id)}>
-            <CourseElement course={course} />
-          </div>
-        ))}
+        {allcourse.map(course => (
+                        <div key={course.id} className='border-solid rounded-3xl bg-white hover:scale-105 hover:border-2 hover:border-yellow-400 my-5
+                        grid grid-cols-2 grid-rows-1 ' >
+                            <CourseElement course={course} />
+                            <div className="flex items-center justify-end mr-5"><button  onClick = {() => onClickHandler(course.id)} className="bg-green-300 text-white rounded-3xl"><p className="px-4 py-1">Check Details</p></button></div>
+                        </div>
+                    ))}
          <button className='bg-blue-500  text-white py-3 px-4 rounded' onClick={()=>{
             router.push('/instructor/createcourse')
-         }} >GOOOOO</button>
+         }} >Create Course</button>
       </div>
      
     </>

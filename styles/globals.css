@@ -13,6 +13,9 @@ p,label,select,option,input{
 html{
   font-size: 16px;
 }
+body{
+  background-color: #F6F5F4;
+}
 /* hide scroll bar, keep its function */
 *{ 
   -ms-overflow-style: none;
