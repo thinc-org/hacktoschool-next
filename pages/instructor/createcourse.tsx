@@ -1,9 +1,12 @@
 
-import {Headerr} from "../../component/headerr"
+import { Headerr } from "../../component/headerr"
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
+  const [selectedImage, setSelectedImage] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File>();
+
   const [errormes, setErrormes] = useState("");
   const timeout = (time: any) => {
     window.setTimeout(() => {
@@ -11,23 +14,27 @@ export default function Home() {
     }, time);
   };
 
-  const createCourse =async (e)=>{
+  const createCourse = async (e) => {
+    console.log('in create course function');
     e.preventDefault();
-    const go ={
-      title: e.target.title.value,
-      description: e.target.descrip.value,
-      Id: localStorage.getItem('id')
-    }
-    const response = await fetch('/api/course',{
-      method:'POST',
-      body: JSON.stringify(go)
+
+    const formData = new FormData();
+    formData.append('title', e.target.title.value);
+    formData.append('description', e.target.descrip.value);
+    formData.append('instructorId', localStorage.getItem('id'));
+    formData.append("courseImage", selectedFile);
+    
+    const response = await fetch('/api/course/create', {
+      method: 'POST',
+      body: formData
     })
     const now = await response.json()
-    if(response.status === 500){
+    console.log("debuggin uploading creating course\n", now);
+    if (response.status === 500) {
       setErrormes("Already");
       timeout(3000);
     }
-    else{
+    else {
       setErrormes("Done");
       timeout(3000);
     }
@@ -48,49 +55,76 @@ export default function Home() {
           <p>Created!</p>
         </div>
       );
-    } 
-   else {
+    }
+    else {
       return <div></div>;
     }
   };
 
   return (
     <div className="bg-bgcolor w-screen h-screen">
-      <Headerr  />
+      <Headerr />
       <form className="mt-24 pr-20 px-40" onSubmit={createCourse}>
-            <div className="my-4">
-              <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                Title
-              </label>
-              <input
-                required
-                type="text"
-                id="title"
-                name="title"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              />
+        <div className="my-4">
+          <label className="block mb-2 text-sm font-medium text-gray-900 ">
+            Title
+          </label>
+          <input
+            required
+            type="text"
+            id="title"
+            name="title"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div>
+        <div className="my-4">
+          <label className="block mb-2 text-sm font-medium text-gray-900 ">
+            Description
+          </label>
+          <input
+            required
+            type="text"
+            id="descrip"
+            name="descrip"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div>
+
+        <div className="my-4">
+          <label className="block mb-2 text-sm font-medium text-gray-900 ">
+            Course Image
+            <input
+              type="file"
+              id="courseImage"
+              name="courseImage"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              onChange={({ target }) => {
+                if (target.files) {
+                  const file = target.files[0];
+                  setSelectedImage(URL.createObjectURL(file));
+                  setSelectedFile(file);
+                }
+              }}
+            />
+            {/* To display the image preview */}
+            <div className="mt-5 w-60 aspect-video rounded flex items-center justify-center border-2 border-dashed cursor-pointer">
+              {selectedImage ? (
+                <img src={selectedImage} alt="" />
+              ) : (
+                <span>Upload Your Course Image</span>
+              )}
             </div>
-            <div className="my-4">
-              <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                Description
-              </label>
-              <input
-                required
-                type="text"
-                id="descrip"
-                name="descrip"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              />
-            </div>
-      
-     
-            <button className="bg-blue-500 text-white py-2 px-4 rounded">
-              <p>Create Course</p>
-            </button>
-            <div>
-              <ShowErrorAdd />
-            </div>
-          </form>
+          </label>
+        </div>
+
+
+        <button className="bg-blue-500 text-white py-2 px-4 rounded">
+          <p>Create Course</p>
+        </button>
+        <div>
+          <ShowErrorAdd />
+        </div>
+      </form>
     </div>
   );
 }
