@@ -4,14 +4,19 @@ import { useEffect, useState } from "react";
 import { Headerr } from "../../component/headerr";
 import prisma from "../../lib/prisma";
 
-const CourseHome: React.FC = ({ id: courseId, title, description }) => {
+const CourseHome: React.FC = ({ course: { id: courseId, title, description, instructor_name }, registered_students }) => {
     const [role, setRole] = useState('')
     const [enrolled, setEnrolled] = useState(false)
     const [loading, setLoading] = useState(true)
 
+    
+    console.log(registered_students.values);
+
     useEffect(() => {
+
+
         // check if the student has enroll in the course or not
-        const fetchData = async () => {
+        const fetchCheckEnrolled = async () => {
             const studentId = parseInt(localStorage.getItem('id'));
 
             const body = {
@@ -38,9 +43,10 @@ const CourseHome: React.FC = ({ id: courseId, title, description }) => {
             }
 
         };
-
         setRole(localStorage.getItem('role'));
-        fetchData();
+        if (localStorage.getItem('role') === 'student') {
+            fetchCheckEnrolled();
+        }
     }, []);
 
     console.log(loading);
@@ -130,7 +136,7 @@ const CourseHome: React.FC = ({ id: courseId, title, description }) => {
                 <Headerr />
                 <h1>{title}</h1>
                 <small>Description: {description}</small>
-
+                <p>Instructor: {instructor_name}</p>
 
                 {loading ? (<div>Loading ...</div>) : (
                     <div>
@@ -151,6 +157,21 @@ const CourseHome: React.FC = ({ id: courseId, title, description }) => {
 
                 <h1>{title}</h1>
                 <small>Description: {description}</small>
+
+                <div>
+                    <p>Registered Students</p>
+                    {
+                        registered_students.length ? 
+                            (registered_students.map(student => (
+                                <div key={student.id}>
+                                    <h2>Name: {student.name}</h2>
+                                    <small>Email: {student.email}</small>
+                                </div>
+                            ))) :
+                            <h2>no registered students</h2>
+                    }
+                </div>
+
             </>
         )
 
@@ -171,12 +192,39 @@ const CourseHome: React.FC = ({ id: courseId, title, description }) => {
 
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const id = Number(Array.isArray(context.params.id) ? context.params.id[0] : context.params.id)
+    const courseId = Number(Array.isArray(context.params.id) ? context.params.id[0] : context.params.id)
     const course = await prisma.course.findUnique({
-        where: { id },
+        where: { id: courseId },
+        include: { instructor : true },
     })
 
-    return { props: { ...JSON.parse(JSON.stringify(course)) } }
+    const enrolls = await prisma.enroll.findMany({
+        where: {
+            courseId: courseId,
+        },
+    });
+    const studentIdArray = enrolls.map((e) => e.studentId);
+
+    const students = await prisma.student.findMany({
+        where: {
+            id: {
+                in: studentIdArray
+            }
+        },
+
+        select: {
+            id: true,
+            email: true,
+            name: true,
+        },
+    });
+
+    console.log("in heeeeeeer")
+    console.log(students)
+
+    console.log(course.instructor);
+
+    return { props: { course: { ...JSON.parse(JSON.stringify(course)), instructor_name: course.instructor.name }, registered_students: students } }
 }
 
 export default CourseHome;
