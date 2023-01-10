@@ -72,7 +72,7 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
       <>
       <p className="text-center">Main</p>
       <p className="text-center">Profile</p>
-      <p className="text-center">My Course</p>
+      <p className="text-center" onClick={()=>{router.push('/student/Dashboard')}}>My Course</p>
       <p className="text-center col-span-2" onClick={()=>toAllCourse()}>Browse Course</p>
       <div className="col-span-3"></div>
       </>

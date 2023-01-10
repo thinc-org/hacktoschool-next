@@ -128,66 +128,75 @@ const CourseHome: React.FC = ({ course: { id: courseId, title, description, inst
         }
     }
 
-
-
-    if (role === 'student') {
-        return (
-            <>
-                <Headerr />
-                <h1>{title}</h1>
-                <small>Description: {description}</small>
-                <p>Instructor: {instructor_name}</p>
-
-                {loading ? (<div>Loading ...</div>) : (
+    const Mainbody = ()=>{
+        if (role === 'student') {
+            return (
+                <>
+        
+                    <h1>{title}</h1>
+                    <small>Description: {description}</small>
+                    <p>Instructor: {instructor_name}</p>
+    
+                    {loading ? (<div>Loading ...</div>) : (
+                        <div>
+                            {enrolled ? (
+                                <button className="bg-red-500 text-white py-2 px-4 rounded" onClick={() => leaveHandler()}>leave</button>
+                            ) : (
+                                <button className="bg-blue-500 text-white py-2 px-4 rounded" onClick={() => enrollHandler()}>enroll</button>
+                            )}
+                        </div>
+                    )}
+                </>
+            )
+        } else if (role === 'instructor') {
+            return (
+                <>
+                    
+                    <button className="bg-red-500 text-white py-2 px-4 rounded" onClick={() => deleteHandler()}>delete</button>
+    
+                    <h1>{title}</h1>
+                    <small>Description: {description}</small>
+    
                     <div>
-                        {enrolled ? (
-                            <button className="bg-red-500 text-white py-2 px-4 rounded" onClick={() => leaveHandler()}>leave</button>
-                        ) : (
-                            <button className="bg-blue-500 text-white py-2 px-4 rounded" onClick={() => enrollHandler()}>enroll</button>
-                        )}
+                        <p>Registered Students</p>
+                        {
+                            registered_students.length ? 
+                                (registered_students.map(student => (
+                                    <div key={student.id}>
+                                        <h2>Name: {student.name}</h2>
+                                        <small>Email: {student.email}</small>
+                                    </div>
+                                ))) :
+                                <h2>no registered students</h2>
+                        }
                     </div>
-                )}
-            </>
-        )
-    } else if (role === 'instructor') {
-        return (
-            <>
-                <Headerr />
-                <button className="bg-red-500 text-white py-2 px-4 rounded" onClick={() => deleteHandler()}>delete</button>
-
-                <h1>{title}</h1>
-                <small>Description: {description}</small>
-
-                <div>
-                    <p>Registered Students</p>
-                    {
-                        registered_students.length ? 
-                            (registered_students.map(student => (
-                                <div key={student.id}>
-                                    <h2>Name: {student.name}</h2>
-                                    <small>Email: {student.email}</small>
-                                </div>
-                            ))) :
-                            <h2>no registered students</h2>
-                    }
-                </div>
-
-            </>
-        )
-
-    } else {
-        return (
-            <>
-                <Headerr />
-
-                <button className="bg-blue-500 text-white py-2 px-4 rounded" onClick={() => enrollNonUserHandler()}>enroll (will redirect you to sign in)</button>
-
-                <h1>{title}</h1>
-                <small>Description: {description}</small>
-            </>
-
-        )
+    
+                </>
+            )
+    
+        } else {
+            return (
+                <>
+                    
+    
+                    <button className="bg-blue-500 text-white py-2 px-4 rounded" onClick={() => enrollNonUserHandler()}>enroll (will redirect you to sign in)</button>
+    
+                    <h1>{title}</h1>
+                    <small>Description: {description}</small>
+                </>
+    
+            )
+        }
     }
+
+   return (<>
+  
+    <Headerr/>
+    <div className="pt-10 px-48">
+    <Mainbody/>
+   </div>
+   </>
+   )
 }
 
 

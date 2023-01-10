@@ -47,7 +47,8 @@ const StudentDashboard: React.FC = () => {
     return (
         <>
             <Headerr />
-            <p>Your Courses</p>
+        <div className="pt-10 px-48">
+        <h1 className="pb-3 text-2xl">Your Courses</h1>
 
             {loading ?
                 (<div>Loading ...</div>) :
@@ -59,6 +60,7 @@ const StudentDashboard: React.FC = () => {
                     ))}
                 </div>)
             }
+            </div>
         </>
     );
 
