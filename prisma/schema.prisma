@@ -11,25 +11,38 @@ datasource db {
 }
 
 model Student {
-  id     Int      @id @default(autoincrement())
-  email  String   @unique
-  name   String
-  password String
-  Enroll Enroll[]
+  id             Int              @id @default(autoincrement())
+  email          String           @unique
+  name           String
+  password       String
+  Enroll         Enroll[]
+  StudentProfile StudentProfile[]
+}
+
+model StudentProfile {
+  student      Student @relation(fields: [studentid], references: [id], onDelete: Cascade)
+  studentid    Int     @id
+  age          Int
+  firstname    String
+  lastname     String
+  tel          String 	@db.VarChar(15)
+  preferredsub String
+  description  String
+  link         String
 }
 
 model Instructor {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String
-  password String 
-  courses Course[]
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  name     String
+  password String
+  courses  Course[]
 }
 
 model Enroll {
   student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
   studentId Int
-  course    Course @relation(fields: [courseId], references: [id], onDelete: Cascade) 
+  course    Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId  Int
 
   @@unique([studentId, courseId])
@@ -41,5 +54,5 @@ model Course {
   description  String?
   Enroll       Enroll[]
   instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
-  instructorId Int  
+  instructorId Int
 }
