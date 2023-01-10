@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next";
+import Router from "next/router";
 import { useEffect, useState } from "react";
 import { Headerr } from "../../component/headerr";
 import prisma from "../../lib/prisma";
@@ -50,6 +51,25 @@ const CourseHome: React.FC = ({ id:courseId, title, description }) => {
             });
             const json = await response.json();
             console.log(json);
+            Router.push('/student/Dashboard');
+            // console.log(loading);
+        } catch (error) {
+            // setError(error);
+        } finally {
+            // setLoading(false);
+            // console.log(loading);
+        }
+    }
+
+    const deleteHandler = async () => {
+        try {
+            const response = await fetch(`/api/course/${courseId}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+            });
+            const json = await response.json();
+            console.log(json);
+            Router.push('/instructor/main');
             // console.log(loading);
         } catch (error) {
             // setError(error);
@@ -76,7 +96,7 @@ const CourseHome: React.FC = ({ id:courseId, title, description }) => {
         return (
             <>
                 <Headerr />
-                <button className="bg-red-500 text-white py-2 px-4 rounded">delete</button>
+                <button className="bg-red-500 text-white py-2 px-4 rounded" onClick={() => deleteHandler()}>delete</button>
 
                 <h1>{title}</h1>
                 <small>Description: {description}</small>

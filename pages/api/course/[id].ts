@@ -58,5 +58,7 @@ async function handleDELETE(id: number, res: NextApiResponse) {
             id: id,
         },
     })
-    res.json(course)
+    res.json({
+        data: "delete course success"
+    })
 }
