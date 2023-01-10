@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Headerr } from "../../component/headerr";
 import prisma from "../../lib/prisma";
 
-const CourseHome: React.FC = ({ course: { id: courseId, title, description }, registered_students }) => {
+const CourseHome: React.FC = ({ course: { id: courseId, title, description, instructor_name }, registered_students }) => {
     const [role, setRole] = useState('')
     const [enrolled, setEnrolled] = useState(false)
     const [loading, setLoading] = useState(true)
@@ -136,7 +136,7 @@ const CourseHome: React.FC = ({ course: { id: courseId, title, description }, re
                 <Headerr />
                 <h1>{title}</h1>
                 <small>Description: {description}</small>
-
+                <p>Instructor: {instructor_name}</p>
 
                 {loading ? (<div>Loading ...</div>) : (
                     <div>
@@ -195,6 +195,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const courseId = Number(Array.isArray(context.params.id) ? context.params.id[0] : context.params.id)
     const course = await prisma.course.findUnique({
         where: { id: courseId },
+        include: { instructor : true },
     })
 
     const enrolls = await prisma.enroll.findMany({
@@ -221,7 +222,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     console.log("in heeeeeeer")
     console.log(students)
 
-    return { props: { course: { ...JSON.parse(JSON.stringify(course)) }, registered_students: students } }
+    console.log(course.instructor);
+
+    return { props: { course: { ...JSON.parse(JSON.stringify(course)), instructor_name: course.instructor.name }, registered_students: students } }
 }
 
 export default CourseHome;
