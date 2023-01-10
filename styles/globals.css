@@ -7,7 +7,7 @@
 h1,h2,h3,h4,h5{
   font-family: 'Dela Gothic One'
 }
-p,label,select,option,input{
+p,label,select,option,input,a{
   font-family: 'Montserrat'
 }
 html{

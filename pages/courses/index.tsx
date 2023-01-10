@@ -5,6 +5,7 @@ import CourseElement from "../../component/CourseElement";
 import { Headerr } from "../../component/headerr";
 import prisma from "../../lib/prisma";
 
+
 const AllCourses: React.FC = () => {
 
     const [courses, setCourses] = useState([]);
