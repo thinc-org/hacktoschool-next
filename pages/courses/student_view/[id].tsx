@@ -143,8 +143,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
 
 
-  /*  add imagePath field to these courses*/
-  /* note for future debugging, becareful of the prisma await in the call back, the timing is uncontrollable */
+  /*  add imagePath field to this course*/
   if (course.photoId !== null) {
     const photo = await prisma.photo.findUnique({
       where: {
