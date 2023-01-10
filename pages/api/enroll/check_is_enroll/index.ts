@@ -8,12 +8,12 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 
     console.log(studentId);
 
-    const enrolls = await prisma.enroll.findUnique({
+    const enrolls = await prisma.enroll.findMany({
         where: {
-            studentId_courseId: {
-                studentId: studentId,
-                courseId: courseId
-            }
+            AND:[
+                {studentId: studentId},
+                {courseId: courseId}
+            ]
         },
     });
 
