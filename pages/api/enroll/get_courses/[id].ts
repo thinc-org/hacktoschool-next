@@ -7,6 +7,7 @@ interface NextApiRequestWithId extends NextApiRequest {
     }   
 };
 
+// the route api/enroll/get_courses/:studentIt will get all enrolled courses of this student
 export default async function handle(req: NextApiRequestWithId, res: NextApiResponse) {
     const studentId = parseInt(req.query.id);
 
