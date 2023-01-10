@@ -40,6 +40,6 @@ model Course {
   title        String     @unique
   description  String?
   Enroll       Enroll[]
-  instructor   Instructor @relation(fields: [instructorId], references: [id])
+  instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
   instructorId Int  
 }
