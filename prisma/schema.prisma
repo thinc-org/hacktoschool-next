@@ -75,6 +75,6 @@ model Course {
 model Photo {
   id       Int     @id @default(autoincrement())
   filePath String
-  course   Course? @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  course   Course? @relation(fields: [courseId], references: [id], onDelete: SetNull)
   courseId Int?    @unique
 }

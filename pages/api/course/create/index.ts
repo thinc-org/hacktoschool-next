@@ -41,12 +41,15 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
         const { filepath: tempFilePath, originalFilename } = files.courseImage;
         const folderPath = process.cwd() + `/public/courses/${courseId}/images`;
         const filePath = folderPath + `/${originalFilename}`;
+        const savingPath = `/courses/${courseId}/images/${originalFilename}`;
 
         try {
             await fs.readdir(path.join(folderPath));
         } catch (error) {
             await fs.mkdir(path.join(folderPath), { recursive: true });
         }
+
+        console.log(savingPath);
 
         // saving the file by renaming the tempFilePath to the new path
         fs.rename(tempFilePath, filePath, err => {
@@ -59,10 +62,22 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
         // linking the photo model to the course model, so we can retrieve the image
         const photo = await prisma.photo.create({
             data:{
-                filePath: filePath,
+                filePath: savingPath,
                 courseId: courseId
             }
         });
+
+        await prisma.course.update({
+            where: {
+                id: courseId
+            },
+            data: {
+                photoId: photo.id
+            }
+        })
+
+
+
         res.status(200).json({ done: "ok" });
     })
 }

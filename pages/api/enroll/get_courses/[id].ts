@@ -2,9 +2,9 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../../../lib/prisma'
 
 interface NextApiRequestWithId extends NextApiRequest {
-    query : {
+    query: {
         id: string
-    }   
+    }
 };
 
 // the route api/enroll/get_courses/:studentId will get all enrolled courses of this student
@@ -14,7 +14,7 @@ export default async function handle(req: NextApiRequestWithId, res: NextApiResp
     console.log(studentId);
 
     const enrolls = await prisma.enroll.findMany({
-        where: {    
+        where: {
             studentId: studentId,
         },
     });
@@ -32,10 +32,26 @@ export default async function handle(req: NextApiRequestWithId, res: NextApiResp
         }
     });
 
-    console.log("courses");
-    console.log(courses);
+    /*  add imagePath field to these courses*/
+    /* note for future debugging, becareful of the prisma await in the call back, the timing is uncontrollable */
+    for (const c of courses) {
+        console.log("*******************************")
+        console.log(c);
+        if (c.photoId !== null) {
+            const photo = await prisma.photo.findUnique({
+                where: {
+                    id: c.photoId,
+                },
+            });
+            c["imagePath"] = photo.filePath;
+        }
+        else {
+            c["imagePath"] = "/dummypic.png"
+        }
+    };
+
     res.json({
-        data :   courses
+        data: courses
     }
     );
 }
