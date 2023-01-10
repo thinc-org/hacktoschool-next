@@ -4,12 +4,47 @@ import { useEffect, useState } from "react";
 import { Headerr } from "../../component/headerr";
 import prisma from "../../lib/prisma";
 
-const CourseHome: React.FC = ({ id:courseId, title, description }) => {
+const CourseHome: React.FC = ({ id: courseId, title, description }) => {
     const [role, setRole] = useState('')
+    const [enrolled, setEnrolled] = useState(false)
+    const [loading, setLoading] = useState(true)
+
     useEffect(() => {
+        // check if the student has enroll in the course or not
+        const fetchData = async () => {
+            const studentId = parseInt(localStorage.getItem('id'));
+
+            const body = {
+                studentId: studentId,
+                courseId: courseId
+            };
+            try {
+                console.log('checking enroll');
+                const response = await fetch(`/api/enroll/check_is_enroll`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                console.log("done check");
+                const json = await response.json();
+                console.log(json.data);
+                setEnrolled(json.data);
+                // console.log(loading);
+            } catch (error) {
+                // setError(error);
+            } finally {
+                setLoading(false);
+                // console.log(loading);
+            }
+
+        };
+
         setRole(localStorage.getItem('role'));
+        fetchData();
     }, []);
-    
+
+    console.log(loading);
+
     const enrollNonUserHandler = () => {
         Router.push('/signup');
     }
@@ -30,6 +65,9 @@ const CourseHome: React.FC = ({ id:courseId, title, description }) => {
             });
             const json = await response.json();
             console.log(json);
+            if (response.status == 200) {
+                setEnrolled(true);
+            }
             // console.log(loading);
         } catch (error) {
             // setError(error);
@@ -89,11 +127,19 @@ const CourseHome: React.FC = ({ id:courseId, title, description }) => {
         return (
             <>
                 <Headerr />
-
-                <button className="bg-blue-500 text-white py-2 px-4 rounded" onClick={() => enrollHandler()}>enroll</button>
-                <button className="bg-red-500 text-white py-2 px-4 rounded" onClick={() => leaveHandler ()}>leave</button>
                 <h1>{title}</h1>
                 <small>Description: {description}</small>
+
+
+                {loading ? (<div>Loading ...</div>) : (
+                    <div>
+                        {enrolled ? (
+                            <button className="bg-red-500 text-white py-2 px-4 rounded" onClick={() => leaveHandler()}>leave</button>
+                        ) : (
+                            <button className="bg-blue-500 text-white py-2 px-4 rounded" onClick={() => enrollHandler()}>enroll</button>
+                        )}
+                    </div>
+                )}
             </>
         )
     } else if (role === 'instructor') {
@@ -128,6 +174,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const course = await prisma.course.findUnique({
         where: { id },
     })
+
     return { props: { ...JSON.parse(JSON.stringify(course)) } }
 }
 
