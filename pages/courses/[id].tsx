@@ -10,6 +10,10 @@ const CourseHome: React.FC = ({ id:courseId, title, description }) => {
         setRole(localStorage.getItem('role'));
     }, []);
     
+    const enrollNonUserHandler = () => {
+        Router.push('/signup');
+    }
+
     const enrollHandler = async () => {
         const studentId = parseInt(localStorage.getItem('id'));
         console.log(typeof courseId);
@@ -108,7 +112,7 @@ const CourseHome: React.FC = ({ id:courseId, title, description }) => {
             <>
                 <Headerr />
 
-                <button className="bg-blue-500 text-white py-2 px-4 rounded">enroll (will redirect you to sign in)</button>
+                <button className="bg-blue-500 text-white py-2 px-4 rounded" onClick={() => enrollNonUserHandler()}>enroll (will redirect you to sign in)</button>
 
                 <h1>{title}</h1>
                 <small>Description: {description}</small>

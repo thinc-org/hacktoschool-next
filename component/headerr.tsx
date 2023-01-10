@@ -62,6 +62,10 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
     }
   };
 
+  const toAllCourse = () => {
+    router.push('/courses');
+  }
+
   const Navcontect=()=>{
     if(role === "student"){
     return(
@@ -69,7 +73,7 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
       <p className="text-center">Main</p>
       <p className="text-center">Profile</p>
       <p className="text-center">My Course</p>
-      <p className="text-center col-span-2">Browse Course</p>
+      <p className="text-center col-span-2" onClick={()=>toAllCourse()}>Browse Course</p>
       <div className="col-span-3"></div>
       </>
     )}
@@ -87,7 +91,7 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
     else{
       return(
         <>
-        <p className="text-center col-span-2">Browse Course</p>
+        <p className="text-center col-span-2" onClick={()=>toAllCourse()}>Browse Course</p>
         <p className="text-center"></p>
         <p className="text-center"></p>
         <div className="col-span-4"></div>
