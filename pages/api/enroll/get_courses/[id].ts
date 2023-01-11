@@ -11,7 +11,7 @@ interface NextApiRequestWithId extends NextApiRequest {
 export default async function handle(req: NextApiRequestWithId, res: NextApiResponse) {
     const studentId = parseInt(req.query.id);
 
-    console.log(studentId);
+    //console.log(studentId);
 
     const enrolls = await prisma.enroll.findMany({
         where: {
@@ -19,8 +19,8 @@ export default async function handle(req: NextApiRequestWithId, res: NextApiResp
         },
     });
 
-    console.log("enrolls");
-    console.log(enrolls);
+    //console.log("enrolls");
+    //console.log(enrolls);
 
     const courseIdArray = enrolls.map((e) => e.courseId);
 
@@ -35,6 +35,8 @@ export default async function handle(req: NextApiRequestWithId, res: NextApiResp
     /*  add imagePath field to these courses*/
     /* note for future debugging, becareful of the prisma await in the call back, the timing is uncontrollable */
     for (const c of courses) {
+        //console.log("*******************************")
+        //console.log(c);
         if (c.photoId !== null) {
             const photo = await prisma.photo.findUnique({
                 where: {
