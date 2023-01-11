@@ -38,6 +38,24 @@ const Notification: React.FC = () => {
         fetchNotifications();
     }, []);
     
+    const deleteNoti = async (notificationId) => {
+        
+        try {
+            const response = await fetch(`/api/notification/${notificationId}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+            });
+            const json = await response.json();
+            if (response.status === 200) {
+                fetchNotifications();
+            }
+        } catch (error) {
+            // setError(error);
+        } finally {
+            // console.log(loading);
+        }
+    }
+
     const setNotiStatus = async (notificationId, notificationStatus) => {
         const body = {
             notificationStatus: notificationStatus
@@ -59,6 +77,8 @@ const Notification: React.FC = () => {
             // console.log(loading);
         }
     }
+
+
     
     const notiClickHandler = async ({id, status, courseId}) => {
 
@@ -110,6 +130,9 @@ const Notification: React.FC = () => {
                                             <button className="bg-slate-200 p-2 text-slate-500 hover:scale-105" onClick={()=>setNotiStatus(noti.id, NotificationStatus.READ)}><p>mark as read ✔️</p></button> 
                                             </>)
                                         }
+
+                                    <button className="bg-red-200 p-2 text-red-700 m-2 hover:scale-105" onClick={()=>deleteNoti(noti.id)}>Clear</button>
+
                                 </div>)
                             })
                         }

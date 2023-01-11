@@ -13,6 +13,8 @@ export default async function handle(req: NextApiRequestWithId, res: NextApiResp
         handleGET(notificationId, res);
     } else if (req.method === 'PUT') {
         handlePUT(req, res);
+    } else if (req.method === 'DELETE') {
+        handleDELETE(notificationId, res);
     } else {
         throw new Error(
             `The HTTP ${req.method} method is not supported at this route.`
@@ -20,6 +22,19 @@ export default async function handle(req: NextApiRequestWithId, res: NextApiResp
     }
 }
 
+
+// DELETE /api/course/:id
+// delete a course by their id
+async function handleDELETE(id: number, res: NextApiResponse) {
+    const notification = await prisma.notification.delete({
+        where: {
+            id: id,
+        },
+    })
+    res.json({
+        data: "delete success"
+    })
+}
 
 // GET /api/notification/:id
 // get the notification by their id

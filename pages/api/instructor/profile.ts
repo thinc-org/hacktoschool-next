@@ -7,7 +7,7 @@ export default async function handle(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    
+
   } else if (req.method === "POST") {
     handlePOST(req, res);
   } else {
@@ -17,54 +17,68 @@ export default async function handle(
   }
 }
 
-// POST /api/course
-// stores a new course
-// requires instructorId field in req.body
+// POST /api/instructor/profile
+// stores a new instructor profile or update
 async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
+
+  console.log("in profile for ins api");
   const data1 = JSON.parse(req.body);
   const instructoridna = parseInt(data1.instructorid);
-  const agena = parseInt(data1.age)
+  let agena
+  if(data1.age === ''){agena = 0}
+  else{
+   agena = parseInt(data1.age)}
   const alreadyprofile = await prisma.InstructorProfile.findUnique({
-    where:{
-        instructorid:instructoridna
+    where: {
+      instructorid: instructoridna
     }
   })
-  if(alreadyprofile){
+  if (alreadyprofile) {
     const updateprofile = await prisma.InstructorProfile.update({
-        where:{
-            instructorid:instructoridna
-        },data:{
-            age:agena,
-            firstname:data1.firstname,
-            lastname:data1.lastname,
-            tel:data1.tel,
-            preferredsub:data1.psub,
-            description:data1.des,
-            link:data1.link
-        }
+      where: {
+        instructorid: instructoridna
+      }, data: {
+        age: agena,
+        firstname: data1.firstname,
+        lastname: data1.lastname,
+        tel: data1.tel,
+        preferredsub: data1.psub,
+        description: data1.des,
+        discord: data1.discord,
+        link: data1.link
+      }
     })
+    console.log("------------------")
+    console.log(updateprofile);
+    console.log("------------------")
     res.status(200).json({
-        body: updateprofile
-      });
+      body: updateprofile
+    });
 
 
   }
-  else{
+  else {
     const newprofile = await prisma.InstructorProfile.create({
-        data:{
-            instructorid: instructoridna,
-            age:agena,
-            firstname:data1.firstname,
-            lastname:data1.lastname,
-            tel:data1.tel,
-            preferredsub:data1.psub,
-            description:data1.des,
-            link:data1.link
-        }
+      data: {
+        instructorid: instructoridna,
+        age: agena,
+        firstname: data1.firstname,
+        lastname: data1.lastname,
+        tel: data1.tel,
+        preferredsub: data1.psub,
+        description: data1.des,
+        discord: data1.discord,
+        link: data1.link
+      }
     })
+
+    console.log("------------------")
+    console.log(newprofile);
+    console.log("------------------")
+
     res.status(200).json({
-        body: newprofile
-      });
+      body: newprofile
+    });
   }
 }
 

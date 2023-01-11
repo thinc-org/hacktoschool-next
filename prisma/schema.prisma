@@ -42,6 +42,7 @@ model InstructorProfile {
   preferredsub String
   description  String
   link         String
+  discord      String?
 }
 
 model Assignment {

@@ -3,7 +3,7 @@ import Router from "next/router";
 import { useEffect, useState } from "react";
 import { Headerr } from "../../component/headerr";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAddressCard, faEnvelope, faInfo, faLink, faPhone, faThumbsUp, faUserDoctor } from "@fortawesome/free-solid-svg-icons";
+import { faAddressCard, faEnvelope, faInfo, faPodcast, faLink, faPhone, faThumbsUp, faUserDoctor } from "@fortawesome/free-solid-svg-icons";
 
 export default function Instructorprofile() {
   const [editmode, setEditmode] = useState(false);
@@ -14,6 +14,7 @@ export default function Instructorprofile() {
     tel: '',
     psub: '',
     des: '',
+    discord: '',
     link:'',
     email: '',
     role: ''
@@ -45,6 +46,7 @@ export default function Instructorprofile() {
         tel:data.tel,
         psub:data.preferredsub,
         des: data.description,
+        discord: data.discord,
         link:data.link,
         email:localStorage.getItem('email'),
         role:localStorage.getItem('role')
@@ -64,6 +66,7 @@ export default function Instructorprofile() {
         tel: e.target.phone.value,
         psub: e.target.psub.value,
         des: e.target.descrip.value,
+        discord: e.target.discord.value,
         link: e.target.link.value,
         instructorid: localStorage.getItem('id')
     }
@@ -85,6 +88,7 @@ export default function Instructorprofile() {
         tel:data.tel,
         psub:data.preferredsub,
         des: data.description,
+        discord: data.discord,
         link:data.link,
         email:localStorage.getItem('email'),
         role:localStorage.getItem('role')
@@ -104,6 +108,7 @@ export default function Instructorprofile() {
       <div className="flex flex-wrap bg-green-200 rounded-full items-center"><span className="px-5"><FontAwesomeIcon icon={faPhone} size="xl"/></span><p>{instructorprofile.tel}</p></div>
       <div className="flex flex-wrap bg-green-200 rounded-full items-center col-span-3"><span className="px-5"><FontAwesomeIcon icon={faThumbsUp} size="xl"/></span><p>{instructorprofile.psub}</p></div>
       <div className="flex flex-wrap bg-green-200 rounded-full items-center col-span-3"><span className="px-5"><FontAwesomeIcon icon={faInfo} size="xl"/></span><p>{instructorprofile.des}</p></div>
+      <div className="flex flex-wrap bg-green-200 rounded-full items-center col-span-3"><span className="px-5"><FontAwesomeIcon icon={faPodcast} size="xl"/></span><p>{instructorprofile.discord}</p></div>
       <div className="flex flex-wrap bg-green-200 rounded-full items-center col-span-2"><span className="px-5"><FontAwesomeIcon icon={faLink} size="xl"/></span><a href={instructorprofile.link} target="_blank" rel="noopener noreferrer">{instructorprofile.link}</a></div>
       <div>
           <button
@@ -158,7 +163,7 @@ export default function Instructorprofile() {
                 id="age"
                 name="age"
                 defaultValue={instructorprofile.age}
-                placeholder={instructorprofile.age ? instructorprofile.age.toString():0}
+                placeholder={instructorprofile.age ? instructorprofile.age.toString() :0}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
             </div>
@@ -201,6 +206,21 @@ export default function Instructorprofile() {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
             </div>
+
+            <div className="m-3 col-span-3">
+              <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                Discord Webhook (Copy Webhook URL)
+              </label>
+              <input
+                type="text"
+                id="discord"
+                name="discord"
+                defaultValue={instructorprofile.discord}
+                placeholder={instructorprofile.discord}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              />
+            </div>
+
             <div className="m-3 col-span-2">
               <label className="block mb-2 text-sm font-medium text-gray-900 ">
                 Link (Your social media link, please provide only one link)
