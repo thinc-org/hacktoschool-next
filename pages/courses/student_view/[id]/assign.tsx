@@ -103,7 +103,7 @@ const Home: React.FC = ({
         const today = new Date();
         const ddate = new Date(element.duedate);
         const pdate = new Date(element.publish);
-        if (ddate >= today && today >= pdate && element.status === 1) {
+        if (ddate >= today && today >= pdate && element.status !== 0) {
           return (
             <>
               {/* .substring(0,10) */}
@@ -271,7 +271,7 @@ const Home: React.FC = ({
     if (mode === 0) {
       return (
         <>
-          <h1>Welcome to assignment for course {courseId}</h1>
+          <h1>Welcome to assignment for course {courseId}   Instructor Name {instructor_name}</h1>
           <h2 className="py-2">Pending</h2>
           <PendingAss />
           <h2 className="py-2">Still Editable</h2>
@@ -287,7 +287,7 @@ const Home: React.FC = ({
       return (
         <>
           <form onSubmit={sendAws}>
-            <div className="grid grid-cols-3 grid-rows-6">
+            <div className="grid grid-cols-3 grid-rows-5">
               <div className="my-4 col-span-3">
                 <h3 className=" ">Title : {"    " + working.topic}</h3>
               </div>
@@ -295,7 +295,7 @@ const Home: React.FC = ({
                 <h3 className=""> Description : </h3>{" "}
                 <p>&nbsp; {working.description}</p>
               </div>
-              <div className="my-4 row-span-3 col-span-3">
+              <div className="my-4 row-span-2 col-span-3">
                 <h3 className="pb-2">Your answer</h3>
                 <textarea
                   defaultValue={working.answer}

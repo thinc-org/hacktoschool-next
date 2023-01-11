@@ -64,20 +64,32 @@ const Home: React.FC = ({
     
     const today = new Date();
   
-    const nowna = allasign.map((asign) => {
+    const nowna = allasign.map((asign,i) => {
       const ddate = new Date(asign.duedate)
       const pdate = new Date(asign.publishtime)
       // console.log(typeof(hi))
       // console.log("now: ", today);
       // console.log("due date: ", hi);
       // console.log(hi > today, " fffffff");
+      if(i===0){  
+        return<>
+            <div className="bg-purple-200 grid grid-cols-5 p-2 ">
+              <p className="underline">Topic</p>
+              <p className="underline">Full Score</p>
+              <p className="underline">Details</p>
+              <p className="underline pl-3">Edit</p>
+              <p className="underline pl-3">Delete</p>
+            </div>
+        </>
+      }
+      else{
       if (ddate < today ) {
         return (
           <>
-            <div className="grid grid-cols-5 bg-green-200 my-2 mx-2">
+            <div className="grid grid-cols-5 bg-red-200 p-2">
               <p>{asign.topic}</p>
               <p>{asign.fullscore}</p>
-              <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={()=>{router.push(`/courses/instructor_view/${courseId}/assign/$`)}}>Details</button></div>
+              <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={()=>{router.push(`/courses/instructor_view/${courseId}/assign/${asign.assignmentid}`)}}>Details</button></div>
               <div><button className="bg-blue-500 text-white py-1 px-4 rounded">Edit</button></div>
               <div><button className="bg-blue-500 text-white py-1 px-4 rounded">Delete</button></div>
             </div>
@@ -85,7 +97,7 @@ const Home: React.FC = ({
         );
       } else {
         return <></>;
-      }
+      }}
     });
     return <>{nowna}</>;
   }
@@ -94,20 +106,31 @@ const Home: React.FC = ({
     
     const today = new Date();
   
-    const nowna = allasign.map((asign) => {
+    const nowna = allasign.map((asign,i) => {
       const ddate = new Date(asign.duedate)
       const pdate = new Date(asign.publishtime)
       // console.log(typeof(hi))
       // console.log("now: ", today);
       // console.log("due date: ", hi);
       // console.log(hi > today, " fffffff");
+      if(i===0){
+        return<>
+            <div className="bg-purple-200 grid grid-cols-5 p-2 ">
+              <p className="underline">Topic</p>
+              <p className="underline">Full Score</p>
+              <p className="underline">Details</p>
+              <p className="underline pl-3">Edit</p>
+              <p className="underline pl-3">Delete</p>
+            </div>
+        </>
+      }else{
       if (today < pdate) {
         return (
           <>
-            <div className="grid grid-cols-5 bg-green-200 my-2 mx-2">
+            <div className="grid grid-cols-5 bg-yellow-200 p-2">
               <p>{asign.topic}</p>
               <p>{asign.fullscore}</p>
-              <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={()=>{router.push(`/courses/instructor_view/${courseId}/assign/$`)}}>Details</button></div>
+              <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={()=>{router.push(`/courses/instructor_view/${courseId}/assign/${asign.assignmentid}`)}}>Details</button></div>
               <div><button className="bg-blue-500 text-white py-1 px-4 rounded">Edit</button></div>
               <div><button className="bg-blue-500 text-white py-1 px-4 rounded">Delete</button></div>
             </div>
@@ -115,7 +138,7 @@ const Home: React.FC = ({
         );
       } else {
         return <></>;
-      }
+      }}
     });
     return <>{nowna}</>;
   }
@@ -123,20 +146,32 @@ const Home: React.FC = ({
  
     const today = new Date();
   
-    const nowna = allasign.map((asign) => {
+    const nowna = allasign.map((asign,i) => {
       const ddate = new Date(asign.duedate)
       const pdate = new Date(asign.publishtime)
       // console.log(typeof(hi))
       // console.log("now: ", today);
       // console.log("due date: ", hi);
       // console.log(hi > today, " fffffff");
+      if(i===0){
+        return<>
+            <div className="bg-purple-200 grid grid-cols-5 p-2 ">
+              <p className="underline">Topic</p>
+              <p className="underline">Full Score</p>
+              <p className="underline">Details</p>
+              <p className="underline pl-3">Edit</p>
+              <p className="underline pl-3">Delete</p>
+            </div>
+        </>
+      }
+      else{
       if (ddate >= today && today >= pdate) {
         return (
           <>
-            <div className="grid grid-cols-5 bg-green-200 my-2 mx-2">
+            <div className="grid grid-cols-5 bg-green-200 p-2">
               <p>{asign.topic}</p>
               <p>{asign.fullscore}</p>
-              <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={()=>{router.push(`/courses/instructor_view/${courseId}/assign/$`)}}>Details</button></div>
+              <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={()=>{router.push(`/courses/instructor_view/${courseId}/assign/${asign.assignmentid}`)}}>Details</button></div>
               <div><button className="bg-blue-500 text-white py-1 px-4 rounded">Edit</button></div>
               <div><button className="bg-blue-500 text-white py-1 px-4 rounded">Delete</button></div>
             </div>
@@ -144,7 +179,7 @@ const Home: React.FC = ({
         );
       } else {
         return <></>;
-      }
+      }}
     });
     return <>{nowna}</>;
   };
@@ -153,21 +188,21 @@ const Home: React.FC = ({
     if (mode === 0) {
       return (
         <>
-          <h1>Welcome to instructor Assignment</h1>
+          <h1>Welcome to instructor Assignment for Course {courseId}</h1>
           <div>
-            <h1>Ongoing Assignment</h1>
+            <h1 className="py-2">Ongoing Assignment</h1>
             <Ongoing />
           </div>
           <div>
-            <h1>Finished Assignment</h1>
+            <h1 className="py-2">Finished Assignment</h1>
             <Finished/>
           </div>
           <div>
-            <h1>Waiting Assignment</h1>
+            <h1 className="py-2">Waiting Assignment</h1>
             <Waiting/>
           </div>
           <button
-            className="bg-blue-500 text-white py-2 px-4 rounded"
+            className="my-2 bg-blue-500 text-white py-2 px-4 rounded"
             onClick={() => {
               setMode(1);
             }}

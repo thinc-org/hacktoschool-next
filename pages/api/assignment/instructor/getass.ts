@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../../lib/prisma";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { json } from "stream/consumers";
-import StudentDashboard from "../../../student/dashboard";
 
 export default async function handle(
   req: NextApiRequest,
@@ -23,27 +22,33 @@ export default async function handle(
 // stores a new course
 // requires instructorId field in req.body
 async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
-    
- const data1 = JSON.parse(req.body);
- 
- //console.log(data1, '           ggggggggggg')
-  const aid = parseInt(data1.assignid)
-  const sid = parseInt(data1.sid)
-  const allAssign = await prisma.StudentAssignment.updateMany({
+  const data1 = parseInt(req.body);
+  let man = [{}]
+   //console.log(data1)
+   const allSubmitstudent = await prisma.studentAssignment.findMany({
     where:{
-        AND:[
-            {assignmentid:aid},
-            {studentId:sid}
-        ] 
-    },data:{
-        answer:data1.answer,
-        status:1
+        assignmentid:data1
     }
+   })
+   for(let element of allSubmitstudent){
+    const student = await prisma.Student.findUnique({
+        where:{ 
+            id:element.studentId
+        }
+    })
+    const newitem = {
+        answer:element.answer,
+        score:element.score,
+        status:element.status,
+        comment:element.comment,
+        sname:student.name,
+        sid:student.id
+    }
+    man.push(newitem)}
+   
 
-   })   
-
-   console.log(allAssign)
  
+
   res.status(200).json({
-    body: 'done'})
+    body: man})
 }

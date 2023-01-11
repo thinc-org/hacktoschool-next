@@ -26,6 +26,7 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
 //   console.log(data1)
   const Cid = parseInt(data1.courseid)
   const Iid = parseInt(data1.instructorid)
+  let bee = [{}]
   const allAnnouce = await prisma.Assignment.findMany({
     where:{
         courseid: Cid
@@ -35,9 +36,9 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
 
  
 
-  
+  const newone = bee.concat(allAnnouce)
 
   res.status(200).json({
-    body: allAnnouce
+    body: newone
 })
 }

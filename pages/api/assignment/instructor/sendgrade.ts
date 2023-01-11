@@ -29,6 +29,7 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
  //console.log(data1, '           ggggggggggg')
   const aid = parseInt(data1.assignid)
   const sid = parseInt(data1.sid)
+  const score = parseInt(data1.score)
   const allAssign = await prisma.StudentAssignment.updateMany({
     where:{
         AND:[
@@ -36,8 +37,9 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
             {studentId:sid}
         ] 
     },data:{
-        answer:data1.answer,
-        status:1
+        score:score,
+        comment:data1.comment,
+        status:2
     }
 
    })   
