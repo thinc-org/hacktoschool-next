@@ -15,7 +15,7 @@ export default async function handle(
     throw new Error(
       `The HTTP ${req.method} method is not supported at this route.`
     );
-course  }
+  }
 }
 
 // POST /api/course
