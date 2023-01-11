@@ -92,7 +92,7 @@ const CourseMenu: React.FC = ({
   const Mainbody = () => {
     return (
       <>
-         <img className="max-w-[10rem] rounded-3xl mb-5" src={imagePath} />
+         <img className="w-[10rem] h-[10rem] rounded-3xl mb-5" src={imagePath} />
         <button
           className="bg-red-500 text-white py-2 px-4 rounded"
           onClick={() => deleteHandler()}

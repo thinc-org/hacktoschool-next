@@ -151,7 +151,7 @@ const CourseDescription: React.FC = ({ course: { id: courseId, title, descriptio
         <div className="pt-10 px-48 flex">
             <div className="flex flex-col">
                 <Mainbody />
-                <img className="max-w-[10rem] rounded-3xl mb-5" src={imagePath} />
+                <img className="w-[10rem] h-[10rem] rounded-3xl mb-5" src={imagePath} />
             </div>
             <Review />
         </div>

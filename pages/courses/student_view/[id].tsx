@@ -47,7 +47,7 @@ const CourseMenu: React.FC = ({
   const Mainbody = () => {
     return (
       <>
-        <img className="max-w-[10rem] rounded-3xl mb-5" src={imagePath} />
+        <img className="w-[10rem] h-[10rem] rounded-3xl mb-5" src={imagePath} />
         <h1>{title}</h1>
         <small>Description: {description}</small>
         <p>Instructor: {instructor_name}</p>

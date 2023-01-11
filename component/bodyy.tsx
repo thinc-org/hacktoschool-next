@@ -291,7 +291,7 @@ export const Bodyy = (props: { statemain: string }) => {
       </div>
       <div className="pt-8 pl-16">
         <div className="absolute top-[30%] left-[55%]">
-          <img className="max-w-[10rem]" src="/gatakblur.png" />
+          <img className="w-[10rem] h-[10rem]" src="/gatakblur.png" />
         </div>
         <div className="absolute top-[20%] left-[55%]">
           <img className="max-w-lg" src="/boysitbook.png" />
