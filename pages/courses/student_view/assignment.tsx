@@ -40,7 +40,7 @@ export default function Home() {
       <p>{element.courseid}</p>
       <p>{element.fullscore}</p>
       <p>{element.duedate.substring(0,10)}</p>
-      <div><button className="bg-blue-500 text-white py-1 px-4 rounded">Check</button></div>
+      <div><button onClick={()=>{router.push(`/courses/student_view/${element.courseid}/assign`)}} className="bg-blue-500 text-white py-1 px-4 rounded">Check</button></div>
     </div>
     </>)}
   })
