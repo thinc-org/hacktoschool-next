@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../../lib/prisma'
 import { Prisma, PrismaClient } from "@prisma/client";
 import { isConstructorDeclaration } from 'typescript';
+import { NotificationStatus, NotificationType } from '../../shared/notificationCodes';
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
@@ -55,7 +56,23 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
                 }
             },
         });
-        // res.json(student);
+
+        const course = await prisma.course.findUnique({
+            where: {
+                id: courseId
+            }
+        });
+        
+        // create notification for the instructor
+        const notification = await prisma.notification.create({
+            data: {
+                instructorId: course.instructorId,
+                message: `เห้ยยยย! นักเรียนชื่อ ${student.name} เขาลงทะเบียนคอร์ส ${course?.title} ของมึงแล้วนะ หัดไปดูดิวะ`,
+                type: NotificationType.STUDENT_ENROLL,
+                status: NotificationStatus.UNREAD,
+            }
+        })
+
         res.status(200).json({
             body: "Enroll success!",
         });

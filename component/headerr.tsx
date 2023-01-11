@@ -1,9 +1,9 @@
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export const Headerr = (props: { selectState: (arg0: string) => void }) => {
   const router = useRouter();
-  const [role,setRole] = useState("")
+  const [role, setRole] = useState("")
   const [logined, setLogined] = useState("");
   useEffect(() => {
     // console.log(logined);
@@ -15,7 +15,7 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
   const Loginornot = () => {
 
     if (logined === "" || logined == null) {
-     
+
       return (
         <div className="col-span-3">
           <span className="p-5">
@@ -43,19 +43,26 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
           <span className="px-5">
             <p>{logined}</p>
           </span>
+          
+          
+            <button onClick={() => Router.push('/notifications')}>
+              <span className="px-5 bg-red-300 py-2 px-4  mx-2">Noti</span>
+            </button>
+          
+
           <div>
-          <button
-            className="bg-blue-500 text-white py-2 px-4 rounded"
-            onClick={() => {
-              localStorage.setItem("email", "");
-              localStorage.setItem("role", "")
-              localStorage.setItem("id","")
-              setLogined("");
-              router.push("/");
-            }}
-          >
-            <p>Sign Out</p>
-          </button>
+            <button
+              className="bg-blue-500 text-white py-2 px-4 rounded"
+              onClick={() => {
+                localStorage.setItem("email", "");
+                localStorage.setItem("role", "")
+                localStorage.setItem("id", "")
+                setLogined("");
+                router.push("/");
+              }}
+            >
+              <p>Sign Out</p>
+            </button>
           </div>
         </div>
       );
@@ -66,36 +73,37 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
     router.push('/courses');
   }
 
-  const Navcontect=()=>{
-    if(role === "student"){
-    return(
-      <>
-      <button><p className="text-center hover:scale-125">Main</p></button>
-      <button><p className="text-center hover:scale-125" onClick={()=>{router.push('/student/profile')}}>Profile</p></button>
-      <button><p className="text-center hover:scale-125" onClick={()=>{router.push('/student/dashboard')}}>My Course</p></button>
-      <button className="col-span-2" ><p className="text-center hover:scale-125 " onClick={()=>toAllCourse()}>Browse Course</p></button>
-      <div className="col-span-3"></div>
-      </>
-    )}
-    else if (role === "instructor"){
-      return(
+  const Navcontect = () => {
+    if (role === "student") {
+      return (
         <>
-        <button><p className="text-center hover:scale-125">Main</p></button>
-        <button><p className="text-center hover:scale-125" onClick={()=>{router.push('/instructor/profile')}}>Profile</p></button>
-        <button><p className="text-center hover:scale-125" onClick={()=>{router.push('/instructor/main')}}>My Course</p></button>
-        <button className="col-span-2"><p className="text-center hover:scale-125 " onClick={()=>toAllCourse()}>Browse Course</p></button>
-        <div className="col-span-3"></div>
+          <button><p className="text-center hover:scale-125">Main</p></button>
+          <button><p className="text-center hover:scale-125" onClick={() => { router.push('/student/profile') }}>Profile</p></button>
+          <button><p className="text-center hover:scale-125" onClick={() => { router.push('/student/dashboard') }}>My Course</p></button>
+          <button className="col-span-2" ><p className="text-center hover:scale-125 " onClick={() => toAllCourse()}>Browse Course</p></button>
+          <div className="col-span-3"></div>
         </>
       )
     }
-    else{
-      return(
+    else if (role === "instructor") {
+      return (
         <>
-        <div  className='col-span-2'><button><p className="text-center" onClick={()=>toAllCourse()}>Browse Course</p></button></div>
-        <button><p className="text-center hover:scale-125"></p></button>
-        <button><p className="text-center hover:scale-125"></p></button>
-        <div className="col-span-4"></div>
-       
+          <button><p className="text-center hover:scale-125">Main</p></button>
+          <button><p className="text-center hover:scale-125" onClick={() => { router.push('/instructor/profile') }}>Profile</p></button>
+          <button><p className="text-center hover:scale-125" onClick={() => { router.push('/instructor/main') }}>My Course</p></button>
+          <button className="col-span-2"><p className="text-center hover:scale-125 " onClick={() => toAllCourse()}>Browse Course</p></button>
+          <div className="col-span-3"></div>
+        </>
+      )
+    }
+    else {
+      return (
+        <>
+          <div className='col-span-2'><button><p className="text-center" onClick={() => toAllCourse()}>Browse Course</p></button></div>
+          <button><p className="text-center hover:scale-125"></p></button>
+          <button><p className="text-center hover:scale-125"></p></button>
+          <div className="col-span-4"></div>
+
         </>
       )
     }
@@ -111,8 +119,8 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
         >
           GlobalTalk
         </h1>
-        <Navcontect/>
-      
+        <Navcontect />
+
         <Loginornot />
       </div>
     </>

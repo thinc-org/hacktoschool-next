@@ -45,16 +45,16 @@ model InstructorProfile {
 }
 
 model Assignment {
-  assignmentid     Int        @id @default(autoincrement())
+  assignmentid     Int @id @default(autoincrement())
   assignmentnumber Int //manully increase na
 
-  course           Course     @relation(fields: [courseid], references: [id], onUpdate: Cascade)
-  courseid         Int
-  topic            String
-  description      String
-  fullscore        Int
-  publishtime      DateTime
-  duedate DateTime
+  course      Course   @relation(fields: [courseid], references: [id], onUpdate: Cascade)
+  courseid    Int
+  topic       String
+  description String
+  fullscore   Int
+  publishtime DateTime
+  duedate     DateTime
 
   StudentAssignment StudentAssignment[]
 }
@@ -78,8 +78,8 @@ model Instructor {
   name              String
   password          String
   courses           Course[]
+  notifications     Notification[]
   InstructorProfile InstructorProfile[]
- 
 }
 
 model Enroll {
@@ -108,4 +108,14 @@ model Photo {
   filePath String
   course   Course? @relation(fields: [courseId], references: [id], onDelete: SetNull)
   courseId Int?    @unique
+}
+
+model Notification {
+  id           Int        @id @default(autoincrement())
+  message      String
+  status       Int
+  type         Int
+  instructor   Instructor? @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  instructorId Int?
+  
 }

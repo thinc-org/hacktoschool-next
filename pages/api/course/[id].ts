@@ -40,7 +40,7 @@ async function handleGET(id: number, res: NextApiResponse) {
 async function handlePUT(req: NextApiRequestWithId, res: NextApiResponse) {
     const courseId = req.query.id;
     const { title, description } = req.body;
-    const course = await prisma.post.update({
+    const course = await prisma.course.update({
         where: { id: courseId },
         data: {
             title: title,
