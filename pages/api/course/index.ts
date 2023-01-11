@@ -23,7 +23,7 @@ async function handleGET(res: NextApiResponse) {
   /* note for future debugging, becareful of the prisma await in the call back, the timing is uncontrollable */
   for (const c of courses) {
     console.log("*******************************")
-    console.log(c);
+    //console.log(c);
     if (c.photoId !== null) {
       const photo = await prisma.photo.findUnique({
         where: {
@@ -35,6 +35,7 @@ async function handleGET(res: NextApiResponse) {
     else {
       c["imagePath"] = "/dummypic.png"
     }
+    console.log(c["imagePath"])
   };
   res.json({
     data: courses

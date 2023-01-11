@@ -11,12 +11,13 @@ datasource db {
 }
 
 model Student {
-  id             Int              @id @default(autoincrement())
-  email          String           @unique
-  name           String
-  password       String
-  Enroll         Enroll[]
-  StudentProfile StudentProfile[]
+  id                Int                 @id @default(autoincrement())
+  email             String              @unique
+  name              String
+  password          String
+  Enroll            Enroll[]
+  StudentProfile    StudentProfile[]
+  StudentAssignment StudentAssignment[]
 }
 
 model StudentProfile {
@@ -43,6 +44,32 @@ model InstructorProfile {
   link         String
 }
 
+model Assignment {
+  assignmentid     Int        @id @default(autoincrement())
+  assignmentnumber Int //manully increase na
+  instructor       Instructor @relation(fields: [instructorid], references: [id], onDelete: Cascade)
+  instructorid     Int
+  course           Course     @relation(fields: [courseid], references: [id], onUpdate: Cascade)
+  courseid         Int
+  topic            String
+  description      String
+
+  StudentAssignment StudentAssignment[]
+}
+
+model StudentAssignment {
+  assignment   Assignment @relation(fields: [assignmentid], references: [assignmentid], onDelete: Cascade)
+  assignmentid Int
+  student      Student    @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId    Int
+  score        Int
+  comment      String
+  answer       String
+  status       Int // not grading, not submit ??
+
+  @@id([studentId, assignmentid])
+}
+
 model Instructor {
   id                Int                 @id @default(autoincrement())
   email             String              @unique
@@ -50,6 +77,7 @@ model Instructor {
   password          String
   courses           Course[]
   InstructorProfile InstructorProfile[]
+  Assignment        Assignment[]
 }
 
 model Enroll {
@@ -62,14 +90,15 @@ model Enroll {
 }
 
 model Course {
-  id           Int        @id @default(autoincrement())
-  title        String     @unique
+  id           Int          @id @default(autoincrement())
+  title        String       @unique
   description  String?
   Enroll       Enroll[]
-  instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  instructor   Instructor   @relation(fields: [instructorId], references: [id], onDelete: Cascade)
   instructorId Int
   photo        Photo?
   photoId      Int?
+  Assignment   Assignment[]
 }
 
 model Photo {

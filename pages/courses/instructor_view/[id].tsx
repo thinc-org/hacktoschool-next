@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Headerr } from "../../../component/headerr";
 import prisma from "../../../lib/prisma";
@@ -12,7 +12,8 @@ const CourseMenu: React.FC = ({
 }) => {
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  
+  useEffect(() => { 
     //for new features
   }, []);
 
@@ -74,7 +75,7 @@ const CourseMenu: React.FC = ({
   };
   const Assignment = () => {
     return (
-      <div className="bg-green-200 py-5 px-5">
+      <div className="bg-green-200 py-5 px-5" onClick={()=>{Router.push('/courses/instructor_view/assignment')}}>
         <h2>Assignments</h2>
       </div>
     );

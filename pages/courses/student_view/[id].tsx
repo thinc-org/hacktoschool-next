@@ -5,6 +5,7 @@ import { Headerr } from "../../../component/headerr";
 import prisma from "../../../lib/prisma";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBullhorn } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/router";
 
 const CourseMenu: React.FC = ({
   course: { id: courseId, title, description, instructor_name, imagePath },
@@ -94,7 +95,7 @@ const CourseMenu: React.FC = ({
   };
   const Assignment = () => {
     return (
-      <div className="bg-purple-200 py-5 px-5">
+      <div className="bg-purple-200 py-5 px-5" onClick={()=>{Router.push('/courses/student_view/assignment')}}>
         <h2>Assignments</h2>
       </div>
     );

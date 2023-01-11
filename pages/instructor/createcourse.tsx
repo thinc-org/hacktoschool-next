@@ -1,6 +1,6 @@
 
 import { Headerr } from "../../component/headerr"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
@@ -13,6 +13,11 @@ export default function Home() {
       setErrormes("");
     }, time);
   };
+
+  useEffect(()=>{
+    console.log('now   '+selectedImage)
+    console.log('file   '+selectedFile)
+  },[selectedImage])
 
   const createCourse = async (e) => {
     console.log('in create course function');
