@@ -48,21 +48,22 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
         } catch (error) {
             await fs.mkdir(path.join(folderPath), { recursive: true });
         }
-        console.log(tempFilePath , ' fffffffffffffffff');
+        console.log(tempFilePath, ' fffffffffffffffff');
 
-        
+        console.log(filePath)
 
         // saving the file by renaming the tempFilePath to the new path
-        fs.rename(tempFilePath, filePath, err => {
-            if (err) {
-                console.error(err.message);
-                return;
-            }
-        });
+        try {
+            await fs.copyFile(tempFilePath, filePath);
+            console.log('success copy file');
+
+        } catch {
+            console.log('error copy file');
+        }
 
         // linking the photo model to the course model, so we can retrieve the image
         const photo = await prisma.Photo.create({
-            data:{
+            data: {
                 filePath: savingPath,
                 courseId: courseId
             }

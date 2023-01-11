@@ -13,8 +13,6 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
         /*  add imagePath field to these courses*/
         /* note for future debugging, becareful of the prisma await in the call back, the timing is uncontrollable */
         for (const c of allcourse) {
-            console.log("*******************************")
-            console.log(c);
             if (c.photoId !== null) {
                 const photo = await prisma.photo.findUnique({
                     where: {
