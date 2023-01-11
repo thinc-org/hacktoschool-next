@@ -73,9 +73,19 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
     router.push('/courses');
   }
 
-  const Navcontect = () => {
-    if (role === "student") {
-      return (
+  const Navcontect=()=>{
+    if(role === "student"){
+    return(
+      <>
+      <button className="col-span-2"><p className="text-center hover:scale-125" onClick={()=>{router.push('/courses/student_view/assignment')}}>Assignment</p></button>
+      <button><p className="text-center hover:scale-125" onClick={()=>{router.push('/student/profile')}}>Profile</p></button>
+      <button><p className="text-center hover:scale-125" onClick={()=>{router.push('/student/dashboard')}}>My Course</p></button>
+      <button className="col-span-2" ><p className="text-center hover:scale-125 " onClick={()=>toAllCourse()}>Browse Course</p></button>
+      <div className="col-span-2"></div>
+      </>
+    )}
+    else if (role === "instructor"){
+      return(
         <>
           <button><p className="text-center hover:scale-125">Main</p></button>
           <button><p className="text-center hover:scale-125" onClick={() => { router.push('/student/profile') }}>Profile</p></button>
