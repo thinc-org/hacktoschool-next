@@ -36,8 +36,22 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
             assignmentid:element.assignmentid
         }
     })
+    const coursename = await prisma.Course.findUnique({
+      where:{
+        id:assignment.courseid
+      }
+    })
+    const newitem = {
+      topic: assignment.topic,
+      fullscore:assignment.fullscore,
+      coursename:coursename.title,
+      duedate:assignment.duedate,
+      publish:assignment.publishtime,
+      courseid:assignment.courseid
+    }
+
    
-    allcourseass.push(assignment)
+    allcourseass.push(newitem)
    }
 
    //console.log(allcourseass, ' hiiiiiiiiiii')

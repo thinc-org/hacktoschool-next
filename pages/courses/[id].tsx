@@ -52,8 +52,8 @@ const CourseDescription: React.FC = ({ course: { id: courseId, title, descriptio
 
     const enrollHandler = async () => {
         const studentId = parseInt(localStorage.getItem('id'));
-        console.log(typeof courseId);
-        console.log(typeof studentId);
+        //console.log(typeof courseId);
+        //console.log(typeof studentId);
         const body = {
             studentId: studentId,
             courseId: courseId

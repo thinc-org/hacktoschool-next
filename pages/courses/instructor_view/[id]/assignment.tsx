@@ -235,6 +235,7 @@ const Home: React.FC = ({
                   Full Score
                 </label>
                 <input
+                required
                   type="number"
                   id="full"
                   name="full"
