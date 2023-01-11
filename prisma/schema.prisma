@@ -68,4 +68,13 @@ model Course {
   Enroll       Enroll[]
   instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
   instructorId Int
+  photo        Photo?
+  photoId      Int?
+}
+
+model Photo {
+  id       Int     @id @default(autoincrement())
+  filePath String
+  course   Course? @relation(fields: [courseId], references: [id], onDelete: SetNull)
+  courseId Int?    @unique
 }

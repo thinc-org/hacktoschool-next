@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Headerr } from "../../component/headerr";
 import prisma from "../../lib/prisma";
 
-const CourseDescription: React.FC = ({ course: { id: courseId, title, description, instructor_name }, registered_students }) => {
+const CourseDescription: React.FC = ({ course: { id: courseId, title, description, instructor_name, imagePath }, registered_students }) => {
     const [role, setRole] = useState('')
     const [enrolled, setEnrolled] = useState(false)
     const [loading, setLoading] = useState(true)
@@ -133,14 +133,14 @@ const CourseDescription: React.FC = ({ course: { id: courseId, title, descriptio
         return (
             <div className="px-5 py-5 rounded-sm bg-emerald-400 px-50">
                 <h3>Students' Reviews</h3>
-                    <div className="my-4 bg-emerald-100">
-                        <h2>jake</h2>
-                        <p>fake review 1</p>
-                    </div>
-                    <div className="my-4 bg-emerald-100">
-                        <h2>jake</h2>
-                        <p>fake review 1</p>
-                    </div>
+                <div className="my-4 bg-emerald-100">
+                    <h2>jake</h2>
+                    <p>fake review 1</p>
+                </div>
+                <div className="my-4 bg-emerald-100">
+                    <h2>jake</h2>
+                    <p>fake review 1</p>
+                </div>
             </div>
         );
     }
@@ -151,6 +151,7 @@ const CourseDescription: React.FC = ({ course: { id: courseId, title, descriptio
         <div className="pt-10 px-48 flex">
             <div className="flex flex-col">
                 <Mainbody />
+                <img className="max-w-[10rem] rounded-3xl mb-5" src={imagePath} />
             </div>
             <Review />
         </div>
@@ -165,6 +166,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         where: { id: courseId },
         include: { instructor: true },
     })
+
+    /*  add imagePath field to this course*/
+    if (course.photoId !== null) {
+        const photo = await prisma.photo.findUnique({
+            where: {
+                id: course.photoId,
+            },
+        });
+        course["imagePath"] = photo.filePath;
+    }
+    else {
+        course["imagePath"] = "/dummypic.png"
+    }
 
     const enrolls = await prisma.enroll.findMany({
         where: {

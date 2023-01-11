@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBullhorn } from "@fortawesome/free-solid-svg-icons";
 
 const CourseMenu: React.FC = ({
-  course: { id: courseId, title, description, instructor_name },
+  course: { id: courseId, title, description, instructor_name, imagePath },
   registered_students,
 }) => {
   const [loading, setLoading] = useState(true);
@@ -91,7 +91,7 @@ const CourseMenu: React.FC = ({
   const Mainbody = () => {
     return (
       <>
-         <img className="max-w-[10rem] rounded-3xl mb-5" src="/dummypic.png" />
+         <img className="max-w-[10rem] rounded-3xl mb-5" src={imagePath} />
         <button
           className="bg-red-500 text-white py-2 px-4 rounded"
           onClick={() => deleteHandler()}
@@ -140,6 +140,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     where: { id: courseId },
     include: { instructor: true },
   });
+
+  /*  add imagePath field to this course*/
+  if (course.photoId !== null) {
+    const photo = await prisma.photo.findUnique({
+      where: {
+        id: course.photoId,
+      },
+    });
+    course["imagePath"] = photo.filePath;
+  }
+  else {
+    course["imagePath"] = "/dummypic.png"
+  }
 
   const enrolls = await prisma.enroll.findMany({
     where: {

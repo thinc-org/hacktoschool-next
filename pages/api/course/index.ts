@@ -8,8 +8,6 @@ export default async function handle(
 ) {
   if (req.method === "GET") {
     handleGET(res);
-  } else if (req.method === "POST") {
-    handlePOST(req, res);
   } else {
     throw new Error(
       `The HTTP ${req.method} method is not supported at this route.`
@@ -17,41 +15,27 @@ export default async function handle(
   }
 }
 
-// POST /api/course
-// stores a new course
-// requires instructorId field in req.body
-async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
-  const data1 = JSON.parse(req.body);
-  const yahoo = parseInt(data1.Id);
-  try {
-    const course = await prisma.course.create({
-      data: {
-        title: data1.title,
-        description: data1.description,
-        instructorId: yahoo,
-      },
-    });
-    res.status(200).json({
-      body: "Created!",
-    });
-  } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      if (e.code === "P2002") {
-        console.log("same data inserted");
-
-        res.status(500).json({
-          body: "Same",
-        });
-      }
-    }
-    throw e;
-  }
-}
-
 // GET /api/course
 // get all courses
 async function handleGET(res: NextApiResponse) {
   const courses = await prisma.course.findMany();
+  /*  add imagePath field to these courses*/
+  /* note for future debugging, becareful of the prisma await in the call back, the timing is uncontrollable */
+  for (const c of courses) {
+    console.log("*******************************")
+    console.log(c);
+    if (c.photoId !== null) {
+      const photo = await prisma.photo.findUnique({
+        where: {
+          id: c.photoId,
+        },
+      });
+      c["imagePath"] = photo.filePath;
+    }
+    else {
+      c["imagePath"] = "/dummypic.png"
+    }
+  };
   res.json({
     data: courses
   });
