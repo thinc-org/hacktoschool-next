@@ -62,16 +62,26 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
                 id: courseId
             }
         });
-        
+
+        console.log("in enrollhandler");
+        console.log(courseId);
+
         // create notification for the instructor
-        const notification = await prisma.notification.create({
-            data: {
-                instructorId: course.instructorId,
-                message: `เห้ยยยย! นักเรียนชื่อ ${student.name} เขาลงทะเบียนคอร์ส ${course?.title} แล้วนะ`,
-                type: NotificationType.STUDENT_ENROLL,
-                status: NotificationStatus.UNREAD,
-            }
-        })
+        try {
+
+            const notification = await prisma.notification.create({
+                data: {
+                    instructorId: course.instructorId,
+                    message: `เห้ยยยย! นักเรียนชื่อ ${student.name} เขาลงทะเบียนคอร์ส ${course?.title} แล้วนะ`,
+                    type: NotificationType.STUDENT_ENROLL,
+                    status: NotificationStatus.UNREAD,
+                    courseId: course.id,
+                }
+            })
+        } catch( e) {
+            console.log(e);
+        }
+
 
         res.status(200).json({
             body: "Enroll success!",

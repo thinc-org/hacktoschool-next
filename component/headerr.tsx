@@ -42,14 +42,11 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
         <div className="col-span-3 flex flex-end justify-center items-center">
           <span className="px-5">
             <p>{logined}</p>
-          </span>
-          
-          
+          </span> 
             <button onClick={() => Router.push('/notifications')}>
-              <span className="px-5 bg-red-300 py-2 px-4  mx-2">Noti</span>
+              <p className="px-5 bg-red-300 py-2 px-4  mx-2 rounded-full">Inbox</p>
             </button>
-          
-
+        
           <div>
             <button
               className="bg-blue-500 text-white py-2 px-4 rounded"
@@ -84,17 +81,6 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
       <div className="col-span-2"></div>
       </>
     )}
-    else if (role === "instructor"){
-      return(
-        <>
-          <button><p className="text-center hover:scale-125">Main</p></button>
-          <button><p className="text-center hover:scale-125" onClick={() => { router.push('/student/profile') }}>Profile</p></button>
-          <button><p className="text-center hover:scale-125" onClick={() => { router.push('/student/dashboard') }}>My Course</p></button>
-          <button className="col-span-2" ><p className="text-center hover:scale-125 " onClick={() => toAllCourse()}>Browse Course</p></button>
-          <div className="col-span-3"></div>
-        </>
-      )
-    }
     else if (role === "instructor") {
       return (
         <>
