@@ -23,45 +23,21 @@ export default async function handle(
 // requires instructorId field in req.body
 async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
   const data1 = JSON.parse(req.body);
-  //console.log(data1)
+//   console.log(data1)
   const Cid = parseInt(data1.courseid)
   const Iid = parseInt(data1.instructorid)
-  const Pdate = new Date(data1.pdate)
-  const Ddate = new Date(data1.ddate)
-  const full = parseInt(data1.full)
-
-  const newAssign = await prisma.Assignment.create({
-    data:{
-    assignmentnumber:0,
-    courseid: Cid,
-    topic:data1.title,
-    description:data1.des,
-    fullscore: full,
-    publishtime: Pdate,
-    duedate: Ddate}
-  }) 
-
-  const enrolls = await prisma.enroll.findMany({
+  const allAnnouce = await prisma.Assignment.findMany({
     where:{
-      courseId:Cid
-        }
+        courseid: Cid
     }
-  )
-
-  enrolls.forEach(async (element)=>{
-    await prisma.StudentAssignment.create({
-      data:{
-        studentId: element.studentId,
-        assignmentid: newAssign.assignmentid,
-        score:0,
-        comment:'',
-        answer:'',
-        status:0
-      }
-    })
   })
+  
+
+ 
+
+  
 
   res.status(200).json({
-    body: 'done'
+    body: allAnnouce
 })
 }
