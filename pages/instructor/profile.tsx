@@ -209,7 +209,7 @@ export default function Instructorprofile() {
 
             <div className="m-3 col-span-3">
               <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                Discord Webhook (Copy Webhook URL)
+                Discord Webhook (check server settings/integration)
               </label>
               <input
                 type="text"

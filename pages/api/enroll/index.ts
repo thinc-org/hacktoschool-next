@@ -69,10 +69,10 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
 
         // create notification for the instructor
         const notiMsg = `เห้ยยยย! นักเรียนชื่อ ${student.name} เขาลงทะเบียนคอร์ส ${course?.title} แล้วนะ`;
-
+        const instructorId = course.instructorId
         const notification = await prisma.notification.create({
             data: {
-                instructorId: course.instructorId,
+                instructorId: instructorId,
                 message: notiMsg,
                 type: NotificationType.STUDENT_ENROLL,
                 status: NotificationStatus.UNREAD,
@@ -80,7 +80,22 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
             }
         })
 
-        sendDiscordNotification(notiMsg);
+        // uncomment to send discord notifications
+        const instructorProfile = await prisma.instructorProfile.findUnique({
+            where: {
+                instructorid: instructorId
+            }
+        });
+        console.log(course.instructorId);
+        console.log(instructorProfile);
+        const discordBotURL = instructorProfile.discord;
+        console.log(discordBotURL);
+
+        if (discordBotURL !== '') {
+            sendDiscordNotification(notiMsg, discordBotURL);
+        }
+
+
 
         res.status(200).json({
             body: "Enroll success!",
@@ -92,15 +107,20 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
     }
 }
 
-const sendDiscordNotification = (msg) => {
+const sendDiscordNotification = (msg, discordBotURL) => {
     console.log("sending notification to discord")
-    
+
     const { Webhook } = require('discord-webhook-node');
-    const hook = new Webhook("https://discord.com/api/webhooks/1062738812016545823/Wi-okhQGasFSCTu8B-CDHNWhOLXzWknZR7HWjJE0PueIE06aM8XAhDCVBRuAdCuHpBhn");
+
+    const hook = new Webhook(discordBotURL);
+
+    // uncomment for debugging/ demo
+    // const hook = new Webhook("https://discord.com/api/webhooks/1062738812016545823/Wi-okhQGasFSCTu8B-CDHNWhOLXzWknZR7HWjJE0PueIE06aM8XAhDCVBRuAdCuHpBhn");
 
     const IMAGE_URL = 'https://i.pinimg.com/564x/1d/83/a6/1d83a6d88d8be5b041a9a98fd5048311.jpg';
     hook.setUsername('Next ไหมนะ-Enroll-BOT');
     hook.setAvatar(IMAGE_URL);
+
 
     hook.send(msg);
 

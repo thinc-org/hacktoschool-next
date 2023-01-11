@@ -114,6 +114,7 @@ const Notification: React.FC = () => {
             <Headerr />
             <div className="pt-10 px-48">
                 <h1>Your Notifications</h1>
+                <p className="text-slate-400">for discord automatic bot, fill in the webhook url in profile</p>
                 {loading ? (<div>Loading ...</div>) : (
                     <div>
                         {
