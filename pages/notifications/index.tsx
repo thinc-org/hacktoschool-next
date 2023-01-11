@@ -22,7 +22,9 @@ const Notification: React.FC = () => {
                 body: JSON.stringify(body)
             });
             const json = await response.json();
-            setNotifications(json.data);
+            if (response.ok){
+                setNotifications(json.data);
+            }
         } catch (error) {
             // setError(error);
         } finally {

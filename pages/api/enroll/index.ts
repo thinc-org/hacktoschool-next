@@ -67,7 +67,7 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
         const notification = await prisma.notification.create({
             data: {
                 instructorId: course.instructorId,
-                message: `เห้ยยยย! นักเรียนชื่อ ${student.name} เขาลงทะเบียนคอร์ส ${course?.title} ของมึงแล้วนะ หัดไปดูดิวะ`,
+                message: `เห้ยยยย! นักเรียนชื่อ ${student.name} เขาลงทะเบียนคอร์ส ${course?.title} แล้วนะ`,
                 type: NotificationType.STUDENT_ENROLL,
                 status: NotificationStatus.UNREAD,
             }
