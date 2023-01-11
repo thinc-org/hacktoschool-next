@@ -53,6 +53,8 @@ model Assignment {
   topic            String
   description      String
   fullscore        Int
+  publishtime      DateTime
+  duedate DateTime
 
   StudentAssignment StudentAssignment[]
 }
