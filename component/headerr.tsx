@@ -42,14 +42,11 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
         <div className="col-span-3 flex flex-end justify-center items-center">
           <span className="px-5">
             <p>{logined}</p>
-          </span>
-          
-          
+          </span> 
             <button onClick={() => Router.push('/notifications')}>
-              <span className="px-5 bg-red-300 py-2 px-4  mx-2">Noti</span>
+              <p className="px-5 bg-red-300 py-2 px-4  mx-2 rounded-full">Inbox</p>
             </button>
-          
-
+        
           <div>
             <button
               className="bg-blue-500 text-white py-2 px-4 rounded"
@@ -84,7 +81,6 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
       <div className="col-span-2"></div>
       </>
     )}
-
     else if (role === "instructor") {
       return (
         <>
