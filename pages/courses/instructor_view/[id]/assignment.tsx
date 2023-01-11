@@ -11,7 +11,7 @@ const Home: React.FC = ({
   const [allasign, setAllassign] = useState([]);
   const router = useRouter();
   const [mode, setMode] = useState(0); // mode 0 = default 1 = create
-  const [annoucement, setAnnouncement] = useState({
+  const [annoucement, setassignment] = useState({
     title: "",
     description: "",
     pdate: "",
@@ -29,7 +29,7 @@ const Home: React.FC = ({
       instructorid: localStorage.getItem("id"),
     };
 
-    const response = await fetch("/api/announcement/instructor/getall", {
+    const response = await fetch("/api/assignment/instructor/getall", {
       method: "POST",
       body: JSON.stringify(nes),
     });
@@ -51,7 +51,7 @@ const Home: React.FC = ({
       instructorid: localStorage.getItem("id"),
     };
 
-    const response = await fetch("/api/announcement/instructor/new", {
+    const response = await fetch("/api/assignment/instructor/new", {
       method: "POST",
       body: JSON.stringify(newAn),
     });
@@ -77,7 +77,7 @@ const Home: React.FC = ({
             <div className="grid grid-cols-5 bg-green-200 my-2 mx-2">
               <p>{asign.topic}</p>
               <p>{asign.fullscore}</p>
-              <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={()=>{router.push(`/courses/instructor_view/${courseId}/assign/${asign.assignmentid}`)}}>Details</button></div>
+              <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={()=>{router.push(`/courses/instructor_view/${courseId}/assign/$`)}}>Details</button></div>
               <div><button className="bg-blue-500 text-white py-1 px-4 rounded">Edit</button></div>
               <div><button className="bg-blue-500 text-white py-1 px-4 rounded">Delete</button></div>
             </div>
@@ -107,7 +107,7 @@ const Home: React.FC = ({
             <div className="grid grid-cols-5 bg-green-200 my-2 mx-2">
               <p>{asign.topic}</p>
               <p>{asign.fullscore}</p>
-              <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={()=>{router.push(`/courses/instructor_view/${courseId}/assign/${asign.assignmentid}`)}}>Details</button></div>
+              <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={()=>{router.push(`/courses/instructor_view/${courseId}/assign/$`)}}>Details</button></div>
               <div><button className="bg-blue-500 text-white py-1 px-4 rounded">Edit</button></div>
               <div><button className="bg-blue-500 text-white py-1 px-4 rounded">Delete</button></div>
             </div>
@@ -136,7 +136,7 @@ const Home: React.FC = ({
             <div className="grid grid-cols-5 bg-green-200 my-2 mx-2">
               <p>{asign.topic}</p>
               <p>{asign.fullscore}</p>
-              <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={()=>{router.push(`/courses/instructor_view/${courseId}/assign/${asign.assignmentid}`)}}>Details</button></div>
+              <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={()=>{router.push(`/courses/instructor_view/${courseId}/assign/$`)}}>Details</button></div>
               <div><button className="bg-blue-500 text-white py-1 px-4 rounded">Edit</button></div>
               <div><button className="bg-blue-500 text-white py-1 px-4 rounded">Delete</button></div>
             </div>
