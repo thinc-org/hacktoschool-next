@@ -47,12 +47,12 @@ model InstructorProfile {
 model Assignment {
   assignmentid     Int        @id @default(autoincrement())
   assignmentnumber Int //manully increase na
-  instructor       Instructor @relation(fields: [instructorid], references: [id], onDelete: Cascade)
-  instructorid     Int
+
   course           Course     @relation(fields: [courseid], references: [id], onUpdate: Cascade)
   courseid         Int
   topic            String
   description      String
+  fullscore        Int
 
   StudentAssignment StudentAssignment[]
 }
@@ -77,7 +77,7 @@ model Instructor {
   password          String
   courses           Course[]
   InstructorProfile InstructorProfile[]
-  Assignment        Assignment[]
+ 
 }
 
 model Enroll {
