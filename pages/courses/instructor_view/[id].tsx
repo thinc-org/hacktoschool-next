@@ -75,7 +75,7 @@ const CourseMenu: React.FC = ({
   };
   const Assignment = () => {
     return (
-      <div className="bg-green-200 py-5 px-5" onClick={()=>{Router.push('/courses/instructor_view/assignment')}}>
+      <div className="bg-green-200 py-5 px-5" onClick={()=>{Router.push(`/courses/instructor_view/${courseId}/assignment`)}}>
         <h2>Assignments</h2>
       </div>
     );
