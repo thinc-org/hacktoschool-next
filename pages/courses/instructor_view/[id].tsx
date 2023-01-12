@@ -152,9 +152,9 @@ const Announcements = () => {
 
 const ScoreManage = () => {
   return (
-    <div className="bg-amber-200 py-5 px-5">
+    <div className="bg-amber-200 py-5 px-5" onClick={()=>{Router.push(`/courses/instructor_view/${courseId}/score`)}}>
       {" "}
-      <h2>Score Manage</h2>
+      <h2>Course Score</h2>
     </div>
   );
 };
