@@ -7,8 +7,28 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "GET") {
-    
+  if (req.method === "PUT") {
+    const data1 = JSON.parse(req.body);
+    //console.log(data1)
+    const Pdate = new Date(data1.pdate)
+    const Ddate = new Date(data1.ddate)
+    const full = parseInt(data1.full)
+    const newUp = await prisma.Assignment.update({
+      where:{
+        assignmentid:data1.assignmentid
+      },data:{
+        topic:data1.title,
+        description:data1.des,
+        fullscore: full,
+        publishtime: Pdate,
+        duedate: Ddate
+      }
+    })
+
+    res.status(200).json({
+      body: 'updated!'
+  })
+
   } else if (req.method === "POST") {
     handlePOST(req, res);
   } else {

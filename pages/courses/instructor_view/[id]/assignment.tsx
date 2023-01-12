@@ -18,6 +18,7 @@ const Home: React.FC = ({
     pdate: "",
     duedate: "",
     fullscore: 0,
+    aid:0
   });
   const timeout = (time: any) => {
     window.setTimeout(() => {
@@ -44,7 +45,7 @@ const Home: React.FC = ({
     setAllassign(res.body);
   };
 
-  const sentNewAssign = async (e) => {
+  const sentNewAssign = async (e: { preventDefault: () => void; target: { title: { value: any; }; descrip: { value: any; }; pdate: { value: any; }; ddate: { value: any; }; full: { value: any; }; }; }) => {
     e.preventDefault();
     
     const newAn = {
@@ -119,7 +120,8 @@ const Home: React.FC = ({
                 description:asign.description,
                 duedate:asign.duedate,
                 pdate:asign.publishtime,
-                fullscore:asign.fullscore
+                fullscore:asign.fullscore,
+                aid:asign.assignmentid
 
               })
               }}>Edit</button></div>
@@ -178,7 +180,8 @@ const Home: React.FC = ({
                 description:asign.description,
                 duedate:asign.duedate,
                 pdate:asign.publishtime,
-                fullscore:asign.fullscore
+                fullscore:asign.fullscore,
+                aid:asign.assignmentid
 
               })
               }}>Edit</button></div>
@@ -201,6 +204,24 @@ const Home: React.FC = ({
     });
     return <>{nowna}</>;
   }
+  const sendEdit=async(e: { target: { title: { value: any; }; descrip: { value: any; }; pdate: { value: any; }; ddate: { value: any; }; full: { value: any; }; }; })=>{
+    const newAn = {
+      title: e.target.title.value,
+      des: e.target.descrip.value,
+      pdate: e.target.pdate.value,
+      ddate: e.target.ddate.value,
+      full: e.target.full.value,
+      assignmentid:  annoucement.aid
+    };
+      const response = await fetch('/api/assignment/instructor/new',{
+        method:'PUT',
+        body:JSON.stringify(newAn)
+      })
+
+      const res  = response.json()
+      console.log(res.body)
+  }
+
   const Ongoing = () => {
  
     const today = new Date();
@@ -243,7 +264,8 @@ const Home: React.FC = ({
                 description:asign.description,
                 duedate:asign.duedate,
                 pdate:asign.publishtime,
-                fullscore:asign.fullscore
+                fullscore:asign.fullscore,
+                aid:asign.assignmentid
 
               })
               }}>Edit</button></div>
@@ -383,7 +405,7 @@ const Home: React.FC = ({
       {console.log(annoucement)}
       <h1>Edit Course</h1>
       <p>Whatever date you choose, it will be that date on 7AM</p>
-      <form>
+      <form onSubmit={sendEdit}>
         <div className="grid grid-cols-3 grid-rows-5">
           <div className="my-4 col-span-3">
             <label className="block mb-2 text-sm font-medium text-gray-900 ">
