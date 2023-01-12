@@ -83,45 +83,50 @@ const CourseDescription: React.FC = ({ course: { id: courseId, title, descriptio
         if (role === 'student') {
             return (
                 <>
-                    <h1>{title}</h1>
-                    <small>Description: {description}</small>
                     <p>Instructor: {instructor_name}</p>
+                    <p className="text-slate-400">Description: {description}</p>
+                    <div>
+                        <p className="text-slate-600">Total Students : {registered_students.length}</p>
+                    </div>
 
                     {loading ? (<div>Loading ...</div>) : (
                         <div>
                             {enrolled ? (
-                                <button className="bg-blue-500 text-white py-2 px-4 rounded" onClick={() => Router.push(`student_view/${courseId}`)}>Continue Learning</button>
-                            ) : (
-                                <button className="bg-blue-500 text-white py-2 px-4 rounded" onClick={() => enrollHandler()}>Enroll</button>
+                                <div className="mt-5">
+                                    <button className="bg-courseBtnBgColor text-white py-2 px-4 rounded-full" onClick={() => Router.push(`student_view/${courseId}`)}>Continue Learning</button>
+                                </div>) 
+                            : (
+                                <div className="mt-5">
+                                    <button className="bg-courseBtnBgColor text-white py-2 px-4 rounded-full" onClick={() => enrollHandler()}>Enroll</button>
+                                </div>
                             )}
                         </div>
                     )}
-                    <div>
-                        <p>Total Students : {registered_students.length}</p>
-                    </div>
                 </>
             )
         } else if (role === 'instructor') {
             return (
                 <>
-                    <h1>{title}</h1>
-                    <small>Description: {description}</small>
-                    <button className="bg-blue-500 text-white py-2 px-4 rounded" onClick={() => Router.push(`instructor_view/${courseId}`)}>Manage</button>
+                    <p className="text-slate-400">Description: {description}</p>
                     <div>
-                        <p>Total Students : {registered_students.length}</p>
+                        <p className="text-slate-600">Total Students : {registered_students.length}</p>
                     </div>
-                </>
+                    <div className="mt-5">
+                        <button className="bg-courseBtnBgColor text-white py-2 px-4 rounded-full" onClick={() => Router.push(`instructor_view/${courseId}`)}>Manage</button>
+                    </div>
+                    </>
             )
 
         } else {
             return (
                 <>
-                    <button className="bg-blue-500 text-white py-2 px-4 rounded" onClick={() => enrollNonUserHandler()}>Enroll</button>
 
-                    <h1>{title}</h1>
-                    <small>Description: {description}</small>
+                    <p className="text-slate-400">Description: {description}</p>
                     <div>
-                        <p>Total Students : {registered_students.length}</p>
+                        <p className="text-slate-600">Total Students : {registered_students.length}</p>
+                    </div>
+                    <div className="mt-5">
+                        <button className="bg-courseBtnBgColor text-white py-2 px-4 rounded-full" onClick={() => enrollNonUserHandler()}>Enroll</button>
                     </div>
                 </>
 
@@ -129,32 +134,25 @@ const CourseDescription: React.FC = ({ course: { id: courseId, title, descriptio
         }
     }
 
-    const Review = () => {
-        return (
-            <div className="px-5 py-5 rounded-sm bg-emerald-400 px-50">
-                <h3>Students' Reviews</h3>
-                <div className="my-4 bg-emerald-100">
-                    <h2>jake</h2>
-                    <p>fake review 1</p>
-                </div>
-                <div className="my-4 bg-emerald-100">
-                    <h2>jake</h2>
-                    <p>fake review 1</p>
-                </div>
-            </div>
-        );
-    }
-
     return (<>
+    <div className="bg-neutral-100">
 
         <Headerr />
-        <div className="pt-10 px-48 flex">
-            <div className="flex flex-col">
-                <Mainbody />
-                <img className="w-[10rem] h-[10rem] rounded-3xl mb-5" src={imagePath} />
+        <div className="mx-[20%] mt-10 py-5 px-4 shadow-xl bg-white">
+            <div className="flex justify-center my-4">
+                <div className="grid grid-cols-4">
+                    <div className="flex items-center justify-center col-span-2">
+                        <img className="w-[13rem] h-[13rem] rounded-3xl mb-5" src={imagePath} />
+                    </div>
+                    
+                    <div className="flex flex-col mr-4 p-2 rounded-md col-span-2">
+                        <h1 className="text-4xl mb-5">{title}</h1>
+                        <Mainbody />
+                    </div>
+                </div>
             </div>
-            <Review />
         </div>
+    </div>
     </>
     )
 }

@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../lib/prisma";
 import { Prisma, PrismaClient } from "@prisma/client";
+import { sendDiscordNotification } from "../enroll";
 
 export default async function handle(
   req: NextApiRequest,
@@ -48,9 +49,12 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
         link: data1.link
       }
     })
-    console.log("------------------")
-    console.log(updateprofile);
-    console.log("------------------")
+    console.log(data1.discord);
+    // if the discord is valid, send a message to the provided bot, otherwise notify error
+    if (data1.discord !== ''){
+      sendDiscordNotification("discord bot connected", data1.discord);
+    }
+
     res.status(200).json({
       body: updateprofile
     });

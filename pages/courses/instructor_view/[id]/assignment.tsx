@@ -319,7 +319,7 @@ const Home: React.FC = ({
     } else if (mode === 1) {
       return (
         <>
-          <h1>Create Course</h1>
+          <h1>Create Assignment</h1>
           <p>Whatever date you choose, it will be that date on 7AM</p>
           <form onSubmit={sentNewAssign}>
             <div className="grid grid-cols-3 grid-rows-5">

@@ -77,6 +77,25 @@ export default async function handle(
           },
         });
 
+        // also create profile for them
+
+        const newprofile = await prisma.InstructorProfile.create({
+          data: {
+            instructorid: newUser.id,
+            age: 0,
+            firstname: '',
+            lastname: '',
+            tel: '',
+            preferredsub: '',
+            description: '',
+            discord: '',
+            link: ''
+          }
+        })
+
+        console.log("instructor profile created");
+
+
         const resdata = {
           id: newUser.id,
           role: "instructor",
