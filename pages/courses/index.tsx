@@ -11,7 +11,7 @@ const AllCourses: React.FC = () => {
   const [error, setError] = useState(null);
   const [page, setPage] = useState();
   const [apage, setApage] = useState([]);
-  const [cpage,setCpage] = useState(0)
+  const [cpage, setCpage] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,22 +36,16 @@ const AllCourses: React.FC = () => {
     fetchData();
   }, []);
 
-//   useEffect(() => {
-//     Pagena();
-//   }, []);
+  //   useEffect(() => {
+  //     Pagena();
+  //   }, []);
 
-  useEffect(() => {
-  
-    console.log(apage);
-  }, [apage]);
   useEffect(() => {
     console.log(page);
-    if(page){
-        pagena()
+    if (page) {
+      pagena();
     }
   }, [page]);
-
- 
 
   const pagena = () => {
     let anum = 0;
@@ -71,23 +65,30 @@ const AllCourses: React.FC = () => {
     Router.push("/courses/[id]", `/courses/${courseId}`);
   };
 
-  const Pagelay = ()=>{
-    const hi = apage.map((element)=>{
-        return(
+  const Pagelay = () => {
+    const hi = apage.map((element) => {
+      return (
         <>
-        <div className="bg-black w-10 h-10 mx-4 mb-5 hover:scale-125 flex items-center justify-center rounded-full text-white"
-        onClick={()=>{setCpage(element)}}><p>{element+1}</p></div>
-        </>)
-    })
-    return <>{hi}</>
-  }
+          <div
+            className={"bg-black mx-4 mb-5 hover:scale-125 flex items-center justify-center rounded-full text-white "+(element === cpage ? ' w-12 h-12':' w-8 h-8')}
+            onClick={() => {
+              setCpage(element);
+            }}
+          >
+            <p>{element + 1}</p>
+          </div>
+        </>
+      );
+    });
+    return <>{hi}</>;
+  };
 
-  const Bodypage = ()=>{
-    return(
-    <div>
-            {courses.map((course,i) => {
-                if(Math.floor(i/10) === cpage){
-                return(
+  const Bodypage = () => {
+    return (
+      <div>
+        {courses.map((course, i) => {
+          if (Math.floor(i / 10) === cpage) {
+            return (
               <div
                 className="border-solid rounded-3xl bg-white hover:scale-105 hover:border-2 hover:border-yellow-400 my-5
                          grid grid-cols-2 grid-rows-1 overflow-x-hidden   "
@@ -111,17 +112,14 @@ const AllCourses: React.FC = () => {
                   </div>
                 </div>
               </div>
-            )}
-            else{
-                return<></>
-            }
-        
-        }
-            
-            
-            )}
-          </div>)
-  }
+            );
+          } else {
+            return <></>;
+          }
+        })}
+      </div>
+    );
+  };
 
   return (
     <>
@@ -129,15 +127,9 @@ const AllCourses: React.FC = () => {
       <div className="pt-10 px-48">
         <h1 className="text-2xl pb-5">Our Courses</h1>
 
-        {loading ? (
-          <div>Loading ...</div>
-        ) : (
-          <Bodypage/>
-        )}
+        {loading ? <div>Loading ...</div> : <Bodypage />}
         <div className="flex items-center justify-center">
-         
-         
-          <Pagelay/>
+          <Pagelay />
         </div>
       </div>
     </>
