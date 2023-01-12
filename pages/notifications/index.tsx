@@ -6,6 +6,7 @@ import { NotificationStatus } from "../shared/notificationCodes";
 const Notification: React.FC = () => {
     const [notifications, setNotifications] = useState([]);
     const [loading, setLoading] = useState(true)
+    const [userRole, setUserRole] = useState()
 
     const fetchNotifications = async () => {
         const userId = parseInt(localStorage.getItem('id'));
@@ -35,6 +36,7 @@ const Notification: React.FC = () => {
     }
 
     useEffect(() => {
+        setUserRole(localStorage.getItem('role'))
         fetchNotifications();
     }, []);
     
@@ -114,10 +116,15 @@ const Notification: React.FC = () => {
             <Headerr />
             <div className="pt-10 px-48">
                 <h1>Your Notifications</h1>
-                <p className="text-slate-400">for discord automatic bot, fill in the webhook url in profile</p>
+                {
+                    userRole === 'instructor' ?  (<p className="text-slate-400">for discord automatic bot, fill in the webhook url in profile</p>) : null
+                }
+                
                 {loading ? (<div>Loading ...</div>) : (
                     <div>
                         {
+                            notifications.length === 0 ? <p className="text-slate-400">no notifications</p>:
+
                             notifications.map((noti) => {
                                 return (<div key={noti.id} className="p-2 m2 hover:bg-sky-400">
                                     {

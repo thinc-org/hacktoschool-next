@@ -138,10 +138,10 @@ const CourseDescription: React.FC = ({ course: { id: courseId, title, descriptio
     <div className="bg-neutral-100">
 
         <Headerr />
-        <div className="mx-[20%] mt-10 py-5 px-4 shadow-xl bg-white">
+        <div className="mx-[25%] mt-10 pt-5 pb-2 px-4 shadow-xl bg-white">
             <div className="flex justify-center my-4">
                 <div className="grid grid-cols-4">
-                    <div className="flex items-center justify-center col-span-2">
+                    <div className="flex items-center justify-center col-span-2 mx-10">
                         <img className="w-[13rem] h-[13rem] rounded-3xl mb-5" src={imagePath} />
                     </div>
                     

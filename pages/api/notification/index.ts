@@ -19,10 +19,17 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
         })
 
     } else if (userRole === 'student') {
-        console.log("not supported");
-        res.status(500).json({
-            err: "under development"
+        const notifications = await prisma.notification.findMany({
+            where: {
+                studentId: userId,
+            }
         });
+
+        console.log(notifications);
+
+        res.json({
+            data: notifications,
+        })
     } else {
         res.status(500).json({
             err: "invalid role"
