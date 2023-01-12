@@ -13,51 +13,63 @@ const CourseMenu: React.FC = ({
 }) => {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-
-
-  useEffect(() => {
   const [notiforass,setNotiforass] = useState(0)
-  
+
   useEffect(() => { 
     //for new features
     getNoti()
   }, []);
 
-  function AnnouncementModal() {
-    //get noti for assign that pending (status === 0 and ontime)
-    const getNoti = async()=>{
-      const data = {
-        cid: courseId,
-        instructorid: localStorage.getItem("id"),
-      };
-      const response = await fetch("/api/assignment/instructor/getall", {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
-      const res = await response.json();
+  //get noti for assign that pending (status === 0 and ontime)
+  const getNoti = async()=>{
+    const data = {
+      cid: courseId,
+      instructorid: localStorage.getItem("id"),
+    };
+    const response = await fetch("/api/assignment/instructor/getall", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    const res = await response.json();
       //console.log(res.body);
       let num = 0
       for(let element of res.body){
         if(element.assignmentid){
-        //console.log(element)
-        const response = await fetch("/api/assignment/instructor/getass", {
-          method: "POST",
-          body: element.assignmentid,
-        });
-        const res2 = await response.json()
-        res2.body.forEach(element1 => {
-          if(element1.status === 1){
-            num++;
-          }
-        
-      });}
-    }
-    setNotiforass(num)
-    //console.log(num)
-  }
-
+          //console.log(element)
+          const response = await fetch("/api/assignment/instructor/getass", {
+            method: "POST",
+            body: element.assignmentid,
+          });
+          const res2 = await response.json()
+          res2.body.forEach(element1 => {
+            if(element1.status === 1){
+              num++;
+            }
+            
+          });}
+        }
+        setNotiforass(num)
+        //console.log(num)
+      }
+      
+      const RegisStudent = () => {
+        return (
+          <div className="overflow-auto bg-purple-200 max-h-36  p-5">
+            <h2>Registered Students</h2>
+            {registered_students.length ? (
+              registered_students.map((student) => (
+                <div key={student.id}>
+                  <p>Name: {student.name}</p>
+                  <p className="text-xs">Email: {student.email}</p>
+                </div>
+              ))
+            ) : (
+              <h2>no registered students</h2>
+            )}
+          </div>
+        );
+      };
   
-
   const deleteHandler = async () => {
     try {
       const response = await fetch(`/api/course/${courseId}`, {
@@ -71,7 +83,8 @@ const CourseMenu: React.FC = ({
     } finally {
     }
   };
-  const RegisStudent = () => {
+  
+  function AnnouncementModal() {
     return (
       <>
         {showModal ? (
@@ -79,7 +92,7 @@ const CourseMenu: React.FC = ({
             <div
               className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
               onClick={() => setShowModal(false)}
-            >
+              >
               <div className="relative w-auto my-6 mx-auto max-w-3xl" onClick={(event) => event.stopPropagation()}>
                 {/*content*/}
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -105,7 +118,7 @@ const CourseMenu: React.FC = ({
                       className="bg-red-500 text-white active:bg-red-600 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
                       onClick={() => setShowModal(false)}
-                    >
+                      >
                       CLOSE
                     </button>
                   </div>
@@ -118,17 +131,8 @@ const CourseMenu: React.FC = ({
       </>
     );
   }
-
-
-  const ScoreManage = () => {
-    return (
-      <div className="bg-amber-200 py-5 px-5">
-        {" "}
-        <h2>Score Manage</h2>
-      </div>
-    );
-  };
-
+  
+  
 const newAnnouncement = () => {
   Router.push(`${courseId}/announcements/create`);
 }
@@ -188,7 +192,7 @@ const Mainbody = () => {
       <button
         className="bg-red-500 text-white py-2 px-4 rounded"
         onClick={() => deleteHandler()}
-      >
+        >
         Delete
       </button>
 
