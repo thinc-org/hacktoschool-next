@@ -13,19 +13,21 @@ const CourseMenu: React.FC = ({
   const [labelshow, setLabelshow] = useState([]);
   const [scoreshow, setScoreshow] = useState([]);
   const [bgshow, setBgshow] = useState([]);
+
   const [needknow, setNeedknow] = useState({
-    totalscore: 0,
+    avgscore: 0,
     totalfullscore: 0,
   });
   const [bordershow, setBordershow] = useState([]);
   useEffect(() => {
-    getScore()
+    getScore();
   }, []);
   const getScore = async () => {
-    let labeltag = [];
     let scoretag = [];
+    let studenttag = [];
+    let fulltag = [];
+    let percenttag = [];
     let bgtag = [];
-    let bordertag = [];
     let totals = 0;
     let totalf = 0;
 
@@ -35,35 +37,56 @@ const CourseMenu: React.FC = ({
     });
     const res = await response.json();
     //console.log(res.body , ' allstudent')
-    for(let element of res.body){
-      const data={
-        cid:courseId,
-        sid:element.studentId
-      }
-      const allscore = await fetch('/api/assignment/student/getallwithid',{
-        method:'POST',
-        body:JSON.stringify(data)
-      })
-      const realall = await allscore.json()
-      let temp = []
-      
+    for (let element of res.body) {
+      const data = {
+        cid: courseId,
+        sid: element.studentId,
+      };
+      const allscore = await fetch("/api/assignment/student/getallwithid", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      const realall = await allscore.json();
+      let temp = 0;
+      let full = 0;
+
       realall.body.forEach((element2) => {
-        if(element2.status === 2){
-            temp.push(element2)
+        if (element2.status === 2) {
+          temp += element2.score;
+          full += element2.fullscore;
         }
       });
-      scoretag.push(element.studentId)
-      labeltag.push(temp)
-     
+      if (full !== 0) {
+        const ss = (temp / full) * 100;
+        studenttag.push(element.sname);
+        fulltag.push(full), percenttag.push(ss);
+        if (ss >= 50) {
+          bgtag.push("rgb(74 222 128)");
+        } else {
+          bgtag.push("rgb(248 113 113)");
+        }
       }
-    
-    console.log(labeltag)
-    console.log(scoretag)
-    // setLabelshow(labeltag);
-    // setNeedknow({
-    //   totalscore: totals,
-    //   totalfullscore: totalf,
-    // });
+      
+
+      scoretag.push(temp);
+      
+      
+      
+    }
+    console.log(studenttag)
+    //console.log(percenttag);
+    //  console.log(fulltag)
+    //  console.log(scoretag)
+    const sumscore = scoretag.reduce((partialSum, a) => partialSum + a, 0);
+    const sumfscore = fulltag.reduce((partialSum, a) => partialSum + a, 0);
+    setNeedknow({
+      avgscore: (sumscore / sumfscore) * 100,
+      totalfullscore: 0,
+    });
+    setLabelshow(studenttag);
+    setScoreshow(percenttag);
+    setBgshow(bgtag);
+
     // setScoreshow(scoretag);
     // setBgshow(bgtag);
     // console.log(bordertag);
@@ -77,9 +100,13 @@ const CourseMenu: React.FC = ({
       x: {
         ticks: {
           font: {
-            size: 18,
+            size: 14,
           },
         },
+      },
+      y: {
+        max: 100,
+        min: 0,
       },
     },
   };
@@ -103,7 +130,21 @@ const CourseMenu: React.FC = ({
     <>
       <Headerr />
       <div className="pt-10 px-48">
-        <h1 style={{ color: "red" }}>FOR DEBUGGING : USNXSNDJD</h1>
+        <h1>
+          Graph for student score for all the assignment in this course in
+          percentage
+        </h1>
+        <div className="flex justify-center">
+          <div className=" h-[30rem] w-[50rem]">
+            <Bar data={data} options={option} />
+          </div>
+        </div>
+        <div className="mt-3">
+          <p>
+            Average Score For Students In This Course :{" "}
+            {needknow.avgscore.toFixed(2)}
+          </p>
+        </div>
       </div>
     </>
   );

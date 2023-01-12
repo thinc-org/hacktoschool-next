@@ -35,7 +35,7 @@ async function handleGET(res: NextApiResponse) {
     else {
       c["imagePath"] = "/dummypic.png"
     }
-    console.log(c["imagePath"])
+    //console.log(c["imagePath"])
   };
   res.json({
     data: courses

@@ -213,6 +213,11 @@ const Home: React.FC = ({
       full: e.target.full.value,
       assignmentid:  annoucement.aid
     };
+    if(newAn.pdate>newAn.ddate){
+      setErrormes('nodate')
+      timeout(1000)
+      return
+    }
       const response = await fetch('/api/assignment/instructor/new',{
         method:'PUT',
         body:JSON.stringify(newAn)

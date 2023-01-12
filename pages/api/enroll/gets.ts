@@ -8,14 +8,27 @@ import { NotificationStatus, NotificationType } from '../../shared/notificationC
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
         const data = parseInt(req.body)
+        let niceone = []
         const allfind = await prisma.Enroll.findMany({
             where:{
                 courseId:data
             }
         })
+        for(let element of allfind){
+            const findS = await prisma.student.findUnique({
+                where:{
+                    id:element.studentId
+                }
+            })
+            const bb = {
+                studentId: element.studentId,
+                sname:findS.name
+            }
+            niceone.push(bb)
+        }
         //all student that enrolled that course
         res.status(200).json({
-            body: allfind
+            body: niceone
         })
 
 

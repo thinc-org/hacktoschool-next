@@ -16,7 +16,18 @@ const Home: React.FC = ({
     courseId,
   },
 }) => {
+  const [errormes, setErrormes] = useState("");
   const [allasign, setAllassign] = useState([]);
+  const [needknow, setNeedknow] = useState({
+    max: "",
+    maxn: 0,
+    minn: 0,
+    min: "",
+    avg: 0,
+    sd: 0,
+    total:0,
+    sure:0
+  });
   const [working, setWorking] = useState({
     score: 0,
     answer: "",
@@ -31,6 +42,62 @@ const Home: React.FC = ({
   useEffect(() => {
     getAllscore();
   }, []);
+
+  useEffect(() => {
+    logic();
+  }, [allasign]);
+
+  const logic = () => {
+    let mx = 0,
+      sure=0,
+      mn = 1000,
+      mnn = "",
+      mxn = "",
+      total = 0,
+    
+      num = 0,
+      forsd = [];
+    console.log("hi");
+    allasign.forEach((element, i) => {
+      if (i === 0) {
+      } else {
+        sure++
+        if (element.status === 2) {
+          if (element.score > mx) {
+            (mx = element.score), (mxn = element.sname);
+          }
+          if (element.score < mn) {
+            (mn = element.score), (mnn = element.sname);
+          }
+          total += element.score;
+          num++;
+          forsd.push(element.score);
+        }
+      }
+    });
+    const mean = total / num;
+    let gafa = 0;
+    if(mn===1000){mn = 0}
+    forsd.forEach((element) => {
+      gafa += Math.pow(element - mean, 2);
+    });
+    const SD = Math.sqrt(gafa / num);
+    setNeedknow({
+      max: mxn,
+      min: mnn,
+      maxn: mx,
+      minn: mn,
+      avg: mean,
+      sd: SD,
+      total:num,
+      sure:sure
+    });
+  };
+  const timeout = (time: any) => {
+    window.setTimeout(() => {
+      setErrormes("");
+    }, time);
+  };
   const getAllscore = async () => {
     const response = await fetch("/api/assignment/instructor/getass", {
       method: "POST",
@@ -47,8 +114,13 @@ const Home: React.FC = ({
       assignid: assignmentid,
       score: e.target.score.value,
       comment: e.target.comment.value,
-      sid: working.sid
+      sid: working.sid,
     };
+    if (parseInt(data.score) > fullscore) {
+      setErrormes("above");
+      timeout(1000);
+      return;
+    }
     const response = await fetch("/api/assignment/instructor/sendgrade", {
       method: "POST",
       body: JSON.stringify(data),
@@ -56,8 +128,20 @@ const Home: React.FC = ({
 
     const res = await response.json();
     console.log(res.body);
-    getAllscore()
+    getAllscore();
     setMode(0);
+  };
+
+  const ShowErrorAdd = () => {
+    if (errormes === "above") {
+      return (
+        <div className="mt-4 ml-4 text-red-600">
+          <p>Your given score is above full score!</p>
+        </div>
+      );
+    } else {
+      return <div></div>;
+    }
   };
 
   const Waitgrading = () => {
@@ -121,13 +205,15 @@ const Home: React.FC = ({
           </>
         );
       } else {
-        if (element.status === 2)
+        if (element.status === 2) {
           return (
             <>
               <div className="bg-green-200 grid grid-cols-4 p-2 ">
                 <p>{element.sid}</p>
                 <p>{element.sname}</p>
-                <p>{element.score}/{fullscore}</p>
+                <p>
+                  {element.score}/{fullscore}
+                </p>
                 <p>
                   <button
                     className="bg-blue-500 text-white py-1 px-4 rounded"
@@ -148,11 +234,12 @@ const Home: React.FC = ({
               </div>
             </>
           );
-        else {
+        } else {
           return <></>;
         }
       }
     });
+
     return <> {allsubmit}</>;
   };
 
@@ -164,6 +251,21 @@ const Home: React.FC = ({
           <Waitgrading />
           <h2 className="py-2">Graded</h2>
           <Graded />
+          <h1 className="py-2">Course Statistics</h1>
+          <div className="p-2 bg-blue-200 rounded-b-xl ">
+            <p>
+              Submitted : {needknow.total} From : {needknow.sure}
+            </p>
+            <p>
+              Max Score : {needknow.maxn} By : {needknow.max}{" "}
+            </p>
+            <p>
+              Min Score : {needknow.minn} By : {needknow.min}{" "}
+            </p>
+            <p>
+              Average Score is : {needknow.avg} And SD is : {needknow.sd.toFixed(3)}{" "}
+            </p>
+          </div>
         </>
       );
     } else if (mode === 1) {
@@ -208,10 +310,11 @@ const Home: React.FC = ({
               />
             </div>
 
-            <div>
+            <div className="flex item-center">
               <button className="bg-blue-500 mt-2 text-white py-2 px-4 rounded">
                 <p>Grade</p>
               </button>
+              <ShowErrorAdd />
             </div>
           </form>
         </>
@@ -226,7 +329,11 @@ const Home: React.FC = ({
       <Headerr />
 
       <div className="pt-10 px-48">
-        <div className="grid pb-2 grid-cols-3"><h1 className="">Assignment Topic: {topic}</h1> <h1>Publish Date: {publishtime.substring(0, 10)}</h1><h3>Due Date: {duedate.substring(0, 10)}</h3></div>
+        <div className="grid pb-2 grid-cols-3">
+          <h1 className="">Assignment Topic: {topic}</h1>{" "}
+          <h1>Publish Date: {publishtime.substring(0, 10)}</h1>
+          <h3>Due Date: {duedate.substring(0, 10)}</h3>
+        </div>
         <p>Description: {description}</p>
         <Main />
       </div>
