@@ -271,7 +271,7 @@ const Home: React.FC = ({
     if (mode === 0) {
       return (
         <>
-          <h1>Welcome to assignment for course {courseId}   Instructor Name {instructor_name}</h1>
+          <h1>Welcome to assignment for course {title}   Instructor Name {instructor_name}</h1>
           <h2 className="py-2">Pending</h2>
           <PendingAss />
           <h2 className="py-2">Still Editable</h2>

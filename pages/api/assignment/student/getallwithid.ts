@@ -25,7 +25,7 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
   
  const data1 = JSON.parse(req.body);
  let allcourseass = [{}];
-    
+
   const sid = parseInt(data1.sid)
   const allAssign = await prisma.Assignment.findMany({
     where:{

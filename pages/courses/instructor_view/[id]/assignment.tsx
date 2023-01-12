@@ -293,7 +293,7 @@ const Home: React.FC = ({
     if (mode === 0) {
       return (
         <>
-          <h1>Welcome to instructor Assignment for Course {courseId}</h1>
+          <h1>Welcome to instructor Assignment for Course {title}</h1>
           <div>
             <h1 className="py-2">Ongoing Assignment</h1>
             <Ongoing />

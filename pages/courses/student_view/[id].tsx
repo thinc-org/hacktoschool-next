@@ -12,11 +12,38 @@ const CourseMenu: React.FC = ({
 }) => {
   // for some loading
   const [loading, setLoading] = useState(true);
+  const [notiforass,setNotiforass] = useState(0)
 
   useEffect(() => {
     //adding font awesome
     // for some future features
+    getNoti()
   }, []);
+  //get noti for assign that pending (status === 0 and ontime)
+  const getNoti = async()=>{
+    const data = {
+      cid: courseId,
+      sid: localStorage.getItem("id"),
+    };
+    const response = await fetch("/api/assignment/student/getallwithid", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    const res = await response.json();
+    //console.log(res.body);
+    let num = 0
+    res.body.forEach(element => {
+      const today = new Date();
+      const ddate = new Date(element.duedate);
+      const pdate = new Date(element.publish);  
+      if(ddate >= today && today >= pdate && element.status === 0){
+        num+=1;
+      }
+    });
+    setNotiforass(num)
+    //console.log(num)
+   
+  }
 
   const leaveHandler = async () => {
     const studentId = parseInt(localStorage.getItem("id"));
@@ -94,9 +121,18 @@ const CourseMenu: React.FC = ({
     );
   };
   const Assignment = () => {
+    const Noti = ()=>{
+      if(notiforass>0){
+        return<div className=" ml-3 inline-flex items-center justify-center w-8 h-8 text-xs text-white bg-red-500 rounded-full dark:border-gray-900"><h3>{notiforass}</h3></div>
+      }
+      else{
+        return<></>
+      }
+    }
     return (
-      <div className="bg-purple-200 py-5 px-5" onClick={()=>{Router.push(`/courses/student_view/${courseId}/assign`)}}>
+      <div className="bg-purple-200 items-center py-5 px-5 inline-flex" onClick={()=>{Router.push(`/courses/student_view/${courseId}/assign`)}}>
         <h2>Assignments</h2>
+        <Noti/>
       </div>
     );
   };

@@ -11,11 +11,46 @@ const CourseMenu: React.FC = ({
   registered_students,
 }) => {
   const [loading, setLoading] = useState(true);
-
+  const [notiforass,setNotiforass] = useState(0)
   
   useEffect(() => { 
     //for new features
+    getNoti()
   }, []);
+
+    //get noti for assign that pending (status === 0 and ontime)
+    const getNoti = async()=>{
+      const data = {
+        cid: courseId,
+        instructorid: localStorage.getItem("id"),
+      };
+      const response = await fetch("/api/assignment/instructor/getall", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      const res = await response.json();
+      //console.log(res.body);
+      let num = 0
+      for(let element of res.body){
+        if(element.assignmentid){
+        //console.log(element)
+        const response = await fetch("/api/assignment/instructor/getass", {
+          method: "POST",
+          body: element.assignmentid,
+        });
+        const res2 = await response.json()
+        res2.body.forEach(element1 => {
+          if(element1.status === 1){
+            num++;
+          }
+        
+      });}
+    }
+    setNotiforass(num)
+    //console.log(num)
+  }
+
+  
 
   const deleteHandler = async () => {
     try {
@@ -74,9 +109,18 @@ const CourseMenu: React.FC = ({
     );
   };
   const Assignment = () => {
+    const Noti = ()=>{
+      if(notiforass>0){
+        return<div className=" ml-3 inline-flex items-center justify-center w-8 h-8 text-xs text-white bg-red-500 rounded-full dark:border-gray-900"><h3>{notiforass}</h3></div>
+      }
+      else{
+        return<></>
+      }
+    }
     return (
-      <div className="bg-green-200 py-5 px-5" onClick={()=>{Router.push(`/courses/instructor_view/${courseId}/assignment`)}}>
+      <div className="bg-green-200 py-2 px-5 inline-flex items-center" onClick={()=>{Router.push(`/courses/instructor_view/${courseId}/assignment`)}}>
         <h2>Assignments</h2>
+        <Noti/>
       </div>
     );
   };

@@ -24,7 +24,7 @@ export default async function handle(
 async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
   const data1 = JSON.parse(req.body);
 //   console.log(data1)
-  const Cid = parseInt(data1.courseid)
+  const Cid = data1.cid
   const Iid = parseInt(data1.instructorid)
   let bee = [{}]
   const allAnnouce = await prisma.Assignment.findMany({
