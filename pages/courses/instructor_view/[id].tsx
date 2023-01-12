@@ -167,9 +167,18 @@ const DiscussBoard = () => {
   );
 };
 const Assignment = () => {
+  const Noti = ()=>{
+    if(notiforass>0){
+      return<div className=" ml-3 inline-flex items-center justify-center w-8 h-8 text-xs text-white bg-red-500 rounded-full dark:border-gray-900"><h3>{notiforass}</h3></div>
+    }
+    else{
+      return<></>
+    }
+  }
   return (
-    <div className="bg-green-200 py-5 px-5" onClick={() => { Router.push(`/courses/instructor_view/${courseId}/assignment`) }}>
+    <div className="bg-green-200 py-2 px-5 inline-flex items-center" onClick={()=>{Router.push(`/courses/instructor_view/${courseId}/assignment`)}}>
       <h2>Assignments</h2>
+      <Noti/>
     </div>
   );
 };
