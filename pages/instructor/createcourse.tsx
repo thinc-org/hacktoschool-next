@@ -69,7 +69,8 @@ export default function Home() {
   return (
     <div className="bg-bgcolor w-screen h-screen">
       <Headerr />
-      <form className="mt-24 pr-20 px-40" onSubmit={createCourse}>
+      <form className="mt-10 pr-20 px-40" onSubmit={createCourse}>
+      <h1>Fill in the course info</h1>
         <div className="my-4">
           <label className="block mb-2 text-sm font-medium text-gray-900 ">
             Title
@@ -123,7 +124,7 @@ export default function Home() {
         </div>
 
 
-        <button className="bg-blue-500 text-white py-2 px-4 rounded">
+        <button className="bg-blue-500 text-white py-2 px-4 rounded my-10">
           <p>Create Course</p>
         </button>
         <div>
