@@ -7,7 +7,21 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "GET") {
+  if (req.method === "DELETE") {
+
+    const data1 = parseInt(req.body)
+    console.log(data1,' goddd')
+    console.log('1111111111111111111111111111')
+    const nomore = await prisma.Assignment.delete({
+      where:{
+        assignmentid:data1
+      }
+    })
+
+    
+  res.status(200).json({
+    body: 'Success!'})
+
     
   } else if (req.method === "POST") {
     handlePOST(req, res);

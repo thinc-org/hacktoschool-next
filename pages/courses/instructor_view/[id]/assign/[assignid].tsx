@@ -226,7 +226,7 @@ const Home: React.FC = ({
       <Headerr />
 
       <div className="pt-10 px-48">
-        <h1 className="py-2">Assignment Topic: {topic}</h1>
+        <div className="grid pb-2 grid-cols-3"><h1 className="">Assignment Topic: {topic}</h1> <h1>Publish Date: {publishtime.substring(0, 10)}</h1><h3>Due Date: {duedate.substring(0, 10)}</h3></div>
         <p>Description: {description}</p>
         <Main />
       </div>

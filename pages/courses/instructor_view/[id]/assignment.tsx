@@ -9,6 +9,7 @@ const Home: React.FC = ({
 }) => {
  
   const [allasign, setAllassign] = useState([]);
+  const [errormes, setErrormes] = useState("");
   const router = useRouter();
   const [mode, setMode] = useState(0); // mode 0 = default 1 = create
   const [annoucement, setassignment] = useState({
@@ -18,6 +19,11 @@ const Home: React.FC = ({
     duedate: "",
     fullscore: 0,
   });
+  const timeout = (time: any) => {
+    window.setTimeout(() => {
+      setErrormes("");
+    }, time);
+  };
 
   useEffect(() => {
     getAllassign();
@@ -40,7 +46,7 @@ const Home: React.FC = ({
 
   const sentNewAssign = async (e) => {
     e.preventDefault();
-
+    
     const newAn = {
       title: e.target.title.value,
       des: e.target.descrip.value,
@@ -50,6 +56,11 @@ const Home: React.FC = ({
       courseid: courseId,
       instructorid: localStorage.getItem("id"),
     };
+    if(newAn.pdate>newAn.ddate){
+      setErrormes('nodate')
+      timeout(1000)
+      return
+    }
 
     const response = await fetch("/api/assignment/instructor/new", {
       method: "POST",
@@ -58,6 +69,18 @@ const Home: React.FC = ({
     const res = await response.json();
     console.log(res.body + "  dddddd");
     setMode(0);
+  };
+
+  const ShowErrorAdd = () => {
+    if (errormes === "nodate") {
+      return (
+        <div className="mt-8 text-red-600">
+          <p>Invalid Publish and Due Date!</p>
+        </div>
+      );
+    } else {
+      return <div></div>;
+    }
   };
 
   const Finished = ()=>{
@@ -87,11 +110,29 @@ const Home: React.FC = ({
         return (
           <>
             <div className="grid grid-cols-5 bg-red-200 p-2">
-              <p>{asign.topic}</p>
+              <p className=" overflow-hidden">{asign.topic}</p>
               <p>{asign.fullscore}</p>
               <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={()=>{router.push(`/courses/instructor_view/${courseId}/assign/${asign.assignmentid}`)}}>Details</button></div>
-              <div><button className="bg-blue-500 text-white py-1 px-4 rounded">Edit</button></div>
-              <div><button className="bg-blue-500 text-white py-1 px-4 rounded">Delete</button></div>
+              <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={()=>{setMode(2)
+              setassignment({
+                title:asign.topic,
+                description:asign.description,
+                duedate:asign.duedate,
+                pdate:asign.publishtime,
+                fullscore:asign.fullscore
+
+              })
+              }}>Edit</button></div>
+              <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={async ()=>{
+                const nomore = await fetch('/api/assignment/instructor/getass',{
+                  method:"DELETE",
+                  body:asign.assignmentid
+                })
+                const res = await nomore.json()
+                console.log(res.body)
+                getAllassign()
+
+              }}>Delete</button></div>
             </div>
           </>
         );
@@ -128,11 +169,29 @@ const Home: React.FC = ({
         return (
           <>
             <div className="grid grid-cols-5 bg-yellow-200 p-2">
-              <p>{asign.topic}</p>
+              <p className=" overflow-hidden">{asign.topic}</p>
               <p>{asign.fullscore}</p>
               <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={()=>{router.push(`/courses/instructor_view/${courseId}/assign/${asign.assignmentid}`)}}>Details</button></div>
-              <div><button className="bg-blue-500 text-white py-1 px-4 rounded">Edit</button></div>
-              <div><button className="bg-blue-500 text-white py-1 px-4 rounded">Delete</button></div>
+              <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={()=>{setMode(2)
+              setassignment({
+                title:asign.topic,
+                description:asign.description,
+                duedate:asign.duedate,
+                pdate:asign.publishtime,
+                fullscore:asign.fullscore
+
+              })
+              }}>Edit</button></div>
+              <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={async ()=>{
+                const nomore = await fetch('/api/assignment/instructor/getass',{
+                  method:"DELETE",
+                  body:asign.assignmentid
+                })
+                const res = await nomore.json()
+                console.log(res.body)
+                getAllassign()
+
+              }}>Delete</button></div>
             </div>
           </>
         );
@@ -147,12 +206,18 @@ const Home: React.FC = ({
     const today = new Date();
   
     const nowna = allasign.map((asign,i) => {
+      // console.log(asign.duedate)
+      // console.log(asign.publishtime)
       const ddate = new Date(asign.duedate)
       const pdate = new Date(asign.publishtime)
       // console.log(typeof(hi))
       // console.log("now: ", today);
       // console.log("due date: ", hi);
       // console.log(hi > today, " fffffff");
+      // console.log(asign.topic)
+      // console.log(ddate)
+      // console.log(pdate)
+      // console.log(today)
       if(i===0){
         return<>
             <div className="bg-purple-200 grid grid-cols-5 p-2 ">
@@ -169,11 +234,29 @@ const Home: React.FC = ({
         return (
           <>
             <div className="grid grid-cols-5 bg-green-200 p-2">
-              <p>{asign.topic}</p>
+              <p className=" overflow-hidden">{asign.topic}</p>
               <p>{asign.fullscore}</p>
               <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={()=>{router.push(`/courses/instructor_view/${courseId}/assign/${asign.assignmentid}`)}}>Details</button></div>
-              <div><button className="bg-blue-500 text-white py-1 px-4 rounded">Edit</button></div>
-              <div><button className="bg-blue-500 text-white py-1 px-4 rounded">Delete</button></div>
+              <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={()=>{setMode(2)
+              setassignment({
+                title:asign.topic,
+                description:asign.description,
+                duedate:asign.duedate,
+                pdate:asign.publishtime,
+                fullscore:asign.fullscore
+
+              })
+              }}>Edit</button></div>
+              <div><button className="bg-blue-500 text-white py-1 px-4 rounded" onClick={async ()=>{
+                const nomore = await fetch('/api/assignment/instructor/getass',{
+                  method:"DELETE",
+                  body:asign.assignmentid
+                })
+                const res = await nomore.json()
+                console.log(res.body)
+                getAllassign()
+
+              }}>Delete</button></div>
             </div>
           </>
         );
@@ -215,6 +298,7 @@ const Home: React.FC = ({
       return (
         <>
           <h1>Create Course</h1>
+          <p>Whatever date you choose, it will be that date on 7AM</p>
           <form onSubmit={sentNewAssign}>
             <div className="grid grid-cols-3 grid-rows-5">
               <div className="my-4 col-span-3">
@@ -281,13 +365,112 @@ const Home: React.FC = ({
                 <button className="bg-blue-500 text-white py-2 px-4 rounded">
                   <p>Create Assignment</p>
                 </button>
+                <ShowErrorAdd/>
               </div>
+              <div>
+
+              </div>
+              <div className="pl-5">
+                <button className="bg-blue-500 text-white py-2 px-4 rounded" type='button' onClick={()=>{setMode(0)}}><p>Back</p></button>
+              </div>
+              
             </div>
           </form>
         </>
       );
     } else {
-      return <></>;
+      return  <>
+      {console.log(annoucement)}
+      <h1>Edit Course</h1>
+      <p>Whatever date you choose, it will be that date on 7AM</p>
+      <form>
+        <div className="grid grid-cols-3 grid-rows-5">
+          <div className="my-4 col-span-3">
+            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+              Title
+            </label>
+            <input
+              placeholder={annoucement.title}
+              defaultValue={annoucement.title}
+              required
+              type="text"
+              id="title"
+              name="title"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+          </div>
+          <div className="my-4 row-span-2 col-span-3">
+            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+              Description
+            </label>
+            <textarea
+              placeholder={annoucement.description}
+              defaultValue={annoucement.description}
+              required
+              rows={6}
+              id="descrip"
+              name="descrip"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+          </div>
+          <div className=" mr-5">
+            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+              Publish Date
+            </label>
+            <input
+              required
+              placeholder={annoucement.pdate}
+              defaultValue={annoucement.pdate.substring(0,10)}
+              type="date"
+              id="pdate"
+              name="pdate"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+          </div>
+          <div className="mx-5">
+            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+              Due date
+            </label>
+            <input
+              required
+              placeholder={annoucement.duedate}
+              defaultValue={annoucement.duedate.substring(0,10)}
+              type="date"
+              id="ddate"
+              name="ddate"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+          </div>
+          <div className="ml-5">
+            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+              Full Score
+            </label>
+            <input
+            required
+              type="number"
+              placeholder={annoucement.fullscore}
+              defaultValue={annoucement.fullscore}
+              id="full"
+              name="full"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+          </div>
+          <div>
+            <button className="bg-blue-500 text-white py-2 px-4 rounded">
+              <p>Edit Assignment</p>
+            </button>
+            <ShowErrorAdd/>
+          </div>
+          <div>
+
+          </div>
+          <div className="pl-5">
+            <button className="bg-blue-500 text-white py-2 px-4 rounded" type='button' onClick={()=>{setMode(0)}}><p>Back</p></button>
+          </div>
+          
+        </div>
+      </form>
+    </>;
     }
   };
 
