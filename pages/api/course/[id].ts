@@ -53,6 +53,7 @@ async function handlePUT(req: NextApiRequestWithId, res: NextApiResponse) {
 // DELETE /api/course/:id
 // delete a course by their id
 async function handleDELETE(id: number, res: NextApiResponse) {
+    console.log("in delete handler");
     const course = await prisma.course.delete({
         where: {
             id: id,

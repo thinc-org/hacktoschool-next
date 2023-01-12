@@ -48,6 +48,8 @@ async function handleDELETE(req: NextApiRequest, res: NextApiResponse) {
 // req.body must have valid studentId and courseId
 async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
     const { studentId, courseId } = req.body;
+    console.log("in enrollhandler");
+    console.log(courseId);
     try {
         const student = await prisma.student.update({
             where: { id: studentId },
@@ -64,8 +66,6 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
             }
         });
 
-        console.log("in enrollhandler");
-        console.log(courseId);
 
         // create notification for the instructor
         const notiMsg = `เห้ยยยย! นักเรียนชื่อ ${student.name} เขาลงทะเบียนคอร์ส ${course?.title} แล้วนะ`;
@@ -91,12 +91,10 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
         const discordBotURL = instructorProfile.discord;
         console.log(discordBotURL);
 
-        if (discordBotURL !== '') {
+        if (discordBotURL !== null) {
             sendDiscordNotification(notiMsg, discordBotURL);
         }
-
-
-
+        
         res.status(200).json({
             body: "Enroll success!",
         });
@@ -107,7 +105,7 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
     }
 }
 
-const sendDiscordNotification = (msg, discordBotURL) => {
+export const sendDiscordNotification = (msg, discordBotURL) => {
     console.log("sending notification to discord")
 
     const { Webhook } = require('discord-webhook-node');

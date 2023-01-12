@@ -8,7 +8,8 @@ module.exports = {
     extend: {
       colors:{
         'bgcolor':'#F6F5F4',
-        'customtext1':'#2B788B'
+        'customtext1':'#2B788B',
+        'courseBtnBgColor': '#2B788B',
       }
     },
   },

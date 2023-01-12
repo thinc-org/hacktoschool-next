@@ -108,7 +108,7 @@ export default function Instructorprofile() {
       <div className="flex flex-wrap bg-green-200 rounded-full items-center"><span className="px-5"><FontAwesomeIcon icon={faPhone} size="xl"/></span><p>{instructorprofile.tel}</p></div>
       <div className="flex flex-wrap bg-green-200 rounded-full items-center col-span-3"><span className="px-5"><FontAwesomeIcon icon={faThumbsUp} size="xl"/></span><p>{instructorprofile.psub}</p></div>
       <div className="flex flex-wrap bg-green-200 rounded-full items-center col-span-3"><span className="px-5"><FontAwesomeIcon icon={faInfo} size="xl"/></span><p>{instructorprofile.des}</p></div>
-      <div className="flex flex-wrap bg-green-200 rounded-full items-center col-span-3"><span className="px-5"><FontAwesomeIcon icon={faPodcast} size="xl"/></span><p>{instructorprofile.discord}</p></div>
+      <div className="flex flex-row bg-green-200 rounded-full items-center col-span-3"><span className="px-5"><FontAwesomeIcon icon={faPodcast} size="xl"/></span><p className="truncate">{instructorprofile.discord}</p></div>
       <div className="flex flex-wrap bg-green-200 rounded-full items-center col-span-2"><span className="px-5"><FontAwesomeIcon icon={faLink} size="xl"/></span><a href={instructorprofile.link} target="_blank" rel="noopener noreferrer">{instructorprofile.link}</a></div>
       <div>
           <button
@@ -209,7 +209,7 @@ export default function Instructorprofile() {
 
             <div className="m-3 col-span-3">
               <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                Discord Webhook (check server settings/integration)
+                Discord Webhook (check server settings/integration, a success msg will be sent once correctly registerd)
               </label>
               <input
                 type="text"

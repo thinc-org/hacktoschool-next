@@ -38,7 +38,7 @@ export default function Home() {
                            </div>
                        </div>
                     ))}
-         <button className='bg-blue-500  text-white py-3 px-4 rounded' onClick={()=>{
+         <button className='bg-courseBtnBgColor text-white py-3 px-4 rounded-full my-5' onClick={()=>{
             router.push('/instructor/createcourse')
          }} >Create Course</button>
       </div>

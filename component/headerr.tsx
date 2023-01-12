@@ -95,7 +95,7 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
     else {
       return (
         <>
-          <div className='col-span-2'><button><p className="text-center" onClick={() => toAllCourse()}>Browse Course</p></button></div>
+          <div className='col-span-2 ml-10'><button><p className="text-center" onClick={() => toAllCourse()}>Browse Course</p></button></div>
           <button><p className="text-center hover:scale-125"></p></button>
           <button><p className="text-center hover:scale-125"></p></button>
           <div className="col-span-4"></div>
