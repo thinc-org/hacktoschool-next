@@ -10,7 +10,8 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
         handlePOST(req, res);
     } else if (req.method === 'DELETE') {
         handleDELETE(req, res);
-    }
+    } 
+   
 
     else {
         throw new Error(

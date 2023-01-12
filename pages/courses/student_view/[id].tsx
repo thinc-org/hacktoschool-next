@@ -100,7 +100,7 @@ const CourseMenu: React.FC = ({
   };
   const ScoreGraphs = () => {
     return (
-      <div className="bg-amber-200 py-5 px-5">
+      <div className="bg-amber-200 py-5 px-5" onClick={()=>{Router.push(`/courses/student_view/${courseId}/score`)}}>
         {" "}
         <h2>Score Graphs</h2>
       </div>

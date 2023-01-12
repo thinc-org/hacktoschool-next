@@ -19,13 +19,13 @@ export default async function handle(
 }
 
 // POST /api/course
-// stores a new course
+// give sid and cid,  will give you every assignment for that
 // requires instructorId field in req.body
 async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
   
  const data1 = JSON.parse(req.body);
  let allcourseass = [{}];
-
+  
   const sid = parseInt(data1.sid)
   const allAssign = await prisma.Assignment.findMany({
     where:{
