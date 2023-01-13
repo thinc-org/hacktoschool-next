@@ -32,6 +32,22 @@ export default async function handle(
               password: info.password,
             },
           });
+
+          // also create profile for them
+
+        const newprofile = await prisma.studentProfile.create({
+          data: {
+            studentid: newUser.id,
+            age: 0,
+            firstname: '',
+            lastname: '',
+            tel: '',
+            preferredsub: '',
+            description: '',
+            link: ''
+          }
+        })
+
           const resdata = {
             id: newUser.id,
             role: "student",
