@@ -44,7 +44,7 @@ export const Headerr = (props: { selectState: (arg0: string) => void }) => {
             <p>{logined}</p>
           </span> 
             <button onClick={() => Router.push('/notifications')}>
-              <p className="px-5 bg-red-300 py-2 px-4  mx-2 rounded-full">Inbox</p>
+              <p className="bg-neutral-500 py-3 px-4  mx-2 rounded-md text-slate-200 text-xs">noti</p>
             </button>
         
           <div>
