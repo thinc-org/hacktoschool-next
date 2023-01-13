@@ -167,7 +167,7 @@ const CourseMenu: React.FC = ({
   };
   const CourseMaterials = () => {
     return (
-      <div className="bg-green-200 py-5 px-5" onClick={()=>{Router.push(`/coursematerial/${courseId}`)}}>
+      <div className="bg-green-200 py-5 px-5">
         <h2>Course Materials</h2>
       </div>
     );
