@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch","fullTextIndex"]
 }
 
 datasource db {
@@ -82,6 +83,9 @@ model Instructor {
   courses           Course[]
   notifications     Notification[]
   InstructorProfile InstructorProfile[]
+
+  
+  @@fulltext([name])
 }
 
 model Enroll {
@@ -105,6 +109,8 @@ model Course {
   Assignment    Assignment[]
   notifications Notification[]
   announcements Announcement[]
+
+  @@fulltext([title,description])
 }
 
 model Photo {
