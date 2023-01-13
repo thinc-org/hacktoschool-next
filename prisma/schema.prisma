@@ -2,8 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
-  previewFeatures = ["fullTextSearch","fullTextIndex"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -84,7 +84,6 @@ model Instructor {
   notifications     Notification[]
   InstructorProfile InstructorProfile[]
 
-  
   @@fulltext([name])
 }
 
@@ -98,19 +97,20 @@ model Enroll {
 }
 
 model Course {
-  id            Int            @id @default(autoincrement())
-  title         String         @unique
-  description   String?
-  Enroll        Enroll[]
-  instructor    Instructor     @relation(fields: [instructorId], references: [id], onDelete: Cascade)
-  instructorId  Int
-  photo         Photo?
-  photoId       Int?
-  Assignment    Assignment[]
-  notifications Notification[]
-  announcements Announcement[]
+  id              Int               @id @default(autoincrement())
+  title           String            @unique
+  description     String?
+  Enroll          Enroll[]
+  instructor      Instructor        @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  instructorId    Int
+  photo           Photo?
+  photoId         Int?
+  Assignment      Assignment[]
+  notifications   Notification[]
+  announcements   Announcement[]
+  DiscussionBoard DiscussionBoard[]
 
-  @@fulltext([title,description])
+  @@fulltext([title, description])
 }
 
 model Photo {
@@ -138,4 +138,26 @@ model Announcement {
   message  String
   course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId Int
+}
+
+model DiscussionBoard {
+  id Int @id @default(autoincrement())
+
+  course   Course @relation(fields: [courseid], references: [id], onUpdate: Cascade)
+  courseid Int
+  name     String //owner
+  detail   String
+  like     Int
+  topic    String
+
+  Comment Comment[]
+}
+
+model Comment {
+  id              Int             @id @default(autoincrement())
+  detail          String
+  like            Int
+  name            String
+  discussionboard DiscussionBoard @relation(fields: [did], references: [id], onDelete: Cascade)
+  did             Int
 }

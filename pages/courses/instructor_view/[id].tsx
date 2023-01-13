@@ -161,7 +161,7 @@ const ScoreManage = () => {
 
 const DiscussBoard = () => {
   return (
-    <div className="bg-blue-200 py-5 px-5">
+    <div className="bg-blue-200 py-5 px-5" onClick={()=>{Router.push(`/discussion/${courseId}`)}}>
       <h2>Discussion Board</h2>
     </div>
   );
