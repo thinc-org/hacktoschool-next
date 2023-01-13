@@ -36,7 +36,7 @@ export default async function handle(
   else if(req.method === "DELETE"){
     const data1 = JSON.parse(req.body);
     const id = parseInt(data1.target)
-    console.log(data1)
+    //console.log(data1)
     if(data1.type === 'comment'){
       await prisma.Comment.delete({
         where:{

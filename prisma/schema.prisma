@@ -84,6 +84,7 @@ model Instructor {
   courses           Course[]
   notifications     Notification[]
   InstructorProfile InstructorProfile[]
+  CourseMaterial    CourseMaterial[]
 
   @@fulltext([name])
 }
@@ -111,6 +112,7 @@ model Course {
   announcements    Announcement[]
   DiscussionBoard  DiscussionBoard[]
   anonymousComment AnonymousComment[]
+  CourseMaterial   CourseMaterial[]
 
   @@fulltext([title, description])
 }
@@ -178,4 +180,15 @@ model Comment {
   name            String
   discussionboard DiscussionBoard @relation(fields: [did], references: [id], onDelete: Cascade)
   did             Int
+}
+
+model CourseMaterial {
+  id           Int        @id @default(autoincrement())
+  material     String
+  instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  instructorId Int
+  course       Course     @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId     Int
+  name String
+  des String
 }

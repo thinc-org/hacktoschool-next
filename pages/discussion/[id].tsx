@@ -214,7 +214,7 @@ const CourseMenu: React.FC = ({ course: { courseId: courseId } }) => {
               setMode(1);
             }}
           >
-            <p>Go</p>
+            <p>Create Discussion</p>
           </button>
         </>
       );

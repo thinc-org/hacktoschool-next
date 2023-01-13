@@ -185,7 +185,7 @@ const Assignment = () => {
 
 const CourseMaterials = () => {
   return (
-    <div className="bg-green-200 py-5 px-5">
+    <div className="bg-green-200 py-5 px-5"  onClick={()=>{Router.push(`/coursematerial/${courseId}`)}}>
       <h2>Course Materials</h2>
     </div>
   );
