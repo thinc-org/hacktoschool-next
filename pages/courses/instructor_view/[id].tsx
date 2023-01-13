@@ -217,6 +217,13 @@ const ViewComments = () => {
     </div>
   )
 }
+const ToGroupChat = () => {
+  return (
+    <div>
+      <button onClick={()=>{Router.push(`/courses/instructor_view/${courseId}/chat/welcomeRoom`)}}>GroupChat</button>
+    </div>
+  )
+}
 
 return (
   <>
@@ -236,6 +243,7 @@ return (
           <Assignment />
           <CourseMaterials />
           <ViewComments />
+          <ToGroupChat />
         </div>
       </div>
     </div>

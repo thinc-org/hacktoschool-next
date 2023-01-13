@@ -197,6 +197,14 @@ const CourseMenu: React.FC = ({
     )
   }
 
+  const ToGroupChat = () => {
+    return (
+      <div>
+        <button onClick={()=>{Router.push(`/courses/student_view/${courseId}/chat/welcomeRoom`)}}>GroupChat</button>
+      </div>
+    )
+  }
+
   return (
     <>
       <AnnouncementModal />
@@ -222,6 +230,7 @@ const CourseMenu: React.FC = ({
             <Assignment />
 
             <WriteComment />
+            <ToGroupChat />
           </div>
         </div>
       </div>
