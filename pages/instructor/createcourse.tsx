@@ -2,6 +2,7 @@
 import { Headerr } from "../../component/headerr"
 import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
+import Router, { useRouter } from "next/router";
 
 export default function Home() {
   const [selectedImage, setSelectedImage] = useState("");
@@ -13,6 +14,7 @@ export default function Home() {
       setErrormes("");
     }, time);
   };
+  const router = useRouter()
 
   useEffect(()=>{
     console.log('now   '+selectedImage)
@@ -22,6 +24,8 @@ export default function Home() {
   const createCourse = async (e) => {
     console.log('in create course function');
     e.preventDefault();
+    
+    router.push('/instructor/main')
 
     const formData = new FormData();
     formData.append('title', e.target.title.value);
@@ -43,7 +47,8 @@ export default function Home() {
       setErrormes("Done");
       timeout(3000);
     }
-    console.log(now)
+    console.log(now, ' ffffffffffffff')
+  
 
   }
 

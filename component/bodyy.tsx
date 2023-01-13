@@ -307,7 +307,7 @@ export const Bodyy = (props: { statemain: string }) => {
           <img className="max-w-[30rem]" src="/manman1.png" />
         </div>
       </div>
-      <div className="lg:mt-20 bg-white">
+      <div className="lg:mt-40 bg-white">
         <h1 className="text-5xl pb-6 align-middle">
           Learn a language in a painful way.
         </h1>
