@@ -94,17 +94,18 @@ model Enroll {
 }
 
 model Course {
-  id            Int            @id @default(autoincrement())
-  title         String         @unique
-  description   String?
-  Enroll        Enroll[]
-  instructor    Instructor     @relation(fields: [instructorId], references: [id], onDelete: Cascade)
-  instructorId  Int
-  photo         Photo?
-  photoId       Int?
-  Assignment    Assignment[]
-  notifications Notification[]
-  announcements Announcement[]
+  id               Int                @id @default(autoincrement())
+  title            String             @unique
+  description      String?
+  Enroll           Enroll[]
+  instructor       Instructor         @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  instructorId     Int
+  photo            Photo?
+  photoId          Int?
+  Assignment       Assignment[]
+  notifications    Notification[]
+  announcements    Announcement[]
+  anonymousComment AnonymousComment[]
 }
 
 model Photo {
@@ -128,6 +129,13 @@ model Notification {
 }
 
 model Announcement {
+  id       Int    @id @default(autoincrement())
+  message  String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId Int
+}
+
+model AnonymousComment {
   id       Int    @id @default(autoincrement())
   message  String
   course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
