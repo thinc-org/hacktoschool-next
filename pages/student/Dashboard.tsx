@@ -62,8 +62,8 @@ const StudentDashboard: React.FC = () => {
         <>
           <div
             className={
-              "bg-black mx-4 mb-5 hover:scale-125 flex items-center justify-center rounded-full text-white " +
-              (element === cpage ? " w-12 h-12" : " w-8 h-8")
+              "mx-4 mb-5 hover:scale-125 flex items-center justify-center rounded-full text-white " +
+              (element === cpage ? " w-12 h-12 bg-indigo-800 text-md" : " w-8 h-8 bg-indigo-300")
             }
             onClick={() => {
               setCpage(element);
