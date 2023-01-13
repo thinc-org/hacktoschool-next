@@ -133,7 +133,7 @@ const CourseMenu: React.FC = ({
 
   const Announcements = () => {
     return (
-      <div className="hover:scale-105 bg-red-200 py-5 px-5" onClick={() => setShowModal(true)}>
+      <div className="hover:scale-105 bg-indigo-300 py-5 px-5 items-center inline-flex" onClick={() => setShowModal(true)}>
         <button className="text-slate-800" onClick={() => setShowModal(true)}>
           <h2 >View Announcements</h2>
         </button>
@@ -143,7 +143,7 @@ const CourseMenu: React.FC = ({
 
   const LiveChat = () => {
     return (
-      <div className="hover:scale-105  bg-emerald-200 py-5 px-5">
+      <div className="hover:scale-105  bg-rose-300 py-5 px-5 items-center inline-flex">
         {" "}
         <h2>Live Chats</h2>
       </div>
@@ -151,7 +151,7 @@ const CourseMenu: React.FC = ({
   };
   const ScoreGraphs = () => {
     return (
-      <div className=" hover:scale-105 bg-amber-200 py-5 px-5" onClick={() => { Router.push(`/courses/student_view/${courseId}/score`) }}>
+      <div className=" hover:scale-105 bg-rose-300 py-5 px-5 items-center inline-flex" onClick={() => { Router.push(`/courses/student_view/${courseId}/score`) }}>
         {" "}
         <h2>Score Graphs</h2>
       </div>
@@ -159,19 +159,19 @@ const CourseMenu: React.FC = ({
   };
   const DiscussBoard = () => {
     return (
-      <div className="hover:scale-105  bg-blue-200 py-5 px-5" onClick={() => { Router.push(`/discussion/${courseId}`) }}>
+      <div className="hover:scale-105 bg-orange-300 py-5 px-5 items-center inline-flex" onClick={() => { Router.push(`/discussion/${courseId}`) }}>
         <h2>Discussion Board</h2>
       </div>
     );
   };
   const CourseMaterials = () => {
     return (
-      <div className="bg-green-200 py-5 px-5">
+      <div className="bg-zinc-300 hover:scale-105 py-5 px-5 items-center inline-flex">
         <h2>Course Materials</h2>
       </div>
     );
   };
-  const Assignment = () => {
+  const Assignment = () => {  
     const Noti = () => {
       if (notiforass > 0) {
         return <div className="hover:scale-105  ml-3 inline-flex items-center justify-center w-8 h-8 text-xs text-white bg-red-500 rounded-full dark:border-gray-900"><h3>{notiforass}</h3></div>
@@ -181,7 +181,7 @@ const CourseMenu: React.FC = ({
       }
     }
     return (
-      <div className="hover:scale-105  bg-emerald-200 items-center py-5 px-5 inline-flex" onClick={() => { Router.push(`/courses/student_view/${courseId}/assign`) }}>
+      <div className="hover:scale-105  bg-yellow-300 items-center py-5 px-5 inline-flex" onClick={() => { Router.push(`/courses/student_view/${courseId}/assign`) }}>
         <h2>Assignments</h2>
         <Noti />
       </div>
@@ -190,7 +190,7 @@ const CourseMenu: React.FC = ({
 
   const WriteComment = () => {
     return (
-      <div className="bg-sky-200 py-5 px-5 hover:scale-105">
+      <div className="bg-lime-300 py-5 px-5 hover:scale-105 items-center inline-flex">
         <button onClick={() => { Router.push(`/courses/student_view/${courseId}/writeComment`) }}><h2>Write Comments</h2></button>
       </div>
     )
@@ -198,7 +198,7 @@ const CourseMenu: React.FC = ({
 
   const ToGroupChat = () => {
     return (
-      <div className="bg-purple-200 py-5 px-5 hover:scale-105">
+      <div className="bg-teal-200 py-5 px-5 hover:scale-105 items-center inline-flex">
         <button onClick={() => { Router.push(`/courses/student_view/${courseId}/chat/welcomeRoom`) }}><h2>GroupChat</h2></button>
       </div>
     )
