@@ -96,28 +96,28 @@ const GroupChat = () => {
                 <div id="chat-history" className="overflow-scroll max-h-80">
                     {
                         chat.map((c, id) =>
-                            <div className="text-xl p-2 border">
+                            <div className="text-sm p-2 border bg-white">
                                 <p className={c.from === "instructor" ? "text-green-500" : ""}>{c.user} : {c.message}</p>
                             </div>
                         )
                     }
                 </div>
 
-                <div  id="chat-input" className="flex flex-row fixed bottom-0">
-                    <input ref={inputRef}
-                    autoFocus
-                    className="px-2"
-                        placeholder={connected ? "Type a message..." : "Connecting..."}
-                        value={message}
-                        onChange={(e) => { setMessage(e.target.value) }}
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                                sendMessage();
-                            }
-                        }}
-                        disabled={!connected}
-                    />
-                <button className="bg-sky-400 py-2 px-4 rounded-full mt-2 mx-1 shadow-sm text-white focus:outline-none hover:scale-105 text-md" onClick={() => sendMessage()}>SEND</button>
+                <div id="chat-input" className="min-w-full mb-2 flex flex-row fixed bottom-0">
+                        <input ref={inputRef}
+                            className=" px-2 focus:outline-sky-400 min-w-[60%] mr-2"
+                            autoFocus
+                            placeholder={connected ? "Type a message..." : "Connecting..."}
+                            value={message}
+                            onChange={(e) => { setMessage(e.target.value) }}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    sendMessage();
+                                }
+                            }}
+                            disabled={!connected}
+                        />
+                    <button className="bg-sky-400 py-2 px-4 rounded-full mt-2 mx-1 shadow-sm text-white focus:outline-none hover:scale-105 text-md" onClick={() => sendMessage()}><p>SEND</p></button>
                 </div>
             </div>
         </>
