@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../lib/prisma";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { json } from "stream/consumers";
+import { elements } from "chart.js";
 
 export default async function handle(
   req: NextApiRequest,
@@ -31,7 +32,31 @@ export default async function handle(
 
   } else if (req.method === "POST") {
     handlePOST(req, res);
-  } else {
+  }
+  else if(req.method === "DELETE"){
+    const data1 = JSON.parse(req.body);
+    const id = parseInt(data1.target)
+    console.log(data1)
+    if(data1.type === 'comment'){
+      await prisma.Comment.delete({
+        where:{
+          id:id
+        }
+      })
+    }else{
+      await prisma.discussionBoard.delete({
+        where:{
+          id:id
+        }
+      })
+    }
+
+    res.status(200).json({
+      body: 'done'})
+  
+
+  }
+   else {
     throw new Error(
       `The HTTP ${req.method} method is not supported at this route.`
     );
@@ -42,17 +67,53 @@ export default async function handle(
 // stores a new course
 // requires instructorId field in req.body
 async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
-  const data1 = parseInt(req.body);
+  const data1 = JSON.parse(req.body);
+  const cid = parseInt(data1.id)
+  const sid = parseInt(data1.sid)
   //console.log(data1)
- 
+  let realone = []
+
   const alldis = await prisma.DiscussionBoard.findMany({
     where:{
-        courseid:data1
+        courseid:data1.cid
     }
   })
+  for(let element of alldis){
+   
+    const already = await prisma.Like.findMany({
+    
+      where:{
+          AND:[
+              {did:element.id},
+              {studentId:sid}
+          ]
+      }
+     })
+
+     const allcom = await prisma.comment.findMany({
+      where:{
+        did: element.id
+      }
+     })
+
+     let liked=false
+     if(already.length === 1){
+        liked = true
+     }
+     const na = {
+      id:element.id,
+      topic:element.topic,
+      name:element.name,
+      detail:element.detail,
+      like:element.like,
+      already: liked, 
+      allcomment: allcom
+     }
+     realone.push(na)
+  }
  
  res.status(200).json({
-    body: alldis})
+    body: realone})
 
 
 

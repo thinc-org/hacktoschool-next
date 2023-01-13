@@ -20,6 +20,7 @@ model Student {
   StudentProfile    StudentProfile[]
   StudentAssignment StudentAssignment[]
   notifications     Notification[]
+  Like              Like[]
 }
 
 model StudentProfile {
@@ -97,21 +98,21 @@ model Enroll {
 }
 
 model Course {
-  id              Int               @id @default(autoincrement())
-  title           String            @unique
-  description     String?
-  Enroll          Enroll[]
-  instructor      Instructor        @relation(fields: [instructorId], references: [id], onDelete: Cascade)
-  instructorId    Int
-  photo           Photo?
-  photoId         Int?
-  Assignment      Assignment[]
-  notifications   Notification[]
-  announcements   Announcement[]
-  DiscussionBoard DiscussionBoard[]
+  id               Int                @id @default(autoincrement())
+  title            String             @unique
+  description      String?
+  Enroll           Enroll[]
+  instructor       Instructor         @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  instructorId     Int
+  photo            Photo?
+  photoId          Int?
+  Assignment       Assignment[]
+  notifications    Notification[]
+  announcements    Announcement[]
+  DiscussionBoard  DiscussionBoard[]
+  anonymousComment AnonymousComment[]
 
   @@fulltext([title, description])
-  anonymousComment AnonymousComment[]
 }
 
 model Photo {
@@ -159,6 +160,15 @@ model DiscussionBoard {
   topic    String
 
   Comment Comment[]
+  Like    Like[]
+}
+
+model Like {
+  id              Int             @id @default(autoincrement())
+  discussionboard DiscussionBoard @relation(fields: [did], references: [id], onDelete: Cascade)
+  did             Int
+  student         Student         @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId       Int
 }
 
 model Comment {

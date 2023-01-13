@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../../lib/prisma";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { json } from "stream/consumers";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default async function handle(
   req: NextApiRequest,
