@@ -1,5 +1,6 @@
 import { faChild } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
 import SocketIOClient from "socket.io-client"
 import { Headerr } from "../../../../../component/headerr";
@@ -9,6 +10,7 @@ import { randomTextColor } from "../../../../shared/randomUtil";
 interface Imessage {
     user: string;
     message: string;
+    from?: string;
 }
 
 const GroupChat = () => {
@@ -20,10 +22,10 @@ const GroupChat = () => {
     const [message, setMessage] = useState<string>("");
 
     const inputRef = useRef(null);
+    const router = useRouter();
 
     // initiate the connection once 
     useEffect(() => {
-        console.log(process.env.BASE_URL)
         // const socket = SocketIOClient.connect("/api/course/groupchat/socketIO");
         // connect to socket server
         const socket = SocketIOClient.connect(process.env.BASE_URL, {
@@ -55,10 +57,21 @@ const GroupChat = () => {
         // if the message in the chatbox is not null
         if (message) {
 
+            const anonymous = router.query.anonymous;
+            let userName;
+            if (anonymous === 'true') {
+                userName = router.query.appearAs;
+            } else {
+                userName = localStorage.getItem('email');
+            }
+
             const body = {
-                user: localStorage.getItem('email'),
+                user: userName,
                 message: message
             };
+
+            console.log(body);
+            console.log("sending to server");
 
             const res = await fetch("/api/course/groupchat/chat", {
                 method: "POST",
@@ -80,18 +93,20 @@ const GroupChat = () => {
             <Headerr />
             <div className="pt-10 px-48">
                 <h1>Group Chat</h1>
-                <div id="chat-history">
+                <div id="chat-history" className="overflow-scroll max-h-80">
                     {
                         chat.map((c, id) =>
                             <div className="text-xl p-2 border">
-                                <p>{c.user} : {c.message}</p>
+                                <p className={c.from === "instructor" ? "text-green-500" : ""}>{c.user} : {c.message}</p>
                             </div>
                         )
                     }
                 </div>
 
-                <div id="chat-input">
+                <div  id="chat-input" className="flex flex-row fixed bottom-0">
                     <input ref={inputRef}
+                    autoFocus
+                    className="px-2"
                         placeholder={connected ? "Type a message..." : "Connecting..."}
                         value={message}
                         onChange={(e) => { setMessage(e.target.value) }}
@@ -102,6 +117,7 @@ const GroupChat = () => {
                         }}
                         disabled={!connected}
                     />
+                <button className="bg-sky-400 py-2 px-4 rounded-full mt-2 mx-1 shadow-sm text-white focus:outline-none hover:scale-105 text-md" onClick={() => sendMessage()}>SEND</button>
                 </div>
             </div>
         </>

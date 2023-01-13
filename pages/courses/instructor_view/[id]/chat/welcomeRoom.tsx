@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import GODBUTTON from "../../../../../component/GODBUTTON";
 import { Headerr } from "../../../../../component/headerr";
 
 const welcomeRoom = () => {
