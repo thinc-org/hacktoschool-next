@@ -11,7 +11,6 @@ export const config = {
 
 // returning an SocketIOServer (from the socket.io package) back as part of the res object to the client
 // this path will be their communication pipe
-// in that pipe there will be a channel called "message" which we will emit the message
 export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
     if (!res.socket.server.io) {
         console.log("New Socket.io server...");
@@ -23,11 +22,11 @@ export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
         // append SocketIO server to Next.js socket server response
         res.socket.server.io = io;
 
-        res?.socket?.server?.io?.emit("message", {
-            user: "server-debug",
-            message: "wellllll",
-        });
+        // res?.socket?.server?.io?.emit("message", {
+        //     user: "server-debug",
+        //     message: "wellllll",
+        // });
     }
-    res.status(200)
-    // res.end();
+    // res.status(200)
+    res.end();
 };
