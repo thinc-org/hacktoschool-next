@@ -111,6 +111,7 @@ model Course {
   DiscussionBoard DiscussionBoard[]
 
   @@fulltext([title, description])
+  anonymousComment AnonymousComment[]
 }
 
 model Photo {
@@ -134,6 +135,13 @@ model Notification {
 }
 
 model Announcement {
+  id       Int    @id @default(autoincrement())
+  message  String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId Int
+}
+
+model AnonymousComment {
   id       Int    @id @default(autoincrement())
   message  String
   course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)

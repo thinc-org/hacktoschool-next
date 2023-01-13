@@ -209,6 +209,15 @@ const Mainbody = () => {
   );
 };
 
+
+const ViewComments = () => {
+  return (
+    <div>
+      <button onClick={()=>{Router.push(`/courses/instructor_view/${courseId}/viewAnonymousComments`)}}>View Comments</button>
+    </div>
+  )
+}
+
 return (
   <>
     <AnnouncementModal />
@@ -226,6 +235,7 @@ return (
           <DiscussBoard />
           <Assignment />
           <CourseMaterials />
+          <ViewComments />
         </div>
       </div>
     </div>

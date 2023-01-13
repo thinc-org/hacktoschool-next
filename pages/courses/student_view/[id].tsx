@@ -189,6 +189,14 @@ const CourseMenu: React.FC = ({
     );
   };
 
+  const WriteComment = () => {
+    return (
+      <div>
+        <button onClick={()=>{Router.push(`/courses/student_view/${courseId}/writeComment`)}}>Write Comments</button>
+      </div>
+    )
+  }
+
   return (
     <>
       <AnnouncementModal />
@@ -212,6 +220,8 @@ const CourseMenu: React.FC = ({
             <DiscussBoard />
             <CourseMaterials />
             <Assignment />
+
+            <WriteComment />
           </div>
         </div>
       </div>
