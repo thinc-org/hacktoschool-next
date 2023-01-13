@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import Router, { useRouter } from 'next/router'
+import Router, { useRouter } from "next/router";
 export const Bodyy = (props: { statemain: string }) => {
   const [errormes, setErrormes] = useState("");
-  const router  = useRouter()
+  const router = useRouter();
   // useEffect(() => {
   //   console.log(props.statemain);
   // }, [props.statemain]);
@@ -38,11 +38,9 @@ export const Bodyy = (props: { statemain: string }) => {
       if (res.body === "We fucked up") {
         setErrormes("Already");
         timeout(3000);
-      }
-      else if(res.body === 'same password'){
-        setErrormes("Same")
-        timeout(4000)
-
+      } else if (res.body === "same password") {
+        setErrormes("Same");
+        timeout(4000);
       } else {
       }
       return;
@@ -50,17 +48,16 @@ export const Bodyy = (props: { statemain: string }) => {
       if (res.body.role === "student") {
         localStorage.setItem("id", res.body.id);
         localStorage.setItem("role", res.body.role);
-        localStorage.setItem("email", res.body.email)
+        localStorage.setItem("email", res.body.email);
         console.log("Student!");
-        router.push('/student/dashboard')
-         
+        router.push("/student/dashboard");
       } else {
         localStorage.setItem("id", res.body.id);
         localStorage.setItem("role", res.body.role);
-        console.log(res.body.email+' ffffffffffff')
-        localStorage.setItem("email", res.body.email)
+        console.log(res.body.email + " ffffffffffff");
+        localStorage.setItem("email", res.body.email);
         console.log("Instuctor");
-        router.push('/instructor/main')
+        router.push("/instructor/main");
       }
     }
   };
@@ -94,19 +91,19 @@ export const Bodyy = (props: { statemain: string }) => {
       return;
     } else {
       //Success login
-      console.log(res.body)
+      console.log(res.body);
       if (res.body.role === "student") {
         localStorage.setItem("id", res.body.id);
         localStorage.setItem("role", res.body.role);
-        localStorage.setItem("email", res.body.email)
+        localStorage.setItem("email", res.body.email);
         console.log("Student!");
-        router.push('/student/dashboard')
+        router.push("/student/dashboard");
       } else {
         localStorage.setItem("id", res.body.id);
         localStorage.setItem("role", res.body.role);
-        localStorage.setItem("email", res.body.email)
+        localStorage.setItem("email", res.body.email);
         console.log("Instuctor!");
-        router.push('/instructor/main')
+        router.push("/instructor/main");
       }
     }
   };
@@ -130,11 +127,13 @@ export const Bodyy = (props: { statemain: string }) => {
           <p>This email already registered!</p>
         </div>
       );
-    }
-    else if (errormes === "Same"){
+    } else if (errormes === "Same") {
       return (
         <div className="mt-8 text-red-600">
-          <p>You already have an account as another role, to prevent confusion, please use new password</p>
+          <p>
+            You already have an account as another role, to prevent confusion,
+            please use new password
+          </p>
         </div>
       );
     } else {
@@ -285,21 +284,109 @@ export const Bodyy = (props: { statemain: string }) => {
   };
 
   return (
-    <div className=" pl-44 pr-20 grid grid-cols-2 grid-rows-1">
+    <>
+    <div className=" pl-44 lg:pl-44 pr-20 grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 grid-rows-4">
       <div className="align-middle">
         <Gridfirst />
       </div>
-      <div className="pt-8 pl-16">
-        <div className="absolute top-[30%] left-[55%]">
-          <img className="w-[10rem] h-[10rem]" src="/gatakblur.png" />
+      <div className="relative mt-10">
+        <div className="pt-8 pl-16">
+          <div className="absolute lg:top-[20%] top-[0%] left-0">
+            <img className="w-[10rem] h-[10rem]" src="/gatakblur.png" />
+          </div>
+          <div className="absolute top-0 left-0">
+            <img className="max-w-lg" src="/boysitbook.png" />
+          </div>
+          <div className="absolute top-0 left-[40%]">
+            <img className="max-w-[24rem]" src="/gatakblur2.png" />
+          </div>
         </div>
-        <div className="absolute top-[20%] left-[55%]">
-          <img className="max-w-lg" src="/boysitbook.png" />
+      </div>
+      <div className="relative mt-20 bg-white">
+        <div className="absolute top-0 left-0">
+          <img className="max-w-[30rem]" src="/manman1.png" />
         </div>
-        <div className="absolute top-[20%] left-[72%]">
-          <img className="max-w-[24rem]" src="/gatakblur2.png" />
+      </div>
+      <div className="lg:mt-20 bg-white">
+        <h1 className="text-5xl pb-6 align-middle">
+          Learn a language in a painful way.
+        </h1>
+        <p className="py-3">Make learning words more fun with mini-games</p>
+        <div className="grid grid-cols-2 mt-10 grid-rows-1 lg:invisible">
+          <div className="relative bg-red-200 w-[8rem] h-[8rem]  rounded-xl">
+            <img
+              className="absolute top-[-12%]  max-w-[8.5rem]"
+              src="/Shoe.png"
+            />
+            <p className="absolute top-[80%] left-[30%]">Sprint</p>
+          </div>
+          <div className="relative bg-blue-200 w-[12 rem] h-[8rem] rounded-xl">
+            <img
+              className="absolute top-[-36%] right-16 max-w-[8rem]"
+              src="/microphonw.png"
+            />
+            <p className="absolute top-[80%] left-[30%]">Audio Call</p>
+          </div>
         </div>
       </div>
     </div>
+    
+    <div className=" pl-32 lg:pl-44 pr-20 grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 grid-rows-4">
+     
+        <div className="align-middle ">
+          <div className="flex justify-center">
+            <h1 className="text-5xl pb-6 ">Increasing your vocabulary</h1>
+          </div>
+          <p className="py-3">
+            Traditional and new effective approaches to word study
+          </p>
+          <div className="flex justify-center">
+            <button
+              type="button"
+              className="mt-5 lg:invisible px-4 py-2 bg-sky-200 rounded-full"
+            >
+              <h1>Textbook</h1>
+            </button>
+          </div>
+        </div>
+        <div>
+          <div className="relative ">
+            <img className="absolute top-[-5rem]" src="/heartatt.png" />
+          </div>
+        </div>
+
+        <div className="mt-0 lg:mt-0 bg-white">
+          <div className="relative mt-5">
+            <img className="absolute" src="/Notoe.png" />
+          </div>
+        </div>
+        <div className="bg-white">
+          <div className="flex justify-center mt-20">
+            <h1 className="text-5xl pb-6 ">Watch your progress every day</h1>
+          </div>
+          <p className="py-3">
+            Save statistics on your achievements, words learned, and mistakes
+          </p>
+          <div className="flex justify-center">
+            <button
+              type="button"
+              className="lg:invisible mt-5 px-4 mb-10 py-2 bg-sky-200 rounded-full"
+            >
+              <h1>Statistics</h1>
+            </button>
+          </div>
+        </div>
+    </div>
+    <div className="relative pb-10">
+      <div className="absolute flex items-center left-[70%]">
+      <img className="  w-[4rem]" src="/Logo.png" />
+      <p className="ml-3">Cleverse</p>
+      </div>
+      <div className="absolute left-[30%] top-[20%] flex items-center">
+      <img className="w-[3rem]" src="/logo2.png" />
+      <p className="ml-3">Thinc</p>
+      </div>
+    </div>
+    </>
   );
 };
