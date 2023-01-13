@@ -124,7 +124,7 @@ export default function Home() {
             router.push("/instructor/createcourse");
           }}
         >
-          Create Course
+         <p> Create Course</p>
         </button>
       </div>
     </>

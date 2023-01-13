@@ -123,7 +123,7 @@ const CourseMenu: React.FC = ({
     return (
       <>
         <img className="w-[10rem] h-[10rem] rounded-3xl mb-5" src={imagePath} />
-        <h1 className="text-8xl border-b mb-2 pb-2 mr-10 border-neutral-400">{title}</h1>
+        <h1 className="text-4xl border-b mb-2 pb-2 mr-10 border-neutral-400">{title}</h1>
         <p className="text-slate-400">Description: {description}</p>
         <p>Instructor: {instructor_name}</p>
       </>
