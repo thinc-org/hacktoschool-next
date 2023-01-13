@@ -13,7 +13,7 @@ const CourseMenu: React.FC = ({
   // for some loading
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [notiforass,setNotiforass] = useState(0)
+  const [notiforass, setNotiforass] = useState(0)
 
   useEffect(() => {
     //adding font awesome
@@ -21,7 +21,7 @@ const CourseMenu: React.FC = ({
     getNoti()
   }, []);
   //get noti for assign that pending (status === 0 and ontime)
-  const getNoti = async()=>{
+  const getNoti = async () => {
     const data = {
       cid: courseId,
       sid: localStorage.getItem("id"),
@@ -36,14 +36,14 @@ const CourseMenu: React.FC = ({
     res.body.forEach(element => {
       const today = new Date();
       const ddate = new Date(element.duedate);
-      const pdate = new Date(element.publish);  
-      if(ddate >= today && today >= pdate && element.status === 0){
-        num+=1;
+      const pdate = new Date(element.publish);
+      if (ddate >= today && today >= pdate && element.status === 0) {
+        num += 1;
       }
     });
     setNotiforass(num)
     //console.log(num)
-   
+
   }
 
   function AnnouncementModal() {
@@ -123,7 +123,7 @@ const CourseMenu: React.FC = ({
     return (
       <>
         <img className="w-[10rem] h-[10rem] rounded-3xl mb-5" src={imagePath} />
-        <h1 className="text-4xl">{title}</h1>
+        <h1 className="text-8xl border-b mb-2 pb-2 mr-10 border-neutral-400">{title}</h1>
         <p className="text-slate-400">Description: {description}</p>
         <p>Instructor: {instructor_name}</p>
       </>
@@ -133,10 +133,9 @@ const CourseMenu: React.FC = ({
 
   const Announcements = () => {
     return (
-      <div className="bg-red-200 py-5 px-5 flex flex-col">
-        <button className="text-slate-800 hover:scale-110" onClick={() => setShowModal(true)}>
+      <div className="hover:scale-105 bg-red-200 py-5 px-5" onClick={() => setShowModal(true)}>
+        <button className="text-slate-800" onClick={() => setShowModal(true)}>
           <h2 >View Announcements</h2>
-          <FontAwesomeIcon icon={faBullhorn} />
         </button>
       </div>
     );
@@ -144,7 +143,7 @@ const CourseMenu: React.FC = ({
 
   const LiveChat = () => {
     return (
-      <div className="bg-emerald-200 py-5 px-5">
+      <div className="hover:scale-105  bg-emerald-200 py-5 px-5">
         {" "}
         <h2>Live Chats</h2>
       </div>
@@ -152,7 +151,7 @@ const CourseMenu: React.FC = ({
   };
   const ScoreGraphs = () => {
     return (
-      <div className="bg-amber-200 py-5 px-5" onClick={()=>{Router.push(`/courses/student_view/${courseId}/score`)}}>
+      <div className=" hover:scale-105 bg-amber-200 py-5 px-5" onClick={() => { Router.push(`/courses/student_view/${courseId}/score`) }}>
         {" "}
         <h2>Score Graphs</h2>
       </div>
@@ -160,47 +159,47 @@ const CourseMenu: React.FC = ({
   };
   const DiscussBoard = () => {
     return (
-      <div className="bg-blue-200 py-5 px-5" onClick={()=>{Router.push(`/discussion/${courseId}`)}}>
+      <div className="hover:scale-105  bg-blue-200 py-5 px-5" onClick={() => { Router.push(`/discussion/${courseId}`) }}>
         <h2>Discussion Board</h2>
       </div>
     );
   };
   const CourseMaterials = () => {
     return (
-      <div className="bg-green-200 py-5 px-5">
+      <div className="hover:scale-105  bg-slate-200 py-5 px-5">
         <h2>Course Materials</h2>
       </div>
     );
   };
   const Assignment = () => {
-    const Noti = ()=>{
-      if(notiforass>0){
-        return<div className=" ml-3 inline-flex items-center justify-center w-8 h-8 text-xs text-white bg-red-500 rounded-full dark:border-gray-900"><h3>{notiforass}</h3></div>
+    const Noti = () => {
+      if (notiforass > 0) {
+        return <div className="hover:scale-105  ml-3 inline-flex items-center justify-center w-8 h-8 text-xs text-white bg-red-500 rounded-full dark:border-gray-900"><h3>{notiforass}</h3></div>
       }
-      else{
-        return<></>
+      else {
+        return <></>
       }
     }
     return (
-      <div className="bg-purple-200 items-center py-5 px-5 inline-flex" onClick={()=>{Router.push(`/courses/student_view/${courseId}/assign`)}}>
+      <div className="hover:scale-105  bg-emerald-200 items-center py-5 px-5 inline-flex" onClick={() => { Router.push(`/courses/student_view/${courseId}/assign`) }}>
         <h2>Assignments</h2>
-        <Noti/>
+        <Noti />
       </div>
     );
   };
 
   const WriteComment = () => {
     return (
-      <div>
-        <button onClick={()=>{Router.push(`/courses/student_view/${courseId}/writeComment`)}}>Write Comments</button>
+      <div className="bg-sky-200 py-5 px-5 hover:scale-105">
+        <button onClick={() => { Router.push(`/courses/student_view/${courseId}/writeComment`) }}><h2>Write Comments</h2></button>
       </div>
     )
   }
 
   const ToGroupChat = () => {
     return (
-      <div>
-        <button onClick={()=>{Router.push(`/courses/student_view/${courseId}/chat/welcomeRoom`)}}>GroupChat</button>
+      <div className="bg-purple-200 py-5 px-5 hover:scale-105">
+        <button onClick={() => { Router.push(`/courses/student_view/${courseId}/chat/welcomeRoom`) }}><h2>GroupChat</h2></button>
       </div>
     )
   }
@@ -215,22 +214,21 @@ const CourseMenu: React.FC = ({
           <div>
             <Mainbody />
             <button
-              className="bg-red-500 text-white py-2 px-4 rounded"
+              className="mt-5 bg-red-500 text-white py-2 px-4 rounded"
               onClick={() => leaveHandler()}
             >
-              Drop
+              <p>  Drop </p>
             </button>
           </div>
-          <div className="col-span-2 grid grid grid-cols-2 gap-5 grid-rows-3">
+          <div className="col-span-2 grid grid grid-cols-2 gap-5 grid-rows-4">
             <Announcements />
-            <LiveChat />
             <ScoreGraphs />
             <DiscussBoard />
-            <CourseMaterials />
             <Assignment />
 
             <WriteComment />
             <ToGroupChat />
+            <CourseMaterials />
           </div>
         </div>
       </div>
