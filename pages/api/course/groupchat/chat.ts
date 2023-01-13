@@ -10,6 +10,7 @@ export default (req: NextApiRequest, res: NextApiResponseServerIO) => {
       // dispatch to channel "message"
       // broadcasting back ??
       res?.socket?.server?.io?.emit("message", message);
+      console.log("sending");
   
       // return message
       res.status(200).json(message);

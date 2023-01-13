@@ -1,6 +1,9 @@
+import { faChild } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useEffect, useRef } from "react";
 import SocketIOClient from "socket.io-client"
 import { Headerr } from "../../../../../component/headerr";
+import { randomTextColor } from "../../../../shared/randomUtil";
 
 
 interface Imessage {
@@ -38,9 +41,15 @@ const GroupChat = () => {
             console.log("received from server : ", message)
             chat.push(message);
             setChat([...chat])
+
         });
 
+        // socket disconnet onUnmount if exists
+        if (socket) return () => socket.disconnect();
+
     }, []);
+
+    console.log(chat);
 
     const sendMessage = async () => {
         // if the message in the chatbox is not null
@@ -74,8 +83,8 @@ const GroupChat = () => {
                 <div id="chat-history">
                     {
                         chat.map((c, id) =>
-                            <div key={id}>
-                                <p>{c.user} : {c.message}</p>    
+                            <div className="text-xl p-2 border">
+                                <p>{c.user} : {c.message}</p>
                             </div>
                         )
                     }
@@ -83,15 +92,15 @@ const GroupChat = () => {
 
                 <div id="chat-input">
                     <input ref={inputRef}
-                    placeholder={connected ? "Type a message..." : "Connecting..."}
-                    value = {message}
-                    onChange={(e) => {setMessage(e.target.value)}}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                            sendMessage();
-                        }
-                    }}
-                    disabled={!connected}
+                        placeholder={connected ? "Type a message..." : "Connecting..."}
+                        value={message}
+                        onChange={(e) => { setMessage(e.target.value) }}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                sendMessage();
+                            }
+                        }}
+                        disabled={!connected}
                     />
                 </div>
             </div>
