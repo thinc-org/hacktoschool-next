@@ -13,7 +13,7 @@ interface Imessage {
     from?: string;
 }
 
-const GroupChat = () => {
+const GroupChat = ({ BASE_URL }) => {
 
     // connected flag
     const [connected, setConnected] = useState<boolean>(false);
@@ -28,7 +28,8 @@ const GroupChat = () => {
     useEffect(() => {
         // const socket = SocketIOClient.connect("/api/course/groupchat/socketIO");
         // connect to socket server
-        const socket = SocketIOClient.connect(process.env.BASE_URL, {
+
+        const socket = SocketIOClient.connect(BASE_URL, {
             path: "/api/course/groupchat/socketIO",
         });
 
@@ -94,24 +95,34 @@ const GroupChat = () => {
                 </div>
 
                 <div id="chat-input" className="min-w-full mb-2 flex flex-row fixed bottom-0">
-                        <input ref={inputRef}
-                            className=" px-2 focus:outline-sky-400 min-w-[60%] mr-2"
-                            autoFocus
-                            placeholder={connected ? "Type a message..." : "Connecting..."}
-                            value={message}
-                            onChange={(e) => { setMessage(e.target.value) }}
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                    sendMessage();
-                                }
-                            }}
-                            disabled={!connected}
-                        />
+                    <input ref={inputRef}
+                        className=" px-2 focus:outline-sky-400 min-w-[60%] mr-2"
+                        autoFocus
+                        placeholder={connected ? "Type a message..." : "Connecting..."}
+                        value={message}
+                        onChange={(e) => { setMessage(e.target.value) }}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                sendMessage();
+                            }
+                        }}
+                        disabled={!connected}
+                    />
                     <button className="bg-sky-400 py-2 px-4 rounded-full mt-2 mx-1 shadow-sm text-white focus:outline-none hover:scale-105 text-md" onClick={() => sendMessage()}><p>SEND</p></button>
                 </div>
             </div>
         </>
     )
+}
+
+export async function getServerSideProps() {
+    const BASE_URL = process.env.BASE_URL;
+
+    return {
+        props: {
+            BASE_URL
+        }
+    }
 }
 
 export default GroupChat;

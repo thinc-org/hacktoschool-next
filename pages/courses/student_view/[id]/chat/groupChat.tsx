@@ -13,7 +13,7 @@ interface Imessage {
     from?: string;
 }
 
-const GroupChat = () => {
+const GroupChat = ({ BASE_URL }) => {
 
     // connected flag
     const [connected, setConnected] = useState<boolean>(false);
@@ -28,7 +28,7 @@ const GroupChat = () => {
     useEffect(() => {
         // const socket = SocketIOClient.connect("/api/course/groupchat/socketIO");
         // connect to socket server
-        const socket = SocketIOClient.connect(process.env.BASE_URL, {
+        const socket = SocketIOClient.connect(BASE_URL, {
             path: "/api/course/groupchat/socketIO",
         });
 
@@ -122,6 +122,16 @@ const GroupChat = () => {
             </div>
         </>
     )
+}
+
+export async function getServerSideProps() {
+    const BASE_URL = process.env.BASE_URL;
+
+    return {
+        props: {
+            BASE_URL
+        }
+    }
 }
 
 export default GroupChat;
